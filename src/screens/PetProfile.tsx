@@ -5,6 +5,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Avatar, Button, Card, Chip, EmptyState, ScoreBadge } from '@/components/ui';
 import { FavoriteButton, StatusBadge } from '@/components/PetCard';
 import { formatKm } from '@/lib/match';
+import { WEIGHTS } from '@/lib/match/weights';
 import { useCurrentUser } from '@/services/auth';
 import { findDirectThread } from '@/services/chat';
 import { recordSwipe } from '@/services/match';
@@ -12,6 +13,41 @@ import { ADOPTION_STATUS_LABEL, formatDate, useAdoptionsForAdopter } from '@/ser
 import { ageLabel, SEX_LABEL, SIZE_LABEL, SPECIES_LABEL, useMatch, usePet, useUser } from '@/services/pets';
 import { useDb } from '@/services/store';
 import { toast } from '@/services/ui';
+import type { MatchFactor } from '@/types';
+
+const FACTOR_LABEL: Record<MatchFactor, string> = {
+  distance: 'Distancia',
+  housing: 'Vivienda',
+  lifestyle: 'Estilo de vida',
+  time: 'Tiempo disponible',
+  home: 'Tamaño del hogar',
+  experience: 'Experiencia',
+  preferences: 'Preferencias',
+};
+
+function BreakdownBar({ factor, value }: { factor: MatchFactor; value: number }) {
+  const max = WEIGHTS[factor];
+  const pct = max > 0 ? Math.max(0, Math.min(100, (value / max) * 100)) : 0;
+  const tone = pct >= 70 ? 'bg-sage' : pct >= 40 ? 'bg-honey' : 'bg-coral';
+  return (
+    <div>
+      <div className="flex items-center justify-between text-xs font-semibold text-cocoa-500">
+        <span>{FACTOR_LABEL[factor]}</span>
+        <span>
+          {Math.round(value)}/{max}
+        </span>
+      </div>
+      <div className="mt-1 h-2 w-full overflow-hidden rounded-full bg-cream-300">
+        <motion.div
+          className={`h-full rounded-full ${tone}`}
+          initial={{ width: 0 }}
+          animate={{ width: `${pct}%` }}
+          transition={{ duration: 0.6, ease: 'easeOut' }}
+        />
+      </div>
+    </div>
+  );
+}
 
 export function PetProfile() {
   const { id } = useParams();
@@ -130,7 +166,12 @@ export function PetProfile() {
               <h2 className="flex items-center gap-2 text-lg font-bold" data-hu="HU-20">
                 💞 ¿Por qué hacemos match?
               </h2>
-              <ul className="mt-2 space-y-1.5">
+              <div className="mt-3 space-y-2.5">
+                {(Object.keys(match.breakdown) as MatchFactor[]).map((factor) => (
+                  <BreakdownBar key={factor} factor={factor} value={match.breakdown[factor]} />
+                ))}
+              </div>
+              <ul className="mt-3 space-y-1.5">
                 {match.reasons.map((r) => (
                   <li key={r.factor} className="flex gap-2 text-sm">
                     <Check size={18} className="shrink-0 text-sage" /> <span>{r.text}</span>

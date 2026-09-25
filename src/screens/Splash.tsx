@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import { Navigate, useNavigate, Link } from 'react-router-dom';
 import { Logo } from '@/components/brand/Logo';
 import { Button } from '@/components/ui';
@@ -14,10 +14,18 @@ const ROLES: { role: Role; emoji: string; label: string; hint: string }[] = [
   { role: 'admin', emoji: '🛡️', label: 'Admin', hint: 'Moderación' },
 ];
 
+const PAWS = [
+  { left: '8%', top: '18%', size: 22, delay: 0, duration: 7 },
+  { left: '82%', top: '12%', size: 16, delay: 1.2, duration: 8.5 },
+  { left: '15%', top: '68%', size: 18, delay: 0.6, duration: 9 },
+  { left: '85%', top: '72%', size: 24, delay: 1.8, duration: 7.5 },
+];
+
 export function Splash() {
   const user = useCurrentUser();
   const navigate = useNavigate();
   const tourDone = useDb((s) => s.demo.tourDone);
+  const reduceMotion = useReducedMotion();
   if (user) return <Navigate to={user.profile || user.role !== 'adopter' ? HOME_BY_ROLE[user.role] : '/onboarding'} replace />;
 
   const enterAs = (role: Role) => {
@@ -28,12 +36,38 @@ export function Splash() {
   };
 
   return (
-    <div className="scroll-area flex h-full flex-col items-center px-6 pb-6 pt-10 text-center" data-hu="HU-01" data-tour="splash">
-      <motion.div initial={{ y: -20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ type: 'spring', stiffness: 120 }} className="w-72">
+    <div className="scroll-area relative flex h-full flex-col items-center overflow-hidden px-6 pb-6 pt-10 text-center" data-hu="HU-01" data-tour="splash">
+      {!reduceMotion && (
+        <div className="pointer-events-none absolute inset-0 z-0" aria-hidden="true">
+          {PAWS.map((p, i) => (
+            <motion.span
+              key={i}
+              className="absolute text-terra-300/40"
+              style={{ left: p.left, top: p.top, fontSize: p.size }}
+              initial={{ opacity: 0, y: 0 }}
+              animate={{ opacity: [0, 1, 1, 0], y: [-6, 6, -6] }}
+              transition={{ duration: p.duration, delay: p.delay, repeat: Infinity, ease: 'easeInOut' }}
+            >
+              🐾
+            </motion.span>
+          ))}
+        </div>
+      )}
+      <motion.div
+        initial={reduceMotion ? { opacity: 1 } : { y: -20, opacity: 0, scale: 0.85 }}
+        animate={{ y: 0, opacity: 1, scale: 1 }}
+        transition={{ type: 'spring', stiffness: 160, damping: 14 }}
+        className="relative z-10 w-72"
+      >
         <Logo />
       </motion.div>
-      <p className="mt-1 text-xs font-bold uppercase tracking-wide text-cocoa-500">Plataforma de conexión y adopción de mascotas</p>
-      <motion.h1 initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }} className="mt-6 font-hand text-4xl text-terra">
+      <p className="relative z-10 mt-1 text-xs font-bold uppercase tracking-wide text-cocoa-500">Plataforma de conexión y adopción de mascotas</p>
+      <motion.h1
+        initial={reduceMotion ? { opacity: 1 } : { opacity: 0, y: 8 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.35, duration: 0.5 }}
+        className="relative z-10 mt-6 font-hand text-4xl text-terra"
+      >
         Conecta corazones, cambia vidas
       </motion.h1>
       <p className="mt-2 max-w-xs text-cocoa-500">Desliza, haz match por compatibilidad y coordina la adopción de tu nuevo compañero en Lima.</p>
