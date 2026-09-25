@@ -26,6 +26,8 @@ interface Step {
   role: Role | null;
   route: string | (() => string);
   target?: string;
+  /** Short popover (title + hint): the screen itself tells the story. */
+  compact?: boolean;
   /** Runs after role + route are applied (and again on re-sync, after the snapshot is restored). */
   enter?: () => void | Promise<void>;
   /** The step advances when the presenter does this (or presses "Hazlo por mí"). */
@@ -103,11 +105,12 @@ export const TOUR: Step[] = [
     role: 'adopter',
     route: '/descubrir',
     target: 'match-chat',
+    compact: true,
     enter: () => {
       const m = lunaMatch();
       if (m) useUi.setState({ celebrationMatchId: m.id });
     },
-    action: { hint: 'Toca “Ir al chat”.', done: () => location.hash.includes('/chats/'), doIt: () => click('match-chat') },
+    action: { hint: 'Toca “Continuar al chat”.', done: () => location.hash.includes('/chats/'), doIt: () => click('match-chat') },
   },
   {
     title: 'Chat con el responsable',
@@ -460,7 +463,7 @@ export function TourOverlay() {
               </button>
             </div>
           </div>
-          {!compact && <p className="mt-1 text-sm text-cocoa-700">{current.body}</p>}
+          {!compact && !current.compact && <p className="mt-1 text-sm text-cocoa-700">{current.body}</p>}
           {current.action && (
             <p className={`mt-2 flex items-center gap-2 rounded-2xl bg-honey-100 px-3 py-1.5 text-sm font-bold ${nudge ? 'animate-pulse' : ''}`} data-tour-hint>
               <Hand size={16} className="shrink-0" /> {nudge ? '¿Te ayudo? Pulsa “Hazlo por mí”.' : current.action.hint}
