@@ -1,7 +1,10 @@
-# HANDOFF — 2026-09-25 15:22 (Fase 1: bloques A–C y D rápidos cerrados; ver ESTADO_CLASE.md)
+# HANDOFF — 2026-09-25 16:50 (Fase 1: B, D, E cerrados en rama; F en curso)
 
-- Desplegado `v0.2-clase`. Hostinger congelado 15:45–17:30: trabajar en rama `fase1-cont`; a main solo si pasan todos los tests (incl. tour ×3).
-- Siguiente: B completo → D (seed) → E → F. Ver ADR-09..11 en docs/decisiones.md.
+- **Producción:** `v0.2-clase` (Hostinger + Pages). **Hostinger congelado hasta 17:30 Lima.**
+- **Rama `fase1-cont`:** B completo (ADR-12), semilla D, las 26 HU (E), Match cinematográfico y pantalla dividida (F, ADR-13). 22 Vitest + 20 Playwright verdes.
+- **En curso:** 2 agentes en worktrees: (1) barras por factor + stack 3 cartas + splash; (2) mapa Leaflet HU-05 (ADR-14). Integrar solo si pasan todos los tests.
+- **Siguiente (después de 17:30):** merge `fase1-cont` → `main` con la suite completa verde (incluye tour ×3) → `npm run manual` → build → zip con `C:\Windows\System32	ar.exe` → TUS + deploy Hostinger → push (Pages) → smoke contra producción → tag `v0.3` → `npm run backup` → actualizar ESTADO_CLASE.md.
+- **Trampas:** el lock `.git/index.lock` puede quedar colgado (verificar que no haya proceso git y borrarlo); las capturas en conflicto se resuelven con `--ours` y se regeneran con la suite.
 
 ## Estado de Fase 0 (histórico)
 
