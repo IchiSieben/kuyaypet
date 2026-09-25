@@ -42,7 +42,7 @@ export function requestAdoption(i: AdoptionInput): { ok: true; request: Adoption
       kind: 'solicitud',
       title: `Solicitud de adopción para ${pet.name}`,
       body: `${adopter?.name ?? 'Un adoptante'} propone ${formatDate(i.date)} a las ${i.time}.`,
-      link: '/responsable',
+      link: `/adoptante/${i.adopterId}?petId=${pet.id}&requestId=${request.id}`,
       actorId: i.adopterId,
       petId: pet.id,
     },

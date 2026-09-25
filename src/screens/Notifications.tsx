@@ -40,7 +40,11 @@ export function Notifications() {
                 <button
                   onClick={() => {
                     markRead(n.id);
-                    if (n.link) navigate(n.link);
+                    if (n.link) return navigate(n.link);
+                    // Legacy/seeded notifications may lack a link: derive the destination (HU-13).
+                    if ((n.kind === 'interes' || n.kind === 'solicitud') && n.actorId && (user.role === 'owner' || user.role === 'admin')) {
+                      navigate(`/adoptante/${n.actorId}${n.petId ? `?petId=${n.petId}` : ''}`);
+                    }
                   }}
                   className={`flex w-full items-start gap-3 rounded-3xl p-3 text-left shadow-soft transition ${n.read ? 'bg-white/70' : 'bg-white ring-2 ring-terra-100'}`}
                 >

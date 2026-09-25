@@ -120,14 +120,15 @@ export const HOME_BY_ROLE: Record<User['role'], string> = {
   admin: '/admin',
 };
 
-// Control de acceso (UML): which role may open which private route.
-const ROLE_ONLY: [RegExp, User['role']][] = [
-  [/^\/(descubrir|buscar|matches|onboarding|coordinar)/, 'adopter'],
-  [/^\/responsable/, 'owner'],
-  [/^\/admin/, 'admin'],
+// Control de acceso (UML): which role(s) may open which private route.
+const ROLE_ONLY: [RegExp, User['role'][]][] = [
+  [/^\/(descubrir|buscar|matches|onboarding|coordinar)/, ['adopter']],
+  [/^\/responsable/, ['owner']],
+  [/^\/admin/, ['admin']],
+  [/^\/adoptante\//, ['owner', 'admin']],
 ];
 
 export function canAccess(role: User['role'], path: string): boolean {
   const rule = ROLE_ONLY.find(([re]) => re.test(path));
-  return !rule || rule[1] === role;
+  return !rule || rule[1].includes(role);
 }
