@@ -116,7 +116,7 @@ const DOG_NAMES = [
 ];
 const CAT_NAMES = [
   'Luna', 'Mishi', 'Chispita', 'Nala', 'Kira', 'Pelusa', 'Tomasa', 'Canela',
-  'Michi', 'Salem', 'Nube Gris', 'Mostaza',
+  'Michi', 'Salem', 'Ceniza', 'Mostaza',
 ];
 
 const PERSONALITY_M = ['Cariñoso', 'Juguetón', 'Tranquilo', 'Guardián', 'Curioso', 'Dormilón', 'Sociable'];
@@ -185,6 +185,7 @@ type ImageManifestEntry = {
   catBreedId?: string;
   gender?: 'M' | 'F';
   index?: number;
+  url?: string; // foto curada fija (no se re-sortea)
 };
 const imageManifest: ImageManifestEntry[] = [];
 
@@ -684,6 +685,27 @@ const adoptadaFav = adoptadaPets[0];
 const otherFavs = pickN(pets.filter((p) => p.id !== adoptadaFav.id), 2);
 [adoptadaFav, ...otherFavs].forEach((p) => {
   favorites.push({ adopterId: 'u-adopter-demo', petId: p.id, createdAt: isoDaysAgo(intBetween(2, 15)) });
+});
+
+// ---------- CONSISTENCY FIXES (Fase 1, Bloque D) ----------
+// El texto "sobre mí" no debe contradecir las banderas que usa el motor.
+for (const p of pets) {
+  if (p.about.includes('otras mascotas')) { p.goodWithDogs = true; p.goodWithCats = true; }
+  if (p.about.includes('otros gatos')) p.goodWithCats = true;
+  if (p.about.includes('niños')) p.goodWithKids = true;
+}
+// Fotos curadas de Luna (protagonista del tour): fijas aunque se regenere public/img.
+const LUNA_PHOTOS = [
+  'https://s3.us-west-2.amazonaws.com/cdn2.thecatapi.com/images/83CUYAi3g.jpg',
+  'https://s3.us-west-2.amazonaws.com/cdn2.thecatapi.com/images/eeg.jpg',
+  'https://s3.us-west-2.amazonaws.com/cdn2.thecatapi.com/images/dsu.jpg',
+];
+luna.photos = luna.photos.slice(0, LUNA_PHOTOS.length);
+while (luna.photos.length < LUNA_PHOTOS.length) luna.photos.push(`img/pets/${luna.id}-${luna.photos.length + 1}.webp`);
+luna.photos.forEach((path: string, i: number) => {
+  const entry = imageManifest.find((e) => e.path === path);
+  if (entry) entry.url = LUNA_PHOTOS[i];
+  else imageManifest.push({ path, kind: 'pet-cat', url: LUNA_PHOTOS[i] });
 });
 
 // ---------- WRITE FILES ----------

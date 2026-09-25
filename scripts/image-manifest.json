@@ -458,15 +458,18 @@
   },
   {
     "path": "img/pets/p29-1.webp",
-    "kind": "pet-cat"
+    "kind": "pet-cat",
+    "url": "https://s3.us-west-2.amazonaws.com/cdn2.thecatapi.com/images/83CUYAi3g.jpg"
   },
   {
     "path": "img/pets/p29-2.webp",
-    "kind": "pet-cat"
+    "kind": "pet-cat",
+    "url": "https://s3.us-west-2.amazonaws.com/cdn2.thecatapi.com/images/eeg.jpg"
   },
   {
     "path": "img/pets/p29-3.webp",
-    "kind": "pet-cat"
+    "kind": "pet-cat",
+    "url": "https://s3.us-west-2.amazonaws.com/cdn2.thecatapi.com/images/dsu.jpg"
   },
   {
     "path": "img/pets/p30-1.webp",

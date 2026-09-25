@@ -18,6 +18,7 @@ type ImageManifestEntry = {
   catBreedId?: string;
   gender?: 'M' | 'F';
   index?: number;
+  url?: string;
 };
 
 const manifest: ImageManifestEntry[] = JSON.parse(readFileSync(MANIFEST_PATH, 'utf-8'));
@@ -112,7 +113,10 @@ async function processEntry(entry: ImageManifestEntry): Promise<{ ok: boolean; e
     return { ok: true, entry };
   }
   try {
-    if (entry.kind === 'pet-dog') {
+    if (entry.url) {
+      await downloadAndProcess(entry.url, outPath, 600, 72);
+      credits.push({ file: `public/${entry.path}`, url: entry.url, provider: entry.kind === 'pet-dog' ? 'Dog CEO API / Stanford Dogs Dataset' : 'The Cat API' });
+    } else if (entry.kind === 'pet-dog') {
       const url = await resolveDogUrl(entry.breedPath);
       await downloadAndProcess(url, outPath, 600, 72);
       credits.push({ file: `public/${entry.path}`, url, provider: 'Dog CEO API / Stanford Dogs Dataset' });
