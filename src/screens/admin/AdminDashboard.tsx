@@ -1,19 +1,43 @@
-import { Flag, ShieldCheck } from 'lucide-react';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Avatar, Button, Card, Chip, EmptyState, Sheet } from '@/components/ui';
-import { approvePublication, rejectPublication, useOpenReports, usePendingPublications } from '@/services/moderation';
+import { Button, Card, Chip, EmptyState, Sheet } from '@/components/ui';
+import { approvePublication, rejectPublication, usePendingPublications } from '@/services/moderation';
 import { ageLabel, SPECIES_LABEL } from '@/services/pets';
 import { useDb } from '@/services/store';
 import { confirm, toast } from '@/services/ui';
+import { useCountUp } from '@/lib/useCountUp';
 import type { Pet } from '@/types';
 
 const REASONS = ['Fotos no corresponden a la mascota', 'Información incompleta o falsa', 'Posible venta encubierta', 'Contenido inapropiado'];
 
-/** Admin panel (Fase 0: metrics + approve/reject publications). Users, reports and deactivation in Fase 3. */
-export function AdminHome() {
+const GOALS = { users: 500, matches: 200 };
+
+function Kpi({ label, value, goal, hint }: { label: string; value: number; goal?: number; hint?: string }) {
+  const shown = useCountUp(value);
+  const pct = goal ? Math.min(100, Math.round((value / goal) * 100)) : undefined;
+  return (
+    <Card className="p-3">
+      <p className="font-display text-3xl font-extrabold text-terra">{shown}</p>
+      <p className="text-sm font-bold">{label}</p>
+      {pct !== undefined ? (
+        <div className="mt-1.5">
+          <div className="h-1.5 w-full overflow-hidden rounded-full bg-cream-200">
+            <div className="h-full rounded-full bg-sage transition-[width] duration-700" style={{ width: `${pct}%` }} />
+          </div>
+          <p className="mt-0.5 text-[11px] text-cocoa-300">
+            {pct}% de la meta ({goal})
+          </p>
+        </div>
+      ) : (
+        hint && <p className="text-[11px] text-cocoa-300">{hint}</p>
+      )}
+    </Card>
+  );
+}
+
+/** Dashboard (index de /admin): KPIs del caso de negocio + cola de publicaciones pendientes (HU-24). */
+export function AdminDashboard() {
   const pending = usePendingPublications();
-  const reports = useOpenReports();
   const users = useDb((s) => s.users);
   const pets = useDb((s) => s.pets);
   const matches = useDb((s) => s.matches);
@@ -21,12 +45,9 @@ export function AdminHome() {
   const [rejecting, setRejecting] = useState<Pet | null>(null);
   const [reason, setReason] = useState('');
 
-  const metrics = [
-    ['Usuarios', users.length, 'meta 500'],
-    ['Matches', matches.length, 'meta 200'],
-    ['Mascotas activas', pets.filter((p) => p.status === 'disponible' && p.approval === 'aprobada').length, ''],
-    ['Adopciones', pets.filter((p) => p.status === 'adoptada').length + adoptions.filter((a) => a.status === 'aceptada').length, 'visitas + adoptadas'],
-  ] as const;
+  const activeUsers = users.filter((u) => u.active).length;
+  const activePct = users.length ? Math.round((activeUsers / users.length) * 100) : 0;
+  const adoptedCount = pets.filter((p) => p.status === 'adoptada').length + adoptions.filter((a) => a.status === 'aceptada').length;
 
   const approve = async (p: Pet) => {
     const ok = await confirm({ title: `¿Aprobar a ${p.name}?`, body: 'La publicación será visible para todos los adoptantes.', emoji: '✅', confirmLabel: 'Aprobar' });
@@ -44,24 +65,15 @@ export function AdminHome() {
   };
 
   return (
-    <div className="space-y-5 px-4 pb-6" data-hu="HU-24">
-      <div>
-        <h1 className="flex items-center gap-2 text-2xl font-extrabold">
-          <ShieldCheck className="text-sage" /> Panel de administración
-        </h1>
-        <p className="text-sm text-cocoa-500">Métricas del caso de negocio y moderación.</p>
-      </div>
+    <div className="space-y-5 pt-2">
       <div className="grid grid-cols-2 gap-2">
-        {metrics.map(([k, v, hint]) => (
-          <Card key={k} className="p-3">
-            <p className="font-display text-3xl font-extrabold text-terra">{v}</p>
-            <p className="text-sm font-bold">{k}</p>
-            {hint && <p className="text-[11px] text-cocoa-300">{hint}</p>}
-          </Card>
-        ))}
+        <Kpi label="Usuarios" value={users.length} goal={GOALS.users} />
+        <Kpi label="Matches" value={matches.length} goal={GOALS.matches} />
+        <Kpi label="% usuarios activos" value={activePct} hint="meta 60%" />
+        <Kpi label="Adopciones" value={adoptedCount} hint="visitas + adoptadas" />
       </div>
 
-      <section data-tour="admin-pending">
+      <section data-tour="admin-pending" data-hu="HU-24">
         <h2 className="mb-2 text-lg font-bold">📋 Publicaciones pendientes ({pending.length})</h2>
         {pending.length === 0 ? (
           <EmptyState emoji="🎉" title="Todo revisado" body="No hay publicaciones pendientes de aprobación." />
@@ -97,32 +109,6 @@ export function AdminHome() {
             })}
           </ul>
         )}
-      </section>
-
-      <section>
-        <h2 className="mb-2 flex items-center gap-2 text-lg font-bold">
-          <Flag size={18} className="text-coral" /> Reportes abiertos ({reports.length})
-        </h2>
-        <ul className="space-y-2">
-          {reports.slice(0, 3).map((r) => {
-            const reporter = users.find((u) => u.id === r.reporterId);
-            return (
-              <li key={r.id}>
-                <Card className="flex items-start gap-3 p-3">
-                  <Avatar src={reporter?.avatar} name={reporter?.name ?? '?'} size={36} />
-                  <div className="min-w-0 flex-1 text-sm">
-                    <p className="font-bold">{r.reason}</p>
-                    <p className="line-clamp-2 text-cocoa-500">{r.detail}</p>
-                  </div>
-                  <Chip tone="coral" className="!text-[11px]">
-                    {r.targetType}
-                  </Chip>
-                </Card>
-              </li>
-            );
-          })}
-        </ul>
-        <p className="mt-2 text-center text-xs text-cocoa-300">Gestión completa de usuarios y reportes: Fase 3.</p>
       </section>
 
       <Sheet open={!!rejecting} onClose={() => setRejecting(null)} title={`Rechazar a ${rejecting?.name ?? ''}`}>
