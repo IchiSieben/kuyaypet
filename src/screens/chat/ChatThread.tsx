@@ -51,19 +51,24 @@ export function ChatThreadScreen() {
           <img src={pet?.photos[0]} alt="" className="h-11 w-11 rounded-full object-cover" />
           <span className="min-w-0">
             <span className="block truncate font-display text-lg font-bold leading-tight">{thread.kind === 'group' ? `Grupo de ${pet?.name}` : pet?.name}</span>
-            <span className="block truncate text-xs text-cocoa-500">
-              {thread.kind === 'group' ? `${thread.memberIds.length} interesados` : `${user.role === 'adopter' ? 'Responsable' : 'Adoptante'}: ${other?.name ?? ''}`}
-            </span>
+            {thread.kind === 'group' ? (
+              <span className="block truncate text-xs text-cocoa-500">{thread.memberIds.length} interesados</span>
+            ) : (
+              <span className="flex items-center gap-1.5 text-xs text-cocoa-500">
+                <Avatar src={other?.avatar} name={other?.name ?? '?'} size={16} />
+                <span className="leading-tight">{other?.name}</span>
+              </span>
+            )}
           </span>
         </Link>
         {user.role === 'adopter' && pet && thread.kind === 'direct' && (
-          <Link to={`/coordinar/${pet.id}`} data-tour="chat-coordinate" className="flex items-center gap-1 rounded-full bg-sage-100 px-3 py-2 text-xs font-bold text-sage-600">
+          <Link to={`/coordinar/${pet.id}`} data-tour="chat-coordinate" aria-label="Coordinar adopción" className="flex shrink-0 items-center gap-1 rounded-full bg-sage-100 px-3 py-2 text-xs font-bold text-sage-600">
             <CalendarCheck size={16} /> Coordinar
           </Link>
         )}
       </header>
 
-      <div className="scroll-area flex-1 space-y-2 px-3 py-4">
+      <div className="scroll-area flex-1 space-y-2 px-3 py-4" data-tour="chat-messages">
         {messages.length === 0 && <p className="py-8 text-center text-sm text-cocoa-500">Todavía no hay mensajes. ¡Rompe el hielo! 👋</p>}
         {messages.map((m) => {
           if (m.system)

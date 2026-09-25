@@ -74,7 +74,10 @@ export function Splash() {
         </div>
       </div>
 
-      <Link to="/creditos" className="mt-auto pt-8 text-sm font-semibold text-cocoa-500 underline decoration-terra/40 underline-offset-4">
+      <a href="./manual/" target="_blank" rel="noreferrer" className="mt-5 text-sm font-bold text-sage-600 underline underline-offset-4">
+        📘 Manual de la demo
+      </a>
+      <Link to="/creditos" className="mt-auto pt-6 text-sm font-semibold text-cocoa-500 underline decoration-terra/40 underline-offset-4">
         Hecho por el Equipo KuyayPet · UPCH 2026-2
       </Link>
     </div>

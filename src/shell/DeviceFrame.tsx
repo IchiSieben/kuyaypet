@@ -37,7 +37,7 @@ export function DeviceFrame({ children }: { children: ReactNode }) {
       <div className="relative shrink-0">
         <div className="relative h-[844px] max-h-[calc(100vh-92px)] w-[390px] rounded-[54px] border-[12px] border-cocoa bg-cocoa shadow-card">
           <div className="absolute left-1/2 top-2 z-[70] h-6 w-28 -translate-x-1/2 rounded-full bg-cocoa" aria-hidden="true" />
-          <div className="h-full w-full overflow-hidden rounded-[42px]">{screen}</div>
+          <div className="h-full w-full overflow-hidden rounded-[42px] bg-cream pt-8">{screen}</div>
         </div>
         <p className="mt-3 text-center font-hand text-2xl text-terra">Adopta · Conecta · Transforma ♥</p>
       </div>

@@ -1,5 +1,6 @@
-import { CheckCircle2, ChevronLeft, ChevronRight, Circle, Heart, Play, RotateCcw } from 'lucide-react';
+import { BookOpen, CheckCircle2, ChevronLeft, ChevronRight, Circle, Heart, HeartHandshake, Home, Play, RotateCcw, ShieldCheck } from 'lucide-react';
 import { QRCodeSVG } from 'qrcode.react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { HU_STATUS } from '@/data/huStatus';
 import { DEMO_IDS, HOME_BY_ROLE, loginAs, useCurrentUser } from '@/services/auth';
@@ -10,7 +11,7 @@ import { resetDemo } from '@/services/users';
 import { LogoMark } from '@/components/brand/Logo';
 import type { Role } from '@/types';
 import team from '../../data/team.json';
-import { startTour } from './Tour';
+import { startTour, TOUR } from './Tour';
 
 /** Runtime URL so each mirror (Hostinger / GitHub Pages / localhost) shows its own QR. */
 export function publicUrl() {
@@ -20,10 +21,10 @@ export function publicUrl() {
   return here;
 }
 
-const ROLE_BTNS: { role: Role; label: string }[] = [
-  { role: 'adopter', label: '🧡 Adoptante' },
-  { role: 'owner', label: '🏡 Responsable' },
-  { role: 'admin', label: '🛡️ Admin' },
+const ROLE_BTNS: { role: Role; label: string; Icon: typeof Home }[] = [
+  { role: 'adopter', label: 'Adoptante', Icon: HeartHandshake },
+  { role: 'owner', label: 'Responsable', Icon: Home },
+  { role: 'admin', label: 'Admin', Icon: ShieldCheck },
 ];
 
 function devsFor(hu: string): string {
@@ -34,6 +35,8 @@ function devsFor(hu: string): string {
 export function PresenterPanel() {
   const open = useUi((s) => s.presenterOpen);
   const guaranteed = useDb((s) => s.demo.guaranteedMatch);
+  const tourStep = useUi((s) => s.tourStep);
+  const [showCount, setShowCount] = useState(false);
   const user = useCurrentUser();
   const navigate = useNavigate();
   const url = publicUrl();
@@ -87,8 +90,9 @@ export function PresenterPanel() {
           <button
             key={b.role}
             onClick={() => switchRole(b.role)}
-            className={`rounded-2xl border-2 px-1 py-2 text-xs font-bold transition ${user?.role === b.role ? 'border-terra bg-terra-100 text-terra-600' : 'border-cream-300 hover:border-terra'}`}
+            className={`flex flex-col items-center gap-1 rounded-2xl border-2 px-1 py-2 text-xs font-bold transition ${user?.role === b.role ? 'border-terra bg-terra-100 text-terra-600' : 'border-cream-300 hover:border-terra'}`}
           >
+            <b.Icon size={18} />
             {b.label}
           </button>
         ))}
@@ -96,7 +100,7 @@ export function PresenterPanel() {
 
       <div className="mt-3 grid grid-cols-2 gap-2">
         <button onClick={startTour} className="flex items-center justify-center gap-1.5 rounded-2xl bg-terra py-2.5 text-sm font-bold text-white hover:bg-terra-600">
-          <Play size={16} /> Tour guiado
+          <Play size={16} /> {tourStep === null ? 'Tour guiado' : `Tour: paso ${tourStep + 1}/${TOUR.length}`}
         </button>
         <button onClick={reset} className="flex items-center justify-center gap-1.5 rounded-2xl bg-cream-200 py-2.5 text-sm font-bold hover:bg-cream-300">
           <RotateCcw size={16} /> Reiniciar demo
@@ -122,11 +126,15 @@ export function PresenterPanel() {
         </div>
       </div>
 
+      <a href="./manual/" target="_blank" rel="noreferrer" className="mt-3 flex items-center justify-center gap-1.5 rounded-2xl border-2 border-sage py-2 text-sm font-bold text-sage-600 hover:bg-sage-100">
+        <BookOpen size={16} /> Manual de la demo
+      </a>
+
       <div className="mt-4 flex items-center justify-between">
         <p className="font-display font-bold">Historias de usuario</p>
-        <span className="text-xs font-bold text-sage-600">
-          {done}/26 implementadas
-        </span>
+        <button onClick={() => setShowCount((v) => !v)} className="text-xs font-bold text-sage-600 underline decoration-dotted" title="Mostrar u ocultar el contador">
+          {showCount ? `${done}/26 implementadas` : 'Fase 1 en curso'}
+        </button>
       </div>
       <ul className="scroll-area mt-2 flex-1 space-y-0.5 pr-1">
         {HU_STATUS.map((h) => {

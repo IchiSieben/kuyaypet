@@ -1,0 +1,285 @@
+<!doctype html><html lang="es-PE"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Manual de la demo · KuyayPet</title><link rel="icon" href="../favicon.svg">
+<style>
+:root{--cream:#FFF8EE;--cocoa:#4A2E22;--terra:#B5553A;--sage:#4F8A65;--line:#F0D4AE}
+*{box-sizing:border-box}body{margin:0;background:var(--cream);color:var(--cocoa);font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+main{max-width:860px;margin:0 auto;padding:24px 16px 64px}
+h1{color:var(--terra);font-size:2.1rem;margin:.2em 0}h2{margin-top:2em;border-bottom:2px solid var(--line);padding-bottom:.2em}
+a{color:var(--terra)}code{background:#F9E6CC;padding:.1em .35em;border-radius:6px}
+table{width:100%;border-collapse:collapse;margin:1em 0;font-size:.92rem;display:block;overflow-x:auto}
+th,td{border:1px solid var(--line);padding:.45em .6em;text-align:left;vertical-align:top}th{background:#F9E6CC}
+img{max-width:100%;border-radius:16px;box-shadow:0 8px 24px -10px rgba(74,46,34,.35);margin:.6em 0;display:block}
+hr{border:0;border-top:1px dashed var(--line);margin:2em 0}
+.back{display:inline-block;margin-bottom:8px;font-weight:700}
+@media print{body{background:#fff}main{max-width:none;padding:0}h2{break-after:avoid}table,img{break-inside:avoid}.back{display:none}img{max-height:420px;width:auto}}
+</style></head><body><main><a class="back" href="../">← Volver a la app</a><h1>Manual de la demo · KuyayPet</h1>
+<p><em>Para el presentador. Ingeniería de Software · UPCH 2026-2.</em></p>
+<p><strong>Link principal:</strong> <a href="https://firebrick-cod-910257.hostingersite.com/">https://firebrick-cod-910257.hostingersite.com/</a>
+<strong>Espejo (plan B):</strong> <a href="https://ichisieben.github.io/kuyaypet/">https://ichisieben.github.io/kuyaypet/</a>
+<strong>Cuentas demo</strong> (contraseña <code>kuyay2026</code>): <code>adoptante@kuyaypet.pe</code> (Valeria) · <code>responsable@kuyaypet.pe</code> (Rosa) · <code>admin@kuyaypet.pe</code></p>
+<hr>
+<h2>1. Preparación antes de clase (5 min)</h2>
+<ol>
+<li>Abre el link principal en <strong>Chrome de escritorio</strong> y pon <strong>pantalla completa (F11)</strong>. A partir de 1024 px de ancho aparecen el <strong>marco de celular</strong> y el <strong>panel de presentador</strong> a la derecha.</li>
+<li>En el panel pulsa <strong>Reiniciar demo</strong>: vuelven los datos semilla y se cierra la sesión.</li>
+<li><strong>Prueba el QR</strong> del panel con tu celular: debe abrir la misma app a pantalla completa. Esa es la invitación para que la clase la abra.</li>
+<li>Deja el zoom del navegador en 100 %. Si el proyector es de baja resolución, prueba con 90 % (Ctrl −).</li>
+<li><strong>Sin internet:</strong> abre la app una vez con internet antes de clase. Es una PWA: queda en caché con fotos y fuentes incluidas. Si el aula no tiene red, recarga igual y funcionará desde la caché. Como respaldo extremo, usa las capturas de este manual.</li>
+<li><strong>Teclado:</strong> durante el tour, <strong>→</strong> avanza, <strong>←</strong> retrocede y <strong>Esc</strong> sale.</li>
+</ol>
+<p><img src="img/presentador-escritorio.png" alt="Modo presentador"></p>
+<hr>
+<h2>2. Guion del tour (5–7 min)</h2>
+<p>Pulsa <strong>Tour guiado</strong> en el panel. El tour <strong>reinicia los datos</strong>, fija a <strong>Luna</strong> (la gata de Rosa) como primera carta y <strong>ejecuta cada acción por ti</strong>: tú solo pulsas <strong>Siguiente</strong> (o →). Mientras dura, la pantalla del celular no acepta toques fuera del guion, así el Match no se puede desincronizar. El panel muestra “Tour: paso N/12”.</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Qué pasa en pantalla</th>
+<th>Qué digo (1–2 frases)</th>
+<th>HU</th>
+<th>≈ tiempo</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>Pantalla de inicio con los botones de rol</td>
+<td>“KuyayPet es un Tinder para adoptar: la información de adopción en Lima está dispersa; aquí se centraliza y se conecta por compatibilidad.”</td>
+<td>HU-01</td>
+<td>40 s</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Cuestionario tipo Bumble</td>
+<td>“Primero conocemos al adoptante: vivienda, horas que pasa fuera, actividad, niños, alergias. Una pregunta por pantalla.”</td>
+<td>HU-20</td>
+<td>40 s</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Deck con Luna, % y razones</td>
+<td>“Cada carta muestra el porcentaje y <strong>por qué</strong>: distancia, vivienda, energía. Nada de caja negra.”</td>
+<td>HU-06, HU-20</td>
+<td>40 s</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Se resalta <strong>Me gusta</strong> → al avanzar, el like se da solo</td>
+<td>“Un like no es un Match: avisa al responsable. El Match solo ocurre con interés mutuo.”</td>
+<td>HU-06</td>
+<td>20 s</td>
+</tr>
+<tr>
+<td>5</td>
+<td><strong>¡Es un Match!</strong> con confeti</td>
+<td>“Rosa aceptó. Aquí la aceptación está simulada; en la fase 2 la hace una persona real desde su celular.”</td>
+<td>HU-07</td>
+<td>30 s</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Chat con Luna: se envía un mensaje y Rosa responde</td>
+<td>“El chat queda vinculado a la mascota y se guarda el historial.”</td>
+<td>HU-08</td>
+<td>30 s</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Formulario <strong>Coordinar adopción</strong></td>
+<td>“Desde el chat propongo fecha y hora para conocer a Luna.”</td>
+<td>HU-10</td>
+<td>20 s</td>
+</tr>
+<tr>
+<td>8</td>
+<td><strong>¡Solicitud enviada!</strong> con estado Pendiente</td>
+<td>“Veo el estado: pendiente, aceptada o rechazada. Ahora cambiemos de lado.”</td>
+<td>HU-10</td>
+<td>15 s</td>
+</tr>
+<tr>
+<td>9</td>
+<td>Somos <strong>Rosa</strong>: se resalta la campana con el contador</td>
+<td>“La responsable recibe la notificación al instante.”</td>
+<td>HU-13</td>
+<td>30 s</td>
+</tr>
+<tr>
+<td>10</td>
+<td>Rosa <strong>acepta</strong> la visita</td>
+<td>“Acepta, y Valeria recibe la confirmación en el chat.”</td>
+<td>HU-10, HU-13</td>
+<td>20 s</td>
+</tr>
+<tr>
+<td>11</td>
+<td><strong>Admin</strong> aprueba una publicación pendiente</td>
+<td>“Toda mascota nueva pasa por moderación: así evitamos ventas encubiertas (Ley 30407).”</td>
+<td>HU-24</td>
+<td>30 s</td>
+</tr>
+<tr>
+<td>12</td>
+<td>Créditos del equipo</td>
+<td>“Escaneen el QR y pruébenlo en su celular.”</td>
+<td>—</td>
+<td>20 s</td>
+</tr>
+</tbody></table>
+<p><img src="img/tour-paso-3.png" alt="Paso 3 · deck">
+<img src="img/tour-paso-5.png" alt="Paso 5 · Match">
+<img src="img/tour-paso-9.png" alt="Paso 9 · responsable"></p>
+<hr>
+<h2>3. Recorrido libre por rol</h2>
+<p>Cambia de rol con los tres botones del panel (<strong>Adoptante · Responsable · Admin</strong>). Al cambiar, entras directo con la cuenta demo de ese rol.</p>
+<p><strong>Adoptante (Valeria)</strong></p>
+<ul>
+<li><strong>Descubrir:</strong> desliza con el mouse o usa ✕ / ⭐ / ♥. El botón <strong>Match garantizado en la próxima carta</strong> del panel asegura que el siguiente like termine en Match.</li>
+<li><strong>Buscar:</strong> grilla de mascotas disponibles, con la distancia a ti (HU-02).</li>
+<li><strong>Matches:</strong> Matches con interés mutuo y ranking de compatibilidad, con los motivos de cada uno (HU-20).</li>
+<li><strong>Perfil de mascota:</strong> carrusel de fotos, “¿Por qué hacemos match?”, favoritos y botón Coordinar (HU-03).</li>
+<li><strong>Perfil:</strong> preferencias y cerrar sesión con confirmación (HU-21).</li>
+</ul>
+<p><strong>Responsable (Rosa)</strong></p>
+<ul>
+<li>Interesados con su % de compatibilidad: ✓ acepta (se crea el Match y se abre el chat) y ✕ rechaza.</li>
+<li>Solicitudes de adopción con fecha, hora y mensaje: aceptar o rechazar.</li>
+<li>Mis publicaciones, con su estado (Publicada / En revisión / Rechazada).</li>
+<li>La campana y <strong>Avisos</strong> muestran las notificaciones leídas y no leídas.</li>
+</ul>
+<p><strong>Administrador</strong></p>
+<ul>
+<li>Métricas del caso de negocio: usuarios (meta 500), matches (meta 200), mascotas activas y adopciones.</li>
+<li><strong>Publicaciones pendientes:</strong> <em>Aprobar</em> pide confirmación. <em>Rechazar</em> pide un motivo (hay chips sugeridos) y se le notifica al responsable (HU-24).</li>
+<li><strong>Reportes abiertos:</strong> la cola de contenido inapropiado (HU-26, gestión completa en la siguiente fase).</li>
+<li>La gestión de usuarios y la desactivación de cuentas (HU-22/25) están en desarrollo. El login ya bloquea las cuentas inactivas.</li>
+</ul>
+<hr>
+<h2>4. Qué es simulado y cómo explicarlo</h2>
+<table>
+<thead>
+<tr>
+<th>Pregunta posible</th>
+<th>Respuesta corta</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>¿Dónde está la base de datos?</td>
+<td>“En esta fase los datos viven en el navegador (localStorage), detrás de una capa de servicios. La fase 2 cambia esa capa por Supabase sin tocar las pantallas.”</td>
+</tr>
+<tr>
+<td>¿Quién acepta los likes?</td>
+<td>“Responsables simulados con una probabilidad y un retardo; Rosa, la responsable demo, acepta a mano en el tour.”</td>
+</tr>
+<tr>
+<td>¿Y el chat?</td>
+<td>“Los mensajes se guardan de verdad; las respuestas del responsable son plantillas. En la fase 2 será tiempo real.”</td>
+</tr>
+<tr>
+<td>¿Login con Google?</td>
+<td>“Selector simulado. Con un Client ID se usa Google Identity Services, pero sin backend no se puede verificar el token, por eso no lo activamos.”</td>
+</tr>
+<tr>
+<td>¿El % es confiable?</td>
+<td>“Son pesos heurísticos y explicables. La fase 2 los calibra con adopciones reales.”</td>
+</tr>
+<tr>
+<td>¿Es seguro?</td>
+<td>“Es un prototipo: las contraseñas demo están en el navegador. La fase 2 usa Supabase Auth con permisos por fila.”</td>
+</tr>
+</tbody></table>
+<p><strong>Siguiente fase:</strong> backend Supabase (auth, Postgres y chat en tiempo real), app Flutter y módulo Comunidad (paseos y playdates).</p>
+<hr>
+<h2>5. Plan B</h2>
+<ol>
+<li><strong>Algo raro en pantalla:</strong> pulsa <strong>Reiniciar demo</strong> en el panel y vuelve a lanzar el tour.</li>
+<li><strong>El tour se trabó:</strong> pulsa <strong>Esc</strong> para salir y luego <em>Tour guiado</em> otra vez (siempre empieza desde cero).</li>
+<li><strong>La página no responde:</strong> recarga (F5). Los datos se conservan.</li>
+<li><strong>Hostinger caído:</strong> usa el espejo <a href="https://ichisieben.github.io/kuyaypet/">https://ichisieben.github.io/kuyaypet/</a></li>
+<li><strong>Sin proyector ni internet:</strong> muestra las capturas de este manual.</li>
+</ol>
+<hr>
+<h2>6. Trazabilidad HU → pantalla → tour</h2>
+<table>
+<thead>
+<tr>
+<th>HU</th>
+<th>Pantalla (ruta)</th>
+<th>Paso del tour</th>
+<th>Estado</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>HU-01 Registro</td>
+<td><code>/registro</code>, <code>/login</code></td>
+<td>1</td>
+<td>Lista</td>
+</tr>
+<tr>
+<td>HU-02 Mascotas disponibles</td>
+<td><code>/buscar</code></td>
+<td>—</td>
+<td>Lista</td>
+</tr>
+<tr>
+<td>HU-03 Perfil de mascota</td>
+<td><code>/mascota/:id</code></td>
+<td>—</td>
+<td>Lista</td>
+</tr>
+<tr>
+<td>HU-06 Me gusta / No me gusta</td>
+<td><code>/descubrir</code></td>
+<td>3–4</td>
+<td>Lista</td>
+</tr>
+<tr>
+<td>HU-07 Match</td>
+<td>overlay + <code>/matches</code></td>
+<td>5</td>
+<td>Lista</td>
+</tr>
+<tr>
+<td>HU-08 Chat</td>
+<td><code>/chats/:id</code></td>
+<td>6</td>
+<td>Lista</td>
+</tr>
+<tr>
+<td>HU-10 Coordinar adopción</td>
+<td><code>/coordinar/:id</code></td>
+<td>7–8, 10</td>
+<td>Lista</td>
+</tr>
+<tr>
+<td>HU-13 Notificaciones</td>
+<td>campana, <code>/notificaciones</code>, <code>/responsable</code></td>
+<td>9</td>
+<td>Parcial</td>
+</tr>
+<tr>
+<td>HU-20 Compatibilidad</td>
+<td><code>/onboarding</code>, <code>/matches</code></td>
+<td>2–3</td>
+<td>Lista</td>
+</tr>
+<tr>
+<td>HU-21 Cerrar sesión</td>
+<td><code>/perfil</code></td>
+<td>—</td>
+<td>Lista</td>
+</tr>
+<tr>
+<td>HU-24 Aprobar / rechazar</td>
+<td><code>/admin</code></td>
+<td>11</td>
+<td>Lista</td>
+</tr>
+<tr>
+<td>HU-04, 05, 09, 11, 12, 14–19, 22, 23, 25, 26</td>
+<td>—</td>
+<td>—</td>
+<td>En desarrollo</td>
+</tr>
+</tbody></table>
+</main></body></html>

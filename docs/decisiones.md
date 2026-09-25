@@ -27,3 +27,12 @@ Fotos descargadas y optimizadas a WebP (~3 MB), fuentes self-hosted (`@fontsourc
 
 ## ADR-08 · Tour guiado que “actúa”
 Cada paso del tour puede cambiar de rol, navegar y ejecutar la acción (dar like, enviar el formulario, aceptar). El presentador solo pulsa “Siguiente”. Reinicia los datos semilla al empezar y fija a Luna (de Rosa) como primera carta, para que el cambio a Responsable muestre la solicitud recién creada.
+
+## ADR-09 · Tour: arreglos seguros antes de la clase, rediseño completo después (2026-09-25, modo autónomo)
+Con 30 min hasta el corte de las 15:40 no era seguro reescribir el tour como máquina de estados con Floating UI. Se aplicaron arreglos de bajo riesgo: (1) el overlay del tour **bloquea toques fuera del guion** (el presentador solo avanza con Siguiente / →), así el Match no se desincroniza; (2) los anclajes `data-tour` solo existen en la carta superior (se acabó el spotlight duplicado); (3) la tarjeta se coloca en el lado con más espacio libre; (4) el paso 2 espera la redirección del splash antes de ir al cuestionario; (5) teclas ← → Esc; (6) el panel muestra “Tour: paso N/12”. El rediseño completo (Floating UI, guardar/restaurar estado previo, pasos que esperan una acción real con “hazlo por mí”) queda en la rama `fase1-cont`.
+
+## ADR-10 · Carpeta de Drive
+La propuesta `02-Proyectos/upch/kuyaypet/` no existe en la estructura de `REGISTRO.md` (los proyectos se organizan por estado). Se usó lo existente: `02-Proyectos/produccion/kuyaypet/` (PROD: tiene URL viva) para zip y manual, y `05-Backups/repos/kuyaypet/` para el `git bundle`.
+
+## ADR-11 · Contador de HU oculto por defecto
+El panel muestra “Fase 1 en curso”; un clic revela “10/26 implementadas”. Evita que la clase lea el prototipo como incompleto sin ocultar el dato.

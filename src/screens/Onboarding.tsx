@@ -334,7 +334,7 @@ export function Onboarding() {
       </p>
       <div className="scroll-area relative min-h-0 flex-1">
         <AnimatePresence mode="wait">
-          <motion.div key={step} initial={{ x: 40, opacity: 0 }} animate={{ x: 0, opacity: 1 }} exit={{ x: -40, opacity: 0 }} transition={{ duration: 0.22 }} className="pb-4">
+          <motion.div key={step} data-tour="onboarding-q" initial={{ x: 40, opacity: 0 }} animate={{ x: 0, opacity: 1 }} exit={{ x: -40, opacity: 0 }} transition={{ duration: 0.22 }} className="pb-4">
             <h1 className="mb-1 text-3xl font-extrabold">{steps[step].q}</h1>
             {steps[step].sub && <p className="mb-4 text-cocoa-500">{steps[step].sub}</p>}
             <div className={steps[step].sub ? '' : 'mt-4'}>{steps[step].body}</div>

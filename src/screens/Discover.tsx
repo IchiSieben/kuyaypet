@@ -174,6 +174,7 @@ function SwipeCard({ entry, onSwipe, behind }: { entry: DeckEntry; onSwipe?: (k:
       initial={behind ? { scale: 0.94, y: 14 } : { scale: 0.96, opacity: 0.6 }}
       animate={behind ? { scale: 0.94, y: 14 } : { scale: 1, opacity: 1 }}
       drag={!behind}
+      data-tour={behind ? undefined : 'top-card'}
       dragMomentum={false}
       onDragEnd={onDragEnd}
       aria-label={`${pet.name}, ${match.score}% de compatibilidad`}
@@ -195,7 +196,7 @@ function SwipeCard({ entry, onSwipe, behind }: { entry: DeckEntry; onSwipe?: (k:
           )}
         </>
       )}
-      <div className="absolute right-3 top-6" data-tour="score">
+      <div className="absolute right-3 top-6" data-tour={behind ? undefined : 'score'}>
         <ScoreBadge score={match.score} className="text-lg" />
       </div>
 
@@ -229,7 +230,7 @@ function SwipeCard({ entry, onSwipe, behind }: { entry: DeckEntry; onSwipe?: (k:
             </Link>
           )}
         </div>
-        <ul className="mt-2 space-y-1" data-tour="reasons">
+        <ul className="mt-2 space-y-1" data-tour={behind ? undefined : 'reasons'}>
           {match.reasons.slice(0, 3).map((r) => (
             <li key={r.factor} className="rounded-xl bg-white/15 px-2.5 py-1 text-[13px] font-semibold backdrop-blur-sm">
               {r.text}

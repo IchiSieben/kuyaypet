@@ -51,9 +51,10 @@ export const TOUR: Step[] = [
     title: 'Cuestionario de compatibilidad',
     body: 'Estilo Bumble: una pregunta por pantalla (vivienda, horas solo, actividad, niños, alergias…). Con estas respuestas el motor KuyayMatch calcula el %.',
     hu: 'HU-20',
-    target: 'onboarding',
-    enter: (nav) => {
+    target: 'onboarding-q',
+    enter: async (nav) => {
       loginAs(DEMO_IDS.adopter);
+      await wait(120); // let the splash redirect settle, then go to the questionnaire
       nav('/onboarding');
     },
   },
@@ -61,7 +62,7 @@ export const TOUR: Step[] = [
     title: 'Descubre mascotas',
     body: 'Cartas ordenadas por compatibilidad. Cada una muestra el % y las razones: nada de caja negra. Se desliza con el dedo o con los botones.',
     hu: 'HU-06 · HU-20',
-    target: 'reasons',
+    target: 'top-card',
     enter: (nav) => {
       useUi.setState({ pinnedPetId: TOUR_PET });
       nav('/descubrir');
@@ -92,7 +93,7 @@ export const TOUR: Step[] = [
     title: 'Chat con el responsable',
     body: 'Mensajes en orden cronológico e historial persistente. Las respuestas del responsable están simuladas en esta fase.',
     hu: 'HU-08',
-    target: 'chat-input',
+    target: 'chat-messages',
     enter: async () => {
       await wait(400);
       const id = location.hash.split('/chats/')[1];
@@ -236,12 +237,26 @@ export function TourOverlay() {
     else useUi.setState({ tourStep: step + 1 });
   };
 
+  // Keyboard: → next, ← back, Esc ends (for the presenter's clicker / keyboard).
+  useEffect(() => {
+    if (step === null) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'ArrowRight') goNext();
+      else if (e.key === 'ArrowLeft' && step > 0 && !busy) useUi.setState({ tourStep: step - 1 });
+      else if (e.key === 'Escape') end();
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  });
+
   if (!current || step === null) return null;
   const pad = 8;
-  const cardBelow = !rect || rect.top + rect.height / 2 < 380;
+  const screenH = document.getElementById('app-screen')?.offsetHeight ?? 844;
+  // Big targets (deck card, chat, questionnaire) leave no free side: the card docks at the bottom over the controls.
+  const cardBelow = !rect || rect.height > screenH * 0.45 || screenH - (rect.top + rect.height) > rect.top;
 
   return (
-    <div className="pointer-events-none absolute inset-0 z-[80]" data-tour-overlay>
+    <div className="absolute inset-0 z-[80]" data-tour-overlay title="Usa Siguiente para avanzar el tour">
       {rect ? (
         <motion.div
           className="absolute rounded-3xl ring-4 ring-honey"
