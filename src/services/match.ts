@@ -41,7 +41,7 @@ export function expressInterest(adopter: User, petId: string, isSuper = false): 
       kind: 'interes',
       title: isSuper ? `⭐ ${adopter.name} te dio un Súper Kuyay` : `${adopter.name} está interesad@ en ${pet.name}`.replace('@', 'o/a'),
       body: `Compatibilidad ${score}%. Acepta para hacer Match y abrir el chat.`,
-      link: '/responsable',
+      link: `/adoptante/${adopter.id}?petId=${petId}`,
       actorId: adopter.id,
       petId,
     },

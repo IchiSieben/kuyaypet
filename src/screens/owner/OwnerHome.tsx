@@ -6,6 +6,7 @@ import { useCurrentUser } from '@/services/auth';
 import { answerInterest, useInterestsForOwner } from '@/services/match';
 import { formatDate, respondAdoption, useAdoptionsForOwner } from '@/services/adoptions';
 import { findDirectThread } from '@/services/chat';
+import { markAdopted } from '@/services/publications';
 import { useDb } from '@/services/store';
 import { confirm, toast } from '@/services/ui';
 
@@ -43,6 +44,18 @@ export function OwnerHome() {
     if (!ok) return;
     respondAdoption(id, status);
     toast({ title: status === 'aceptada' ? 'Visita confirmada' : 'Solicitud rechazada', tone: status === 'aceptada' ? 'success' : 'info' });
+  };
+
+  const onMarkAdopted = async (petId: string, petName: string) => {
+    const ok = await confirm({
+      title: '¿Marcar como adoptada?',
+      body: `${petName} dejará de aparecer para los adoptantes y no se aceptarán nuevas solicitudes.`,
+      emoji: '🎉',
+      confirmLabel: 'Marcar como adoptada',
+    });
+    if (!ok) return;
+    markAdopted(petId);
+    toast({ title: `${petName} ahora figura como adoptada`, tone: 'success', emoji: '🎉' });
   };
 
   return (
@@ -156,26 +169,42 @@ export function OwnerHome() {
       <section>
         <div className="mb-2 flex items-center justify-between">
           <h2 className="text-lg font-bold">🐾 Mis publicaciones</h2>
-          <Button size="sm" variant="soft" icon={<Plus size={16} />} onClick={() => toast({ title: 'Registrar mascota llega en la Fase 2', body: 'Wizard de 3 pasos con fotos y etiquetas.', emoji: '🛠️' })}>
-            Registrar
-          </Button>
+          <Link to="/responsable/nueva">
+            <Button size="sm" variant="soft" icon={<Plus size={16} />}>
+              Registrar
+            </Button>
+          </Link>
         </div>
         <div className="grid grid-cols-2 gap-3">
           {pets.map((p) => (
-            <Link key={p.id} to={`/mascota/${p.id}`} className="overflow-hidden rounded-3xl bg-white shadow-soft">
-              <div className="relative aspect-[4/3]">
-                <img src={p.photos[0]} alt="" className="h-full w-full object-cover" />
-                <span className="absolute left-2 top-2">
-                  <StatusBadge pet={p} />
-                </span>
+            <div key={p.id} className="overflow-hidden rounded-3xl bg-white shadow-soft">
+              <Link to={`/mascota/${p.id}`}>
+                <div className="relative aspect-[4/3]">
+                  <img src={p.photos[0]} alt="" className="h-full w-full object-cover" />
+                  <span className="absolute left-2 top-2">
+                    <StatusBadge pet={p} />
+                  </span>
+                </div>
+                <div className="flex items-center justify-between p-2.5">
+                  <span className="font-bold">{p.name}</span>
+                  <Chip tone={APPROVAL[p.approval].tone} className="!px-2 !py-0.5 text-[11px]">
+                    {APPROVAL[p.approval].label}
+                  </Chip>
+                </div>
+              </Link>
+              <div className="flex flex-col gap-1.5 px-2.5 pb-2.5">
+                <Link to={`/responsable/editar/${p.id}`}>
+                  <Button size="sm" variant="outline" block>
+                    Editar información
+                  </Button>
+                </Link>
+                {p.status === 'disponible' && (
+                  <Button size="sm" variant="success" block onClick={() => onMarkAdopted(p.id, p.name)}>
+                    Marcar como adoptada
+                  </Button>
+                )}
               </div>
-              <div className="flex items-center justify-between p-2.5">
-                <span className="font-bold">{p.name}</span>
-                <Chip tone={APPROVAL[p.approval].tone} className="!px-2 !py-0.5 text-[11px]">
-                  {APPROVAL[p.approval].label}
-                </Chip>
-              </div>
-            </Link>
+            </div>
           ))}
         </div>
       </section>

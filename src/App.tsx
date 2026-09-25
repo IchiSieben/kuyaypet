@@ -25,6 +25,9 @@ import { AdminPublications } from '@/screens/admin/AdminPublications';
 import { AdminPublicationDetail } from '@/screens/admin/AdminPublicationDetail';
 import { AdminReports } from '@/screens/admin/AdminReports';
 import { AdminReportDetail } from '@/screens/admin/AdminReportDetail';
+import { NewPet } from '@/screens/owner/NewPet';
+import { EditPet } from '@/screens/owner/EditPet';
+import { AdopterProfileView } from '@/screens/AdopterProfileView';
 
 export default function App() {
   return (
@@ -40,6 +43,9 @@ export default function App() {
             <Route path="/mascota/:id" element={<PetProfile />} />
             <Route path="/chats/:id" element={<ChatThreadScreen />} />
             <Route path="/coordinar/:petId" element={<Coordinate />} />
+            <Route path="/responsable/nueva" element={<NewPet />} />
+            <Route path="/responsable/editar/:id" element={<EditPet />} />
+            <Route path="/adoptante/:id" element={<AdopterProfileView />} />
             <Route element={<AppLayout />}>
               <Route path="/descubrir" element={<Discover />} />
               <Route path="/buscar" element={<Browse />} />
