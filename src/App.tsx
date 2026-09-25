@@ -5,6 +5,7 @@ import { RequireAuth } from '@/shell/RequireAuth';
 import { Splash } from '@/screens/Splash';
 import { Login } from '@/screens/auth/Login';
 import { Register } from '@/screens/auth/Register';
+import { Recover } from '@/screens/auth/Recover';
 import { Onboarding } from '@/screens/Onboarding';
 import { Discover } from '@/screens/Discover';
 import { Browse } from '@/screens/Browse';
@@ -14,6 +15,9 @@ import { ChatList } from '@/screens/chat/ChatList';
 import { ChatThreadScreen } from '@/screens/chat/ChatThread';
 import { Coordinate } from '@/screens/Coordinate';
 import { Profile } from '@/screens/Profile';
+import { Favorites } from '@/screens/Favorites';
+import { History } from '@/screens/History';
+import { Guide } from '@/screens/Guide';
 import { Notifications } from '@/screens/Notifications';
 import { Credits } from '@/screens/Credits';
 import { OwnerHome } from '@/screens/owner/OwnerHome';
@@ -27,12 +31,16 @@ export default function App() {
           <Route path="/" element={<Splash />} />
           <Route path="/login" element={<Login />} />
           <Route path="/registro" element={<Register />} />
+          <Route path="/recuperar" element={<Recover />} />
           <Route path="/creditos" element={<Credits />} />
+          <Route path="/guia" element={<Guide />} />
           <Route element={<RequireAuth />}>
             <Route path="/onboarding" element={<Onboarding />} />
             <Route path="/mascota/:id" element={<PetProfile />} />
             <Route path="/chats/:id" element={<ChatThreadScreen />} />
             <Route path="/coordinar/:petId" element={<Coordinate />} />
+            <Route path="/favoritos" element={<Favorites />} />
+            <Route path="/historial" element={<History />} />
             <Route element={<AppLayout />}>
               <Route path="/descubrir" element={<Discover />} />
               <Route path="/buscar" element={<Browse />} />
