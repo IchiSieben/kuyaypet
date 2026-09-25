@@ -25,12 +25,18 @@ hr{border:0;border-top:1px dashed var(--line);margin:2em 0}
 <li><strong>Prueba el QR</strong> del panel con tu celular: debe abrir la misma app a pantalla completa. Esa es la invitación para que la clase la abra.</li>
 <li>Deja el zoom del navegador en 100 %. Si el proyector es de baja resolución, prueba con 90 % (Ctrl −).</li>
 <li><strong>Sin internet:</strong> abre la app una vez con internet antes de clase. Es una PWA: queda en caché con fotos y fuentes incluidas. Si el aula no tiene red, recarga igual y funcionará desde la caché. Como respaldo extremo, usa las capturas de este manual.</li>
-<li><strong>Teclado:</strong> durante el tour, <strong>→</strong> avanza, <strong>←</strong> retrocede y <strong>Esc</strong> sale.</li>
+<li><strong>Teclado:</strong> durante el tour, <strong>→</strong> avanza, <strong>←</strong> retrocede y <strong>Esc</strong> sale (y deja todo como estaba antes del tour).</li>
 </ol>
 <p><img src="img/presentador-escritorio.png" alt="Modo presentador"></p>
 <hr>
 <h2>2. Guion del tour (5–7 min)</h2>
-<p>Pulsa <strong>Tour guiado</strong> en el panel. El tour <strong>reinicia los datos</strong>, fija a <strong>Luna</strong> (la gata de Rosa) como primera carta y <strong>ejecuta cada acción por ti</strong>: tú solo pulsas <strong>Siguiente</strong> (o →). Mientras dura, la pantalla del celular no acepta toques fuera del guion, así el Match no se puede desincronizar. El panel muestra “Tour: paso N/12”.</p>
+<p>Pulsa <strong>Tour guiado</strong> en el panel. El tour <strong>guarda lo que tenías abierto</strong>, carga los datos semilla y fija a <strong>Luna</strong> (la gata de Rosa) como primera carta. La tarjeta del tour dice “Paso N de 12” y nunca tapa lo que explica; el panel también muestra el paso.</p>
+<ul>
+<li><strong>Pasos de explicación:</strong> pulsa <strong>Siguiente</strong> (o →).</li>
+<li><strong>Pasos de acción</strong> (4, 5, 7, 10 y 11): la tarjeta te pide el gesto real (“Toca ♥ Me gusta en Luna”). Solo ese botón responde; el resto de la pantalla está bloqueado. Si prefieres no hacerlo, pulsa <strong>Hazlo por mí</strong>. Si pasan 30 s, la pista parpadea para recordártelo.</li>
+<li><strong>Si algo se sale del guion</strong> (cambias de rol en el panel, navegas a mano), el tour vuelve solo al paso correcto y muestra “Volvimos al guion del tour ↺”.</li>
+<li><strong>Atrás</strong> deshace también los datos de ese paso. <strong>↺</strong> (arriba) reinicia el tour. <strong>Saltar tour</strong>, <strong>✕</strong> o <strong>Esc</strong> salen y <strong>restauran lo que tenías antes</strong>.</li>
+</ul>
 <table>
 <thead>
 <tr>
@@ -64,14 +70,14 @@ hr{border:0;border-top:1px dashed var(--line);margin:2em 0}
 </tr>
 <tr>
 <td>4</td>
-<td>Se resalta <strong>Me gusta</strong> → al avanzar, el like se da solo</td>
+<td>Se resalta <strong>Me gusta</strong>: tócalo (o <em>Hazlo por mí</em>)</td>
 <td>“Un like no es un Match: avisa al responsable. El Match solo ocurre con interés mutuo.”</td>
 <td>HU-06</td>
 <td>20 s</td>
 </tr>
 <tr>
 <td>5</td>
-<td><strong>¡Es un Match!</strong> con confeti</td>
+<td><strong>¡Es un Match!</strong>: anillo de compatibilidad, razones y confeti de huellas. Toca <em>Continuar al chat</em></td>
 <td>“Rosa aceptó. Aquí la aceptación está simulada; en la fase 2 la hace una persona real desde su celular.”</td>
 <td>HU-07</td>
 <td>30 s</td>
@@ -85,7 +91,7 @@ hr{border:0;border-top:1px dashed var(--line);margin:2em 0}
 </tr>
 <tr>
 <td>7</td>
-<td>Formulario <strong>Coordinar adopción</strong></td>
+<td>Formulario <strong>Coordinar adopción</strong>: toca <em>Enviar solicitud</em></td>
 <td>“Desde el chat propongo fecha y hora para conocer a Luna.”</td>
 <td>HU-10</td>
 <td>20 s</td>
@@ -106,14 +112,14 @@ hr{border:0;border-top:1px dashed var(--line);margin:2em 0}
 </tr>
 <tr>
 <td>10</td>
-<td>Rosa <strong>acepta</strong> la visita</td>
+<td>Rosa <strong>acepta</strong> la visita: toca <em>Aceptar</em> y confirma</td>
 <td>“Acepta, y Valeria recibe la confirmación en el chat.”</td>
 <td>HU-10, HU-13</td>
 <td>20 s</td>
 </tr>
 <tr>
 <td>11</td>
-<td><strong>Admin</strong> aprueba una publicación pendiente</td>
+<td><strong>Admin</strong> aprueba una publicación pendiente: toca <em>Aprobar</em> y confirma</td>
 <td>“Toda mascota nueva pasa por moderación: así evitamos ventas encubiertas (Ley 30407).”</td>
 <td>HU-24</td>
 <td>30 s</td>
@@ -135,25 +141,27 @@ hr{border:0;border-top:1px dashed var(--line);margin:2em 0}
 <p><strong>Adoptante (Valeria)</strong></p>
 <ul>
 <li><strong>Descubrir:</strong> desliza con el mouse o usa ✕ / ⭐ / ♥. El botón <strong>Match garantizado en la próxima carta</strong> del panel asegura que el siguiente like termine en Match.</li>
-<li><strong>Buscar:</strong> grilla de mascotas disponibles, con la distancia a ti (HU-02).</li>
-<li><strong>Matches:</strong> Matches con interés mutuo y ranking de compatibilidad, con los motivos de cada uno (HU-20).</li>
-<li><strong>Perfil de mascota:</strong> carrusel de fotos, “¿Por qué hacemos match?”, favoritos y botón Coordinar (HU-03).</li>
-<li><strong>Perfil:</strong> preferencias y cerrar sesión con confirmación (HU-21).</li>
+<li><strong>Buscar:</strong> grilla con <strong>Filtros</strong> (especie, raza, edad, sexo, tamaño; HU-04) y <strong>Buscar por cercanía</strong> (distrito o ubicación actual, radio en km, lista o mapa; HU-05).</li>
+<li><strong>Perfil de mascota:</strong> fotos, “¿Por qué hacemos match?”, favoritos, <strong>Unirme al chat de la mascota</strong> (grupal, HU-09), <strong>Reportar</strong> y Coordinar (HU-03, HU-10).</li>
+<li><strong>Perfil:</strong> Favoritos (HU-17), Historial de interés (HU-18), <strong>Guía de adopción</strong> con buscador (HU-14) y cerrar sesión (HU-21).</li>
+<li><strong>Login → ¿Olvidaste tu contraseña?:</strong> el código llega a una <strong>bandeja de correo simulada</strong> (HU-15).</li>
 </ul>
 <p><strong>Responsable (Rosa)</strong></p>
 <ul>
-<li>Interesados con su % de compatibilidad: ✓ acepta (se crea el Match y se abre el chat) y ✕ rechaza.</li>
-<li>Solicitudes de adopción con fecha, hora y mensaje: aceptar o rechazar.</li>
-<li>Mis publicaciones, con su estado (Publicada / En revisión / Rechazada).</li>
-<li>La campana y <strong>Avisos</strong> muestran las notificaciones leídas y no leídas.</li>
+<li><strong>Registrar</strong> mascota en 3 pasos: datos, fotos con vista previa y etiquetas, e historia y salud (HU-11, HU-16). Queda <strong>En revisión</strong> hasta que el admin la aprueba.</li>
+<li><strong>Editar información</strong> (HU-12) y <strong>Marcar como adoptada</strong> (HU-19) desde Mis publicaciones.</li>
+<li>Interesados con su % (aceptar = Match) y solicitudes de visita (aceptar o rechazar).</li>
+<li><strong>Avisos:</strong> al tocar una notificación se abre el perfil del adoptante o el chat de esa solicitud (HU-13).</li>
 </ul>
 <p><strong>Administrador</strong></p>
 <ul>
-<li>Métricas del caso de negocio: usuarios (meta 500), matches (meta 200), mascotas activas y adopciones.</li>
-<li><strong>Publicaciones pendientes:</strong> <em>Aprobar</em> pide confirmación. <em>Rechazar</em> pide un motivo (hay chips sugeridos) y se le notifica al responsable (HU-24).</li>
-<li><strong>Reportes abiertos:</strong> la cola de contenido inapropiado (HU-26, gestión completa en la siguiente fase).</li>
-<li>La gestión de usuarios y la desactivación de cuentas (HU-22/25) están en desarrollo. El login ya bloquea las cuentas inactivas.</li>
+<li><strong>Resumen:</strong> KPIs contra las metas del caso de negocio (500 usuarios, 200 matches, 60 % activos) y publicaciones pendientes (HU-24).</li>
+<li><strong>Usuarios:</strong> buscar, filtrar, editar y <strong>desactivar o reactivar</strong> (una cuenta desactivada no puede entrar; HU-22, HU-25).</li>
+<li><strong>Publicaciones:</strong> revisar y editar todas (HU-23).</li>
+<li><strong>Reportes:</strong> ocultar la publicación, desactivar la cuenta o descartar (HU-26).</li>
 </ul>
+<p><strong>Pantalla dividida (escritorio):</strong> en el panel, <strong>Pantalla dividida: Adoptante | Responsable</strong> muestra dos celulares con sesiones reales. El “Me gusta” de Valeria aparece al instante en el celular de Rosa, y cuando Rosa acepta, a Valeria le salta el Match. Es la mejor forma de explicar el <strong>interés mutuo</strong>. <strong>Salir</strong> vuelve a la vista normal.</p>
+<p><img src="img/F-pantalla-dividida-match.png" alt="Pantalla dividida"></p>
 <hr>
 <h2>4. Qué es simulado y cómo explicarlo</h2>
 <table>
@@ -172,8 +180,16 @@ hr{border:0;border-top:1px dashed var(--line);margin:2em 0}
 <td>“Responsables simulados con una probabilidad y un retardo; Rosa, la responsable demo, acepta a mano en el tour.”</td>
 </tr>
 <tr>
+<td>¿Cómo se sincronizan los dos celulares?</td>
+<td>“Comparten la base de datos del navegador y se avisan con el evento <code>storage</code>. En la fase 2 ese canal será Supabase Realtime.”</td>
+</tr>
+<tr>
 <td>¿Y el chat?</td>
 <td>“Los mensajes se guardan de verdad; las respuestas del responsable son plantillas. En la fase 2 será tiempo real.”</td>
+</tr>
+<tr>
+<td>¿Y el correo de recuperación?</td>
+<td>“Simulado: se ve en una bandeja dentro de la app. Con backend se enviaría de verdad.”</td>
 </tr>
 <tr>
 <td>¿Login con Google?</td>
@@ -228,6 +244,18 @@ hr{border:0;border-top:1px dashed var(--line);margin:2em 0}
 <td>Lista</td>
 </tr>
 <tr>
+<td>HU-04 Filtros</td>
+<td><code>/buscar</code> → Filtros</td>
+<td>—</td>
+<td>Lista</td>
+</tr>
+<tr>
+<td>HU-05 Cercanía</td>
+<td><code>/buscar</code> → Buscar por cercanía</td>
+<td>—</td>
+<td>Lista</td>
+</tr>
+<tr>
 <td>HU-06 Me gusta / No me gusta</td>
 <td><code>/descubrir</code></td>
 <td>3–4</td>
@@ -246,16 +274,70 @@ hr{border:0;border-top:1px dashed var(--line);margin:2em 0}
 <td>Lista</td>
 </tr>
 <tr>
+<td>HU-09 Chat grupal</td>
+<td>perfil → Unirme al chat</td>
+<td>—</td>
+<td>Lista</td>
+</tr>
+<tr>
 <td>HU-10 Coordinar adopción</td>
 <td><code>/coordinar/:id</code></td>
 <td>7–8, 10</td>
 <td>Lista</td>
 </tr>
 <tr>
+<td>HU-11 Registrar mascota</td>
+<td><code>/responsable/nueva</code></td>
+<td>—</td>
+<td>Lista</td>
+</tr>
+<tr>
+<td>HU-12 Editar mascota</td>
+<td><code>/responsable/editar/:id</code></td>
+<td>—</td>
+<td>Lista</td>
+</tr>
+<tr>
 <td>HU-13 Notificaciones</td>
-<td>campana, <code>/notificaciones</code>, <code>/responsable</code></td>
+<td>campana, <code>/notificaciones</code></td>
 <td>9</td>
-<td>Parcial</td>
+<td>Lista</td>
+</tr>
+<tr>
+<td>HU-14 Guía de adopción</td>
+<td><code>/guia</code></td>
+<td>—</td>
+<td>Lista</td>
+</tr>
+<tr>
+<td>HU-15 Recuperar contraseña</td>
+<td><code>/recuperar</code></td>
+<td>—</td>
+<td>Lista (correo simulado)</td>
+</tr>
+<tr>
+<td>HU-16 Fotos y etiquetas</td>
+<td><code>/responsable/nueva</code> (paso 2)</td>
+<td>—</td>
+<td>Lista</td>
+</tr>
+<tr>
+<td>HU-17 Favoritos</td>
+<td><code>/favoritos</code></td>
+<td>—</td>
+<td>Lista</td>
+</tr>
+<tr>
+<td>HU-18 Historial</td>
+<td><code>/historial</code></td>
+<td>—</td>
+<td>Lista</td>
+</tr>
+<tr>
+<td>HU-19 Marcar adoptada</td>
+<td><code>/responsable</code></td>
+<td>—</td>
+<td>Lista</td>
 </tr>
 <tr>
 <td>HU-20 Compatibilidad</td>
@@ -270,16 +352,34 @@ hr{border:0;border-top:1px dashed var(--line);margin:2em 0}
 <td>Lista</td>
 </tr>
 <tr>
+<td>HU-22 Gestionar usuarios</td>
+<td><code>/admin/usuarios</code></td>
+<td>—</td>
+<td>Lista</td>
+</tr>
+<tr>
+<td>HU-23 Revisar publicaciones</td>
+<td><code>/admin/publicaciones</code></td>
+<td>—</td>
+<td>Lista</td>
+</tr>
+<tr>
 <td>HU-24 Aprobar / rechazar</td>
 <td><code>/admin</code></td>
 <td>11</td>
 <td>Lista</td>
 </tr>
 <tr>
-<td>HU-04, 05, 09, 11, 12, 14–19, 22, 23, 25, 26</td>
+<td>HU-25 Desactivar cuentas</td>
+<td><code>/admin/usuarios/:id</code></td>
 <td>—</td>
+<td>Lista</td>
+</tr>
+<tr>
+<td>HU-26 Reportes</td>
+<td><code>/admin/reportes</code>, perfil → Reportar</td>
 <td>—</td>
-<td>En desarrollo</td>
+<td>Lista</td>
 </tr>
 </tbody></table>
 </main></body></html>
