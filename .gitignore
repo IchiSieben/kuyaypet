@@ -10,3 +10,7 @@ playwright-report
 dist.zip
 .vite
 backups
+
+# Local session artefacts
+.claude/
+docs/handoffs/
