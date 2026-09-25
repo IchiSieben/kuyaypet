@@ -31,6 +31,8 @@ export default defineConfig({
       workbox: {
         globPatterns: ['**/*.{js,css,html,svg,png,webp,woff2,json}'],
         maximumFileSizeToCacheInBytes: 4 * 1024 * 1024,
+        // The demo manual is a separate static page, never the SPA shell.
+        navigateFallbackDenylist: [/\/manual\//],
       },
     }),
   ],
