@@ -1,4 +1,4 @@
-# ESTADO_CLASE — actualizado 2026-09-25 16:50 (Lima)
+# ESTADO_CLASE — actualizado 2026-09-25 17:16 (Lima)
 
 ## Links para la clase
 - **App (Hostinger):** https://firebrick-cod-910257.hostingersite.com/
@@ -22,16 +22,20 @@
 - C: manual (MD, PDF, /manual/). Actualizado en la rama con el tour nuevo, la pantalla dividida y las 26 HU.
 - D: arreglos visuales (en producción). Semilla (rama): Porotopo coherente con sus banderas, “Nube Gris” → “Ceniza” y fotos de Luna fijas en `fetch-images`.
 - E (rama): HU-04, 05, 09, 14, 15, 17, 18 (adoptante); 11, 12, 13, 16, 19 (responsable); 22, 23, 25, 26 (admin, con panel en pestañas y KPIs).
-- F (rama): Match cinematográfico (anillo, razones una a una, confeti de huellas); pantalla dividida Adoptante | Responsable con sesiones reales (ADR-13). En curso: barras por factor, stack de 3 cartas, splash animado y mapa Leaflet (HU-05).
+- F: Match cinematográfico (anillo, razones una a una, confeti de huellas); pantalla dividida Adoptante | Responsable con sesiones reales (ADR-13); barras por factor en “¿Por qué hacemos match?”; stack de 3 cartas con vibración; splash animado; mapa de cercanía con Leaflet y OpenStreetMap (ADR-14; CARTO pedía API key); carga diferida y primer pintado estático (ADR-15).
 
-## Tests (rama `fase1-cont`)
-22 Vitest + 20 Playwright en verde (incluye tour ×3, tour con acciones fuera de guion y pantalla dividida).
+## Tests (`main` = `fase1-cont`, commit previo al despliegue)
+22 Vitest + 21 Playwright en verde: tour ×3, tour con acciones fuera de guion, pantalla dividida, mapa y una prueba por HU.
+
+## Lighthouse (local)
+- Escritorio: Rendimiento 98 · Accesibilidad 100 · Buenas prácticas 100 · SEO 100.
+- Móvil (4G lento simulado): **Rendimiento 80** (meta 90 **no alcanzada**: el LCP ≈ 5 s depende del bundle de React + Framer Motion) · Accesibilidad 100 · Buenas prácticas 100 · SEO 100.
 
 ## Pendiente
-- 17:30: integrar `fase1-cont` → `main` si todo está verde, redesplegar Hostinger y Pages, smoke en producción, subir el manual nuevo a Drive.
-- F restante: Lighthouse ≥ 90, transición carta → perfil (layoutId).
+- Rendimiento móvil ≥ 90 (ver ADR-15).
+- Transición carta → perfil con `layoutId` (Bloque F): no se hizo.
 
 ## Problemas / avisos
 - Ninguno bloqueante.
 - `rclone link` hizo el PDF del manual legible para cualquiera con el enlace (no contiene secretos; solo las cuentas demo que ya están en el manual público).
-- En producción (v0.2) el tour todavía deja la app en Créditos sin sesión. En la rama ya restaura el estado previo.
+- **Primera carga tras el despliegue:** quien ya abrió la v0.2 conserva sus datos viejos en el navegador (sin error, porque los tipos no cambiaron). Para ver la semilla nueva, pulsa **Reiniciar demo**.
