@@ -6,7 +6,7 @@ import { Avatar, Button, Card, Chip, EmptyState, ScoreBadge } from '@/components
 import { FavoriteButton, StatusBadge } from '@/components/PetCard';
 import { formatKm } from '@/lib/match';
 import { useCurrentUser } from '@/services/auth';
-import { findDirectThread } from '@/services/chat';
+import { ensureGroupThread, findDirectThread, joinGroup } from '@/services/chat';
 import { recordSwipe } from '@/services/match';
 import { ADOPTION_STATUS_LABEL, formatDate, useAdoptionsForAdopter } from '@/services/adoptions';
 import { ageLabel, SEX_LABEL, SIZE_LABEL, SPECIES_LABEL, useMatch, usePet, useUser } from '@/services/pets';
@@ -39,6 +39,13 @@ export function PetProfile() {
   const available = pet.status === 'disponible' && pet.approval === 'aprobada';
   const thread = myMatch ? findDirectThread(pet.id, myMatch.adopterId, myMatch.ownerId) : undefined;
   const photos = pet.photos.length ? pet.photos : [];
+
+  const joinPetChat = () => {
+    if (!user) return;
+    const thread = ensureGroupThread(pet.id);
+    joinGroup(thread.id, user.id);
+    navigate(`/chats/${thread.id}`);
+  };
 
   const swipe = (kind: 'like' | 'dislike') => {
     if (!user) return;
@@ -201,9 +208,19 @@ export function PetProfile() {
             </Card>
           )}
 
-          <Link to="/perfil" className="flex items-center gap-2 text-sm font-semibold text-terra underline underline-offset-4">
+          <Link to="/guia" className="flex items-center gap-2 text-sm font-semibold text-terra underline underline-offset-4">
             <BookOpen size={16} /> Guía de adopción responsable (Ley 30407 y 31807)
           </Link>
+
+          {isAdopter && (
+            <button
+              onClick={joinPetChat}
+              className="flex w-full items-center justify-center gap-2 rounded-2xl bg-cream-200 py-3 text-sm font-bold text-cocoa-700 hover:bg-cream-300"
+              data-hu="HU-09"
+            >
+              <MessageCircle size={16} /> Unirme al chat de la mascota
+            </button>
+          )}
         </div>
       </div>
 
