@@ -1,17 +1,20 @@
 import { AnimatePresence, motion } from 'framer-motion';
-import { ArrowLeft, BookOpen, CalendarCheck, Check, ChevronLeft, ChevronRight, Heart, MapPin, MessageCircle, Syringe, X } from 'lucide-react';
+import { ArrowLeft, BookOpen, CalendarCheck, Check, ChevronLeft, ChevronRight, Flag, Heart, MapPin, MessageCircle, Syringe, X } from 'lucide-react';
 import { useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { Avatar, Button, Card, Chip, EmptyState, ScoreBadge } from '@/components/ui';
+import { Avatar, Button, Card, Chip, EmptyState, ScoreBadge, Sheet } from '@/components/ui';
 import { FavoriteButton, StatusBadge } from '@/components/PetCard';
 import { formatKm } from '@/lib/match';
 import { useCurrentUser } from '@/services/auth';
 import { findDirectThread } from '@/services/chat';
 import { recordSwipe } from '@/services/match';
 import { ADOPTION_STATUS_LABEL, formatDate, useAdoptionsForAdopter } from '@/services/adoptions';
+import { createReport } from '@/services/moderation';
 import { ageLabel, SEX_LABEL, SIZE_LABEL, SPECIES_LABEL, useMatch, usePet, useUser } from '@/services/pets';
 import { useDb } from '@/services/store';
 import { toast } from '@/services/ui';
+
+const REPORT_REASONS = ['Fotos no corresponden a la mascota', 'Información incompleta o falsa', 'Posible venta encubierta', 'Contenido inapropiado'];
 
 export function PetProfile() {
   const { id } = useParams();
@@ -21,6 +24,9 @@ export function PetProfile() {
   const navigate = useNavigate();
   const match = useMatch(user?.profile, pet);
   const [photo, setPhoto] = useState(0);
+  const [reporting, setReporting] = useState(false);
+  const [reportReason, setReportReason] = useState('');
+  const [reportDetail, setReportDetail] = useState('');
   const myInteraction = useDb((s) => s.interactions.find((i) => i.adopterId === user?.id && i.petId === id));
   const myMatch = useDb((s) => s.matches.find((m) => m.adopterId === user?.id && m.petId === id));
   const myInterest = useDb((s) => s.interests.find((i) => i.adopterId === user?.id && i.petId === id));
@@ -39,6 +45,15 @@ export function PetProfile() {
   const available = pet.status === 'disponible' && pet.approval === 'aprobada';
   const thread = myMatch ? findDirectThread(pet.id, myMatch.adopterId, myMatch.ownerId) : undefined;
   const photos = pet.photos.length ? pet.photos : [];
+
+  const sendReport = () => {
+    if (!user || !reportReason.trim()) return;
+    createReport({ reporterId: user.id, targetType: 'mascota', targetId: pet.id, reason: reportReason.trim(), detail: reportDetail.trim() });
+    toast({ title: 'Gracias por avisarnos', body: 'El equipo de KuyayPet revisará esta publicación.', emoji: '🚩' });
+    setReporting(false);
+    setReportReason('');
+    setReportDetail('');
+  };
 
   const swipe = (kind: 'like' | 'dislike') => {
     if (!user) return;
@@ -66,7 +81,14 @@ export function PetProfile() {
             <button onClick={() => navigate(-1)} aria-label="Volver" className="rounded-full bg-white/90 p-2 shadow-soft">
               <ArrowLeft size={20} />
             </button>
-            <FavoriteButton pet={pet} />
+            <div className="flex items-center gap-2">
+              {user && (
+                <button onClick={() => setReporting(true)} aria-label="Reportar esta publicación" className="rounded-full bg-white/90 p-2 shadow-soft">
+                  <Flag size={18} className="text-coral-600" />
+                </button>
+              )}
+              <FavoriteButton pet={pet} />
+            </div>
           </div>
           {photos.length > 1 && (
             <>
@@ -241,6 +263,21 @@ export function PetProfile() {
           )}
         </div>
       )}
+
+      <Sheet open={reporting} onClose={() => setReporting(false)} title={`Reportar a ${pet.name}`}>
+        <p className="mb-3 text-sm text-cocoa-500">Cuéntanos qué está mal con esta publicación. El equipo de KuyayPet la revisará.</p>
+        <div className="mb-3 flex flex-wrap gap-2">
+          {REPORT_REASONS.map((r) => (
+            <Chip key={r} active={reportReason === r} onClick={() => setReportReason(r)}>
+              {r}
+            </Chip>
+          ))}
+        </div>
+        <textarea rows={3} className="input resize-none" placeholder="Detalle (opcional)" value={reportDetail} onChange={(e) => setReportDetail(e.target.value)} aria-label="Detalle del reporte" />
+        <Button block variant="danger" className="mt-3" disabled={!reportReason.trim()} onClick={sendReport}>
+          Enviar reporte
+        </Button>
+      </Sheet>
     </div>
   );
 }

@@ -17,7 +17,14 @@ import { Profile } from '@/screens/Profile';
 import { Notifications } from '@/screens/Notifications';
 import { Credits } from '@/screens/Credits';
 import { OwnerHome } from '@/screens/owner/OwnerHome';
-import { AdminHome } from '@/screens/admin/AdminHome';
+import { AdminShell } from '@/screens/admin/AdminShell';
+import { AdminDashboard } from '@/screens/admin/AdminDashboard';
+import { AdminUsers } from '@/screens/admin/AdminUsers';
+import { AdminUserDetail } from '@/screens/admin/AdminUserDetail';
+import { AdminPublications } from '@/screens/admin/AdminPublications';
+import { AdminPublicationDetail } from '@/screens/admin/AdminPublicationDetail';
+import { AdminReports } from '@/screens/admin/AdminReports';
+import { AdminReportDetail } from '@/screens/admin/AdminReportDetail';
 
 export default function App() {
   return (
@@ -41,7 +48,15 @@ export default function App() {
               <Route path="/perfil" element={<Profile />} />
               <Route path="/notificaciones" element={<Notifications />} />
               <Route path="/responsable" element={<OwnerHome />} />
-              <Route path="/admin" element={<AdminHome />} />
+              <Route path="/admin" element={<AdminShell />}>
+                <Route index element={<AdminDashboard />} />
+                <Route path="usuarios" element={<AdminUsers />} />
+                <Route path="usuarios/:id" element={<AdminUserDetail />} />
+                <Route path="publicaciones" element={<AdminPublications />} />
+                <Route path="publicaciones/:id" element={<AdminPublicationDetail />} />
+                <Route path="reportes" element={<AdminReports />} />
+                <Route path="reportes/:id" element={<AdminReportDetail />} />
+              </Route>
             </Route>
           </Route>
           <Route path="*" element={<Navigate to="/" replace />} />

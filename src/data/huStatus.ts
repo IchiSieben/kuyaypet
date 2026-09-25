@@ -32,9 +32,9 @@ export const HU_STATUS: HuEntry[] = [
   { id: 'HU-19', title: 'Marcar como adoptada', role: 'owner', route: '/responsable', done: false, phase: 2 },
   { id: 'HU-20', title: 'Mis Matches por compatibilidad', role: 'adopter', route: '/matches', done: true, phase: 0 },
   { id: 'HU-21', title: 'Cerrar sesión', role: 'any', route: '/perfil', done: true, phase: 1 },
-  { id: 'HU-22', title: 'Gestionar usuarios', role: 'admin', route: '/admin', done: false, phase: 3 },
-  { id: 'HU-23', title: 'Revisar publicaciones', role: 'admin', route: '/admin', done: false, phase: 3 },
+  { id: 'HU-22', title: 'Gestionar usuarios', role: 'admin', route: '/admin/usuarios', done: true, phase: 3 },
+  { id: 'HU-23', title: 'Revisar publicaciones', role: 'admin', route: '/admin/publicaciones', done: true, phase: 3 },
   { id: 'HU-24', title: 'Aprobar / rechazar publicaciones', role: 'admin', route: '/admin', done: true, phase: 3 },
-  { id: 'HU-25', title: 'Desactivar cuentas', role: 'admin', route: '/admin', done: false, phase: 3 },
-  { id: 'HU-26', title: 'Información inapropiada (reportes)', role: 'admin', route: '/admin', done: false, phase: 3 },
+  { id: 'HU-25', title: 'Desactivar cuentas', role: 'admin', route: '/admin/usuarios', done: true, phase: 3 },
+  { id: 'HU-26', title: 'Información inapropiada (reportes)', role: 'admin', route: '/admin/reportes', done: true, phase: 3 },
 ];
