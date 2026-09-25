@@ -47,6 +47,7 @@ export function Discover() {
 
   const current = deck[index];
   const next = deck[index + 1];
+  const nextNext = deck[index + 2];
 
   const onSwipe = (entry: DeckEntry, kind: InteractionKind) => {
     recordSwipe(user, entry.pet.id, kind);
@@ -69,7 +70,8 @@ export function Discover() {
       <div className="relative min-h-0 flex-1" data-tour="deck">
         {current ? (
           <>
-            {next && <SwipeCard key={next.pet.id} entry={next} behind />}
+            {nextNext && <SwipeCard key={nextNext.pet.id} entry={nextNext} behind={2} />}
+            {next && <SwipeCard key={next.pet.id} entry={next} behind={1} />}
             <AnimatePresence>
               <SwipeCard key={current.pet.id} entry={current} onSwipe={(k) => onSwipe(current, k)} />
             </AnimatePresence>
@@ -139,7 +141,7 @@ function RoundButton({ label, onClick, className, children, tour }: { label: str
   );
 }
 
-function SwipeCard({ entry, onSwipe, behind }: { entry: DeckEntry; onSwipe?: (k: InteractionKind) => void; behind?: boolean }) {
+function SwipeCard({ entry, onSwipe, behind }: { entry: DeckEntry; onSwipe?: (k: InteractionKind) => void; behind?: 1 | 2 }) {
   const { pet, match } = entry;
   const x = useMotionValue(0);
   const y = useMotionValue(0);
@@ -151,6 +153,8 @@ function SwipeCard({ entry, onSwipe, behind }: { entry: DeckEntry; onSwipe?: (k:
 
   const fly = (kind: InteractionKind) => {
     const target = kind === 'like' ? { x: 520, y: 40 } : kind === 'dislike' ? { x: -520, y: 40 } : { x: 0, y: -800 };
+    const pattern = kind === 'like' ? [30] : kind === 'dislike' ? [15] : [20, 40, 20];
+    navigator.vibrate?.(pattern);
     animate(x, target.x, { duration: 0.35 });
     animate(y, target.y, { duration: 0.35 }).then(() => onSwipe?.(kind));
   };
@@ -170,9 +174,9 @@ function SwipeCard({ entry, onSwipe, behind }: { entry: DeckEntry; onSwipe?: (k:
   return (
     <motion.article
       className="absolute inset-0 touch-none select-none overflow-hidden rounded-4xl bg-cocoa shadow-card"
-      style={behind ? {} : { x, y, rotate }}
-      initial={behind ? { scale: 0.94, y: 14 } : { scale: 0.96, opacity: 0.6 }}
-      animate={behind ? { scale: 0.94, y: 14 } : { scale: 1, opacity: 1 }}
+      style={behind ? { zIndex: behind === 1 ? 2 : 1 } : { x, y, rotate, zIndex: 3 }}
+      initial={behind ? { scale: behind === 1 ? 0.95 : 0.9, y: behind === 1 ? 10 : 20 } : { scale: 0.96, opacity: 0.6 }}
+      animate={behind ? { scale: behind === 1 ? 0.95 : 0.9, y: behind === 1 ? 10 : 20 } : { scale: 1, opacity: 1 }}
       drag={!behind}
       data-tour={behind ? undefined : 'top-card'}
       dragMomentum={false}
