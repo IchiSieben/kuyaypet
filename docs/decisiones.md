@@ -52,3 +52,8 @@ El panel muestra “Fase 1 en curso”; un clic revela “10/26 implementadas”
 **Decisión:** Leaflet con los tiles estándar de OpenStreetMap (`tile.openstreetmap.org`) y la atribución obligatoria “© OpenStreetMap contributors”.
 **Por qué no CARTO:** se probó primero CARTO Voyager, como pedía el prompt, pero hoy esa URL responde con tiles “API KEY REQUIRED”. La política de uso de OSM permite un uso liviano con atribución, y una demo de clase lo es. Para producción con tráfico real habría que usar un proveedor con clave (MapTiler, Stadia) o tiles propios.
 **Offline:** los tiles requieren internet. Si fallan (`tileerror`), aparece el aviso “Mapa sin conexión: usa la vista Lista”, y la lista sigue funcionando sin red con los datos semilla. El componente se carga con `React.lazy` para no crecer el bundle inicial.
+
+## ADR-15 · Rendimiento: primer pintado estático y carga diferida
+Lighthouse en local (móvil, 4G lento simulado): Rendimiento 37 → **80**, Accesibilidad 100, Buenas prácticas 100, SEO 100. En escritorio: 98/100/100/100.
+**Qué se hizo:** carga diferida de las pantallas que no se ven al inicio (597 → 477 kB en el chunk inicial), un splash estático en `index.html` que se pinta antes del JS (FCP 4.7 s → 1.1 s) y `robots.txt`.
+**Pendiente para llegar a ≥ 90 en móvil:** el LCP (≈ 5 s) depende del bundle de React + Framer Motion. Opciones: `LazyMotion` de Framer, sacar el panel de presentador (QR) del chunk inicial y precargar la fuente principal.
