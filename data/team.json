@@ -1,0 +1,14 @@
+{
+  "_nota": "Completar rol, github, linkedin, foto y HU de cada integrante. Las HU asignadas aparecen en la pantalla de Créditos y como 'Desarrollado por' en el modo presentador de cada HU.",
+  "curso": "Ingeniería de Software — UPCH 2026-2",
+  "docente": "Juan Huapalla",
+  "integrantes": [
+    { "nombre": "Juan Berrocal",   "rol": "Desarrollador", "hus": [], "github": "", "linkedin": "", "foto": "" },
+    { "nombre": "Brad Cárdenas",   "rol": "Desarrollador", "hus": [], "github": "", "linkedin": "", "foto": "" },
+    { "nombre": "Kevin Carvallo",  "rol": "Desarrollador", "hus": [], "github": "", "linkedin": "", "foto": "" },
+    { "nombre": "Joseph Lombardi", "rol": "Líder del proyecto", "hus": [], "github": "", "linkedin": "", "foto": "" },
+    { "nombre": "Gael Milla",      "rol": "Desarrollador", "hus": [], "github": "", "linkedin": "", "foto": "" },
+    { "nombre": "Yoichi Palacios", "rol": "Desarrollador · Prototipo y despliegue", "hus": [], "github": "", "linkedin": "", "foto": "" },
+    { "nombre": "Dylan Quispe",    "rol": "Patrocinador del proyecto", "hus": [], "github": "", "linkedin": "", "foto": "" }
+  ]
+}

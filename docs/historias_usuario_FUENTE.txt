@@ -1,0 +1,933 @@
+                +LISTA DE HISTORIAS DE USUARIO – KUYAYPET
+                                       Proyecto de Ingeniería de Software
+
+Las siguientes historias de usuario se han elaborado a partir de las funciones definidas para KuyayPet:
+búsqueda y visualización de mascotas en adopción, filtros y compatibilidad, cercanía geográfica, Like/Dislike,
+Match, chat y contacto entre adoptantes y responsables.
+
+Usuarios principales del sistema
+  • Adoptante: Persona interesada en encontrar y adoptar una mascota.
+  • Responsable de mascota: Persona que publica o gestiona una mascota disponible para adopción.
+  • Usuario común: Persona que utiliza la plataforma y sus funciones de búsqueda, interacción y contacto.
+  • Administrador de la plataforma: Usuario con privilegios de administrador
+Historias de usuario
+      ID              Rol                              Historia de usuario                       Prioridad
+                                   Como usuario, quiero registrarme en KuyayPet para poder
+    HU-01        Usuario común
+                                   acceder a la plataforma.
+                                                                                                   Alta
+
+                                   Como adoptante, quiero visualizar las mascotas disponibles
+    HU-02          Adoptante
+                                   para conocer las opciones de adopción.
+                                                                                                   Alta
+
+                                   Como adoptante, quiero ver el perfil de una mascota para
+    HU-03          Adoptante
+                                   conocer información detallada sobre ella.
+                                                                                                   Alta
+
+                                   Como adoptante, quiero filtrar las mascotas según mis
+    HU-04          Adoptante       preferencias, para encontrar opciones que se ajusten mejor      Alta
+                                   a lo que busco.
+                                   Como adoptante, quiero buscar mascotas cercanas a mi
+    HU-05          Adoptante       ubicación, para encontrar opciones de adopción accesibles      Media
+                                   geográficamente.
+
+                                   Como adoptante, quiero indicar si una mascota me gusta o
+    HU-06          Adoptante
+                                   no me gusta, para expresar rápidamente mi interés por ella.
+                                                                                                  Media
+
+                                   Como adoptante, quiero recibir un Match cuando exista
+    HU-07          Adoptante       interés compatible, para saber que puedo continuar con el      Media
+                                   proceso de contacto.
+                                   Como adoptante, quiero comunicarme mediante un chat
+    HU-08          Adoptante       con el responsable de una mascota, para solicitar               Alta
+                                   información y coordinar una posible adopción.
+                                   Como usuario, quiero comunicarme mediante chat con
+    HU-09        Usuario común     otros usuarios interesados en la misma mascota para             Baja
+                                   conversar sobre ello.
+                                   Como adoptante, quiero coordinar una posible adopción
+    HU-10          Adoptante
+                                   con el responsable para adoptar a la mascota.
+                                                                                                   Alta
+
+                Responsable de     Como responsable, quiero registrar una mascota para
+     HU-11         mascota         ponerla disponible en adopción.
+                                                                                                  Media
+
+                                   Como responsable, quiero editar la información textual de
+                Responsable de
+    HU-12          mascota
+                                   una mascota registrada para que los adoptantes puedan           Alta
+                                   conocerla mejor.
+                                   Como responsable de una mascota, quiero recibir una
+                Responsable de
+    HU-13          mascota
+                                   notificación cuando un adoptante muestre interés en mi         Media
+                                   mascota, para poder responderle.
+                                   Como usuario, quiero consultar información sobre adopción
+    HU-14        Usuario común     en una sola plataforma, para evitar realizar búsquedas          Baja
+                                   manuales en diferentes medios.
+                                           KuyayPet – Historias de Usuario
+                                     Como usuario, quiero recuperar mi contraseña para volver
+    HU-15        Usuario común
+                                     a acceder a mi cuenta.
+                                                                                                  Media
+
+                                     Como responsable, quiero agregar información visual,
+                Responsable de
+    HU-16          mascota
+                                     fotografías, de una mascota para mostrarla a los posibles    Media
+                                     adoptantes.
+                                     Como adoptante, quiero guardar mascotas como favoritas,
+    HU-17          Adoptante
+                                     para poder revisarlas posteriormente.
+                                                                                                  Media
+
+                                     Como adoptante, quiero consultar mi historial de mascotas
+     HU-18         Adoptante         que indiqué que me gustan, para volver a revisar mis           Baja
+                                     opciones de interés.
+                Responsable de       Como responsable, quiero marcar una mascota como
+    HU-19          mascota           adoptada para dejar de mostrarla como disponible.
+                                                                                                  Media
+
+                                     Como adoptante, quiero visualizar mis Matches para revisar
+    HU-20          Adoptante
+                                     las mascotas con las que tuve compatibilidad.
+                                                                                                  Media
+
+                                     Como usuario, quiero cerrar sesión para proteger el acceso
+    HU-21        Usuario común
+                                     a mi cuenta.
+                                                                                                    Alta
+
+                                     Como administrador de la plataforma, quiero gestionar las
+               Administrador de la
+    HU-22         plataforma
+                                     cuentas de los usuarios registrados, para mantener un          Alta
+                                     control adecuado de los usuarios de KuyayPet.
+                                     Como administrador de la plataforma, quiero revisar las
+               Administrador de la
+    HU-23         plataforma
+                                     publicaciones de mascotas, para mantener información           Alta
+                                     adecuada y actualizada en KuyayPet.
+                                     Como administrador de la plataforma, quiero aprobar o
+               Administrador de la
+    HU-24         plataforma
+                                     rechazar publicaciones de mascotas, para controlar las         Alta
+                                     mascotas que se muestran disponibles para adopción.
+                                     Como administrador de la plataforma, quiero desactivar
+               Administrador de la
+    HU-25         plataforma
+                                     cuentas de usuarios que incumplan las condiciones de uso,    Media
+                                     para mantener un entorno seguro en KuyayPet.
+                                     Como administrador de la plataforma, quiero revisar y
+               Administrador de la   gestionar información inapropiada publicada en la
+    HU-26         plataforma         plataforma, para mantener la calidad de la información de
+                                                                                                  Media
+
+                                     KuyayPet.
+
+Nota: Estas historias resumen el alcance funcional planteado en el caso de negocio de KuyayPet.
+Posteriormente, cada historia puede desarrollarse con sus criterios de aceptación y un prototipo.
+
+
+
+
+                                             KuyayPet – Historias de Usuario
+                            HU-01 – REGISTRO DE USUARIO
+1.​ Enunciado
+     Como          usuario común
+     Quiero        registrarme en KuyayPet
+      Para         poder acceder a la plataforma
+
+
+
+2.​ Criterios de aceptación
+-​    DADO que el usuario se encuentra en la pantalla de registro, CUANDO desea crear una cuenta, ENTONCES el
+      sistema debe solicitar nombre, correo electrónico y contraseña.
+-​    DADO que el usuario se encuentra completando el formulario de registro, CUANDO intenta registrarse dejando uno o
+      más campos vacíos, ENTONCES el sistema debe indicar que todos los campos son obligatorios.
+-​    DADO que el usuario se encuentra completando el formulario de registro, CUANDO ingresa su correo electrónico,
+      ENTONCES el sistema debe validar que tenga un formato válido.
+-​    DADO que el usuario se encuentra completando el formulario de registro, CUANDO ingresa una contraseña,
+      ENTONCES el sistema debe validar que tenga como mínimo 8 caracteres.
+-​    DADO que ya existe una cuenta asociada al correo ingresado, CUANDO el usuario intenta registrarse con ese mismo
+      correo, ENTONCES el sistema no debe permitir crear una nueva cuenta.
+-​    DADO que el usuario ha completado correctamente todos los datos requeridos, CUANDO selecciona la opción de
+      registrarse, ENTONCES el sistema debe crear la cuenta y mostrar un mensaje de confirmación.
+-​    DADO que el usuario está completando el formulario de registro, CUANDO ingresa algún dato inválido, ENTONCES el
+      sistema debe mostrar un mensaje indicando el error.
+
+
+3.​ Prototipo
+
+
+
+
+                                            KuyayPet – Historias de Usuario
+                                                          ​
+     HU-02 – VISUALIZACIÓN DE MASCOTAS DISPONIBLES PARA
+                           ADOPCIÓN
+1.​ Enunciado
+     Como          Adoptante
+     Quiero        visualizar las mascotas disponibles para adopción
+      Para         Conocer las opciones de mascotas y seleccionar una de mis interès
+
+
+
+2.​ Criterios de aceptación
+-​    DADO que el sistema cuenta con mascotas registradas y disponibles para adopción, CUANDO el adoptante ingresa a
+      la sección de mascotas, ENTONCES el sistema debe mostrar una lista de mascotas disponibles para adopción.
+-​    DADO que existen mascotas disponibles, CUANDO el adoptante visualiza la lista, ENTONCES cada mascota debe
+      mostrar fotografía, nombre, especie, edad y ubicación.
+-​    DADO que se muestra una mascota disponible, CUANDO el adoptante la selecciona, ENTONCES el sistema debe
+      permitir consultar su información detallada.
+-​    DADO que existen mascotas con diferentes estados de disponibilidad, CUANDO el adoptante ingresa a la sección,
+      ENTONCES el sistema debe mostrar únicamente las mascotas disponibles para adopción.
+-​    DADO que una mascota tiene información registrada, CUANDO el adoptante la visualiza, ENTONCES el sistema debe
+      mostrar los datos registrados por el responsable.
+-​    DADO que no existen mascotas disponibles, CUANDO el adoptante ingresa a la sección, ENTONCES el sistema debe
+      mostrar un mensaje informativo.
+
+
+                                           KuyayPet – Historias de Usuario
+   -​   DADO que el adoptante utiliza una computadora o dispositivo móvil, CUANDO ingresa a la sección de mascotas,
+        ENTONCES la lista debe visualizarse correctamente y adaptarse al tamaño de la pantalla.
+
+   3.​ Prototipo
+
+
+
+
+                       HU-03 – VER PERFIL DE UNA MASCOTA
+Enunciado:
+              Como           Adoptante
+              Quiero         ver el perfil de una mascota
+               Para          conocer información detallada sobre ella
+
+
+
+Criterios de aceptación
+   -​   DADO que el sistema muestra una mascota disponible, CUANDO el adoptante selecciona la opción
+        “Ver perfil”, ENTONCES el sistema debe mostrar el perfil detallado de la mascota.
+   -​   DADO que el perfil de una mascota está disponible, CUANDO el adoptante ingresa al perfil,
+        ENTONCES debe visualizar su fotografía, nombre, especie, raza, edad y ubicación.
+   -​   DADO que la mascota tiene información adicional registrada, CUANDO el adoptante consulta su
+        perfil, ENTONCES el sistema debe mostrar dicha información.
+   -​   DADO que el adoptante se encuentra en el perfil de una mascota, CUANDO revisa la información,
+        ENTONCES los datos mostrados deben corresponder a los registrados por el responsable de la
+        mascota.
+                                              KuyayPet – Historias de Usuario
+   -​   DADO que el perfil de la mascota no contiene información adicional, CUANDO el adoptante lo
+        consulta, ENTONCES el sistema debe mostrar únicamente la información disponible sin generar
+        errores.
+
+
+
+
+Prototipo
+
+
+
+
+                                        KuyayPet – Historias de Usuario
+       HU-04 – FILTRAR MASCOTAS SEGÚN PREFERENCIAS
+1.​ Enunciado:
+          Como          Adoptante
+          Quiero        Filtrar las mascotas según mis preferencias
+           Para         Encontrar opciones que se ajusten mejor a lo que busco
+
+2. Criterios de aceptación
+-​   DADO que el sistema muestra las mascotas disponibles, CUANDO el adoptante selecciona la opción
+     “Filtros”, ENTONCES el sistema debe mostrar las opciones de filtrado disponibles.
+-​   DADO que el adoptante se encuentra en la sección de filtros, CUANDO selecciona una o más
+     preferencias, ENTONCES el sistema debe permitir seleccionar dichos criterios antes de aplicarlos.
+-​   DADO que el adoptante ha seleccionado un filtro, CUANDO selecciona la opción “Aplicar filtros”,
+     ENTONCES el sistema debe actualizar la lista de mascotas mostrando únicamente aquellas que
+     cumplen con el criterio seleccionado.
+-​   DADO que el adoptante selecciona varios filtros, CUANDO los aplica, ENTONCES el sistema debe
+     mostrar las mascotas que cumplan con los criterios seleccionados.
+-​   DADO que existen mascotas que cumplen con los filtros seleccionados, CUANDO se muestran los
+     resultados, ENTONCES el sistema debe permitir al adoptante visualizar las mascotas encontradas.
+-​   DADO que no existen mascotas que coincidan con los filtros seleccionados, CUANDO el adoptante
+     aplica los filtros, ENTONCES el sistema debe informar que no se encontraron mascotas que cumplan
+     con los criterios.
+-​   DADO que el adoptante ha aplicado filtros, CUANDO modifica alguno de los criterios, ENTONCES el
+     sistema debe actualizar los resultados de acuerdo con las nuevas preferencias.
+-​   DADO que el adoptante ha aplicado uno o más filtros, CUANDO selecciona la opción “Limpiar filtros”,
+     ENTONCES el sistema debe eliminar los criterios seleccionados y mostrar nuevamente las mascotas
+     disponibles.
+-​   DADO que el adoptante ha aplicado filtros, CUANDO selecciona una mascota de los resultados,
+     ENTONCES el sistema debe permitirle acceder al perfil de dicha mascota.
+-​   DADO que el adoptante ingresa nuevamente a la sección de mascotas después de haber limpiado
+     los filtros, CUANDO visualiza la lista, ENTONCES el sistema debe mostrar las mascotas disponibles
+     sin restricciones de filtrado.
+
+
+
+
+                                      KuyayPet – Historias de Usuario
+              HU-05 – BÚSQUEDA DE MASCOTAS CERCANAS
+1.​ Enunciado
+     Como          Adoptante
+     Quiero        buscar mascotas cercanas a mi ubicación
+      Para         encontrar opciones de adopción accesibles geográficamente
+
+
+
+2.​ Criterios de aceptación
+
+-​    DADO que el adoptante se encuentra en la sección de búsqueda de mascotas, CUANDO ingresa su ubicación,
+      ENTONCES el sistema debe permitir registrar o seleccionar una ubicación para realizar la búsqueda.
+-​    DADO que el adoptante ha ingresado su ubicación, CUANDO selecciona un radio de búsqueda, ENTONCES el
+      sistema debe permitir establecer una distancia en kilómetros.
+-​    DADO que el adoptante ha ingresado una ubicación y un radio de búsqueda, CUANDO selecciona la opción “Buscar”,
+      ENTONCES el sistema debe mostrar las mascotas disponibles dentro del área seleccionada.
+-​    DADO que existen mascotas disponibles dentro del radio seleccionado, CUANDO se muestran los resultados,
+      ENTONCES el sistema debe mostrar la información básica de cada mascota y su distancia aproximada.
+-​    DADO que no existen mascotas disponibles dentro del radio seleccionado, CUANDO el adoptante realiza la búsqueda,
+      ENTONCES el sistema debe mostrar un mensaje indicando que no se encontraron mascotas cercanas.
+
+
+3.​ Prototipo
+
+
+
+
+                                            KuyayPet – Historias de Usuario
+                       HU-06 – Indicar interés en una mascota
+1.​ Enunciado
+     Como          adoptante
+     Quiero        indicar si una mascota me gusta o no me gusta
+      Para         expresar rápidamente mi interés por ella
+
+
+
+2.​ Criterios de aceptación
+-​    DADO que el adoptante está visualizando una mascota disponible, CUANDO observa su información, ENTONCES el
+      sistema debe mostrar las opciones “Me gusta” y “No me gusta”.
+-​    DADO que el adoptante está visualizando una mascota, CUANDO selecciona la opción “Me gusta”, ENTONCES el
+      sistema debe registrar su interés por esa mascota.
+-​    DADO que el adoptante está visualizando una mascota, CUANDO selecciona la opción “No me gusta”, ENTONCES el
+      sistema debe registrar que no está interesado en esa mascota.
+-​    DADO que el adoptante seleccionó una de las opciones, CUANDO el sistema registra su elección, ENTONCES debe
+      mostrar una confirmación visual de la opción seleccionada.
+-​    DADO que el adoptante ya indicó su preferencia sobre una mascota, CUANDO finaliza la acción, ENTONCES el
+      sistema debe permitirle continuar visualizando otra mascota disponible.
+
+
+
+
+3.​ Prototipo
+
+
+
+
+                                          KuyayPet – Historias de Usuario
+             HU-07 – RECIBIR UN MATCH POR COMPATIBILIDAD
+    1.​ Enunciado:
+
+              Como          Adoptante
+              Quiero        Recibir un Match cuando exista interés compatible
+               Para         Saber que puedo continuar con el proceso de contacto.
+
+
+
+    2.​ Criterios de aceptación
+    -​   El sistema debe permitir identificar cuando existe un interés compatible entre el adoptante y una
+         mascota.
+    -​   Dado que el adoptante ha indicado que está interesado en una mascota, cuando el responsable
+         también manifieste interés en continuar con el proceso, entonces el sistema debe generar un Match.
+    -​   Dado que existe un Match entre el adoptante y una mascota, cuando se genere la coincidencia,
+         entonces el sistema debe notificar al adoptante que se ha producido un Match.
+    -​   Dado que el adoptante recibe una notificación de Match, cuando acceda a la sección de
+         coincidencias, entonces debe poder visualizar la mascota con la que obtuvo el Match.
+    -​   El sistema debe mostrar información básica de la mascota asociada al Match.
+    -​   Dado que el adoptante tiene un Match activo, cuando seleccione la coincidencia, entonces el sistema
+         debe permitirle continuar con el proceso de contacto con el responsable.
+    -​   El Match debe quedar registrado en la cuenta del adoptante para que pueda consultarlo
+         posteriormente.
+    -​   Dado que no existe interés compatible, cuando el adoptante revise sus posibles coincidencias,
+         entonces el sistema no debe generar un Match.
+.
+
+    3.​ Prototipo
+
+
+
+
+                                           KuyayPet – Historias de Usuario
+HU-08 – COMUNICARSE CON EL RESPONSABLE DE LA MASCOTA
+ 1.​ Enunciado:
+
+           Como         Adoptante
+           Quiero       Comunicarme mediante un chat con el responsable de una mascota
+            Para        Solicitar información y coordinar una posible adopción.
+
+
+
+ 2.​ Criterios de aceptación
+ -​   El sistema debe permitir al adoptante iniciar una conversación con el responsable de una mascota.
+ -​   Dado que el adoptante ha seleccionado una mascota en adopción, cuando presione la opción de
+      iniciar chat, entonces el sistema debe abrir una conversación con el responsable de dicha mascota.
+ -​   Dado que existe una conversación entre el adoptante y el responsable, cuando el adoptante envíe un
+      mensaje, entonces el sistema debe registrar y mostrar el mensaje dentro del chat.
+ -​   Dado que el responsable ha enviado un mensaje, cuando el adoptante ingrese a la conversación,
+      entonces debe poder visualizar el mensaje recibido.
+ -​   Dado que el adoptante se encuentra dentro del chat, cuando consulte la conversación, entonces el
+      sistema debe identificar la mascota relacionada con dicha conversación.
+ -​   El sistema debe mostrar los mensajes enviados y recibidos en orden cronológico.
+ -​   Dado que el adoptante necesita información adicional sobre la mascota, cuando envíe una consulta
+      mediante el chat, entonces el responsable debe poder recibirla y responderla.
+ -​   El adoptante debe poder consultar posteriormente el historial de la conversación para continuar la
+      coordinación de la posible adopción.
+ -​   Dado que la adopción ya no continuará, cuando la conversación sea finalizada, entonces el sistema
+      debe conservar el historial de mensajes para su consulta posterior.
+
+
+                                       KuyayPet – Historias de Usuario
+3.​ Prototipo
+
+
+
+
+HU-09 – CHAT ENTRE USUARIOS INTERESADOS EN LA MISMA
+                      MASCOTA
+1.​ Enunciado:
+          Como          Usuario común
+          Quiero        Comunicarme mediante chat con otros usuarios interesados en la misma
+                        mascota
+           Para         Conversar sobre ello y compartir experiencias o detalles del proceso de
+                        adopción
+
+
+
+2.​ Criterios de aceptación
+-​   DADO que el usuario se encuentra en el perfil de una mascota, CUANDO selecciona la opción
+     "Unirme al chat de la mascota" o "Iniciar chat", ENTONCES el sistema debe abrir la ventana o
+     sección del chat vinculada a esa mascota.
+-​   DADO que el usuario ingresa al chat de la mascota, CUANDO escribe un mensaje y selecciona la
+     opción "Enviar", ENTONCES el sistema debe registrar y mostrar el mensaje en tiempo real a los
+     demás usuarios en el chat.
+-​   DADO que otros usuarios interesados escriben en el chat, CUANDO el usuario está activo en la
+     conversación, ENTONCES el sistema debe mostrar los nuevos mensajes indicando el nombre del
+     remitente y la hora de envío.
+-​   DADO que el usuario ingresa por primera vez al chat de una mascota, CUANDO carga la pantalla,
+     ENTONCES el sistema debe mostrar el historial de mensajes previos de la conversación.
+-​   DADO que no hay mensajes previos en el chat de la mascota, CUANDO el usuario ingresa,
+     ENTONCES el sistema debe mostrar un mensaje indicando que no hay mensajes anteriores e invitar
+     a iniciar la conversación.
+-​   DADO que el usuario no tiene una sesión activa en la plataforma, CUANDO intenta acceder al chat
+     de una mascota, ENTONCES el sistema debe solicitarle iniciar sesión antes de permitirle enviar o ver
+     mensajes.
+                                       KuyayPet – Historias de Usuario
+-​   DADO que un usuario ingresa un mensaje vacío o compuesto solo por espacios, CUANDO intenta
+     presionar "Enviar", ENTONCES el sistema debe mantener deshabilitado el botón de envío y no
+     procesar el mensaje.
+3.​ Prototipo
+
+
+
+
+                                                     ​
+                HU-10 – COORDINAR POSIBLE ADOPCIÓN
+1.​ Enunciado:
+          Como         adoptante
+          Quiero       coordinar una posible adopción con el responsable
+           Para        Continuar con el proceso
+
+
+
+2.​ Criterios de aceptación
+●​   DADO que el adoptante está visualizando las mascotas disponibles, CUANDO selecciona una
+     mascota para continuar con el proceso de adopción, ENTONCES el sistema debe mostrar la opción
+     para coordinar la posible adopción.
+●​   DADO que el adoptante ha seleccionado una mascota, CUANDO solicita coordinar la posible
+     adopción con el responsable, ENTONCES el sistema debe permitir enviar una solicitud de
+     coordinación.
+●​   DADO que el adoptante desea coordinar la adopción, CUANDO ingresa una fecha y hora propuesta,
+     ENTONCES el sistema debe permitir registrar la fecha y hora para continuar con el proceso.
+●​   DADO que el adoptante ha enviado una solicitud de coordinación, CUANDO la solicitud es registrada
+     correctamente, ENTONCES el responsable debe poder recibir la solicitud del adoptante.
+●​   DADO que el adoptante ha enviado una solicitud de coordinación, CUANDO consulta el estado de la
+     solicitud, ENTONCES el sistema debe mostrar el estado actual de la solicitud de adopción.
+●​   DADO que el responsable ha respondido a la solicitud de adopción, CUANDO el adoptante consulta
+     su solicitud, ENTONCES el sistema debe mostrar si la solicitud fue aceptada o rechazada.
+●​   DADO que el adoptante ha completado correctamente los datos de la solicitud, CUANDO selecciona
+     la opción “Enviar solicitud”, ENTONCES el sistema debe mostrar un mensaje de confirmación
+     indicando que la solicitud fue enviada.
+                                      KuyayPet – Historias de Usuario
+3.​ Prototipo
+
+
+
+
+                        HU-11 – REGISTRAR MASCOTA
+1.​ Enunciado:
+         Como         responsable de mascota
+         Quiero       registrar una mascota
+          Para        ponerla disponible en adopción
+
+
+
+2.​ Criterios de aceptación
+●​ DADO que el responsable ha iniciado sesión en KuyayPet, CUANDO selecciona la opción “Registrar
+   mascota”, ENTONCES el sistema debe mostrar el formulario de registro.
+●​ DADO que el responsable se encuentra en el formulario de registro, CUANDO ingresa los datos de la
+   mascota, ENTONCES el sistema debe permitir completar el registro.
+●​ DADO que el responsable ha ingresado todos los datos obligatorios, CUANDO selecciona la opción
+   “Registrar mascota”, ENTONCES el sistema debe registrar la mascota.
+●​ DADO que la mascota ha sido registrada correctamente, CUANDO finaliza el registro, ENTONCES el
+   sistema debe mostrar un mensaje de confirmación.
+●​ DADO que el responsable intenta registrar una mascota sin completar los campos obligatorios,
+   CUANDO selecciona “Registrar mascota”, ENTONCES el sistema debe indicar los campos que debe
+   completar.
+●​ DADO que la mascota ha sido registrada correctamente, CUANDO el registro finaliza, ENTONCES la
+   mascota debe quedar disponible para adopción.
+
+
+
+
+3.​ Prototipo
+                                    KuyayPet – Historias de Usuario
+ HU-12 – EDITAR INFORMACIÓN TEXTUAL DE UNA MASCOTA
+1.​ Enunciado:
+          Como          responsable de mascota
+          Quiero        Editar la información textual de una mascota registrada
+           Para         Que los adoptantes puedan conocerla mejor y mantener sus datos
+                        actualizados
+
+
+
+2.​ Criterios de aceptación
+-​   DADO que el responsable se encuentra en la lista o perfil de sus mascotas registradas, CUANDO
+     selecciona la opción "Editar información", ENTONCES el sistema debe desplegar el formulario de
+     edición prellenado con los datos actuales de la mascota.
+-​   DADO que el responsable modifica uno o más campos de texto (nombre, descripción, raza, edad,
+     historia o cuidados especiales), CUANDO selecciona la opción "Guardar cambios", ENTONCES el
+     sistema debe actualizar la información y mostrar un mensaje de confirmación ("Cambios guardados
+     con éxito").
+-​   DADO que el responsable realiza cambios en el formulario, CUANDO selecciona la opción
+     "Cancelar", ENTONCES el sistema debe descartar las modificaciones y volver a la pantalla anterior
+     sin alterar los datos originales.
+-​   DADO que el responsable deja un campo obligatorio vacío (por ejemplo, el nombre de la mascota),
+     CUANDO intenta presionar "Guardar cambios", ENTONCES el sistema debe destacar el campo
+     requerido y mostrar un mensaje de error impidiendo el guardado.
+
+                                      KuyayPet – Historias de Usuario
+   -​   DADO que el responsable confirma la actualización de datos, CUANDO se redirige al perfil público de
+        la mascota, ENTONCES el sistema debe mostrar la información textual reflejando inmediatamente los
+        nuevos datos guardados.
+
+
+
+   3.​ Prototipo
+
+
+
+
+             HU-13 – NOTIFICACIÓN DE INTERÉS EN MASCOTA
+Enunciado:
+             Como          Responsable de mascota
+             Quiero        Recibir una notificación cuando un adoptante muestre interés en mi
+                           mascota
+              Para         Poder responderle a tiempo y coordinar el proceso de adopción
+
+
+
+Criterios de aceptación
+   -​   DADO que un adoptante presiona el botón de "Me interesa" o "Solicitar adopción", CUANDO la
+        acción se procesa correctamente, ENTONCES el sistema debe enviar inmediatamente una
+        notificación (en la plataforma y/o correo) al responsable de la mascota.
+   -​   DADO que el responsable se encuentra navegado en la plataforma, CUANDO recibe una nueva
+        notificación, ENTONCES el sistema debe mostrar un indicador visual (icono de campana con
+        contador o emergente) en la barra superior de navegación.
+   -​   DADO que el responsable selecciona la notificación recibida, CUANDO hace clic sobre ella,
+        ENTONCES el sistema debe redirigirlo directamente al perfil del adoptante interesado o al chat
+        asignado a esa solicitud.
+                                          KuyayPet – Historias de Usuario
+   -​   DADO que el responsable accede a su centro de notificaciones, CUANDO visualiza la lista,
+        ENTONCES el sistema debe mostrar el nombre del adoptante, la mascota de interés, la fecha y hora
+        de la interacción, distinguiendo entre notificaciones leídas y no leídas.
+   -​   DADO que el responsable marca una notificación como leída, CUANDO actualiza la lista,
+        ENTONCES el sistema debe actualizar el contador de notificaciones pendientes en el icono de la
+        barra superior.
+
+Prototipo
+
+
+
+
+        HU-14 – CONSULTA DE INFORMACIÓN SOBRE ADOPCIÓN
+Enunciado:
+             Como          Usuario común
+             Quiero        Consultar información sobre adopción en una sola plataforma
+              Para         Evitar realizar búsquedas manuales en diferentes medios y conocer los
+                           requisitos del proceso
+
+
+
+Criterios de aceptación
+   -​   DADO que el usuario se encuentra en la barra de navegación principal, CUANDO selecciona la
+        sección "Sobre nosotros" o "Guía de Adopción", ENTONCES el sistema debe mostrar un centro
+        informativo centralizado con preguntas frecuentes, requisitos y consejos de adopción responsable.
+   -​   DADO que el usuario navega por la sección informativa, CUANDO selecciona una categoría o
+        pregunta específica (ej. "Requisitos para adoptar" o "¿Cómo preparar mi hogar?"), ENTONCES el
+        sistema debe desplegar el contenido detallado correspondiente de forma clara.
+
+                                          KuyayPet – Historias de Usuario
+   -​   DADO que el usuario se encuentra dentro del perfil de una mascota específica, CUANDO presiona
+        sobre el enlace o icono de "Información sobre el proceso de adopción", ENTONCES el sistema debe
+        redirigirlo a la guía explicativa sin perder el contexto de su navegación.
+   -​   DADO que el usuario utiliza el buscador dentro de la sección de información, CUANDO ingresa
+        palabras clave (ej. "vacunas", "contrato", "seguimiento"), ENTONCES el sistema debe filtrar y mostrar
+        los artículos o preguntas relacionadas con dichas palabras.
+
+Prototipo
+
+
+
+
+                   HU-15 – RECUPERACIÓN DE CONTRASEÑA
+Enunciado:
+             Como           Usuario común
+             Quiero         Recuperar mi contraseña
+              Para          Volver a acceder a mi cuenta en caso de olvido o pérdida de credenciales
+
+
+
+Criterios de aceptación
+   -​   DADO que el usuario se encuentra en la pantalla de "Iniciar sesión", CUANDO selecciona la opción
+        "¿Olvidaste tu contraseña?", ENTONCES el sistema debe mostrar la vista para ingresar el correo
+        electrónico registrado.
+
+
+
+                                          KuyayPet – Historias de Usuario
+   -​   DADO que el usuario ingresa un correo registrado y presiona "Enviar enlace de recuperación",
+        CUANDO el correo existe en la base de datos, ENTONCES el sistema debe enviar un enlace/código
+        de restablecimiento e informar en pantalla que las instrucciones fueron enviadas.
+   -​   DADO que el usuario ingresa un correo electrónico que no está registrado o no cumple con el formato
+        válido, CUANDO presiona "Enviar enlace de recuperación", ENTONCES el sistema debe mostrar un
+        mensaje de error solicitando revisar el correo ingresado.
+   -​   DADO que el usuario accede al enlace recibido en su correo, CUANDO carga la pantalla de
+        restablecimiento, ENTONCES el sistema debe permitirle ingresar y confirmar su nueva contraseña
+        con los criterios de seguridad mínimos.
+   -​   DADO que el usuario confirma la nueva contraseña de forma exitosa, CUANDO el cambio es
+        procesado, ENTONCES el sistema debe mostrar un mensaje de confirmación y redirigir al usuario al
+        formulario de "Iniciar sesión" con sus nuevas credenciales.
+
+Prototipo
+
+
+
+
+                HU-16 – Registro visual y etiquetado de mascotas
+Enunciado:
+             Como          Responsable de mascota
+             Quiero         Agregar información visual, fotografías y una mascota para mostrarla a
+                           los posibles adoptantes
+
+              Para         Presentar claramente a la mascota y aumentar sus posibilidades de
+                           encontrar un hogar
+
+                                          KuyayPet – Historias de Usuario
+Criterios de aceptación
+   -​   DADO que el responsable ha iniciado sesión, CUANDO ingresa a la opción de registrar una mascota,
+        ENTONCES el sistema debe mostrar un formulario para ingresar sus datos y fotografías.
+   -​   DADO que el responsable está completando el formulario, CUANDO intenta registrar la mascota sin
+        llenar los campos obligatorios, ENTONCES el sistema debe indicar cuáles faltan.
+   -​   DADO que el responsable desea agregar una fotografía, CUANDO selecciona un archivo válido,
+        ENTONCES el sistema debe mostrar una vista previa de la imagen.
+   -​   DADO que el archivo seleccionado no corresponde a un formato de imagen permitido, CUANDO el
+        responsable intenta cargarlo, ENTONCES el sistema debe mostrar un mensaje de error.
+   -​   DADO que el responsable registra la mascota, CUANDO selecciona sus características, ENTONCES
+        el sistema debe permitir agregar etiquetas como especie, edad, tamaño, sexo y personalidad.
+   -​   DADO que los datos obligatorios fueron completados correctamente, CUANDO el responsable
+        selecciona “Publicar mascota”, ENTONCES el sistema debe guardar la información y mostrar un
+        mensaje de confirmación.
+   -​   DADO que la mascota fue publicada correctamente, CUANDO un adoptante ingresa a la sección de
+        mascotas, ENTONCES debe poder visualizar su fotografía, datos y etiquetas.
+Prototipo
+
+
+
+
+                                                                                         HU-17 –
+                             Guardado de mascotas favoritas
+Enunciado:
+             Como         Adoptante
+             Quiero       Guardar mascotas como favoritas
+              Para        Poder revisarlas posteriormente y comparar mis opciones de adopción
+
+
+                                        KuyayPet – Historias de Usuario
+Criterios de aceptación
+   -​   DADO que el adoptante ha iniciado sesión, CUANDO visualiza una mascota disponible, ENTONCES
+        el sistema debe mostrar una opción para agregarla a favoritos.
+   -​   DADO que una mascota todavía no se encuentra en favoritos, CUANDO el adoptante selecciona el
+        ícono de corazón, ENTONCES el sistema debe guardarla en su lista.
+   -​   DADO que la mascota fue agregada correctamente, CUANDO finaliza la acción, ENTONCES el
+        sistema debe mostrar una confirmación visual.
+   -​   DADO que el adoptante tiene mascotas guardadas, CUANDO ingresa a la sección “Favoritos”,
+        ENTONCES el sistema debe mostrar todas las mascotas seleccionadas.
+   -​   DADO que una mascota ya se encuentra en favoritos, CUANDO el adoptante vuelve a seleccionar el
+        ícono de corazón, ENTONCES el sistema debe permitir retirarla de la lista.
+   -​   DADO que el adoptante cierra sesión y vuelve a ingresar, CUANDO consulta sus favoritos,
+        ENTONCES las mascotas guardadas deben conservarse.
+   -​   DADO que una mascota favorita deja de estar disponible, CUANDO el adoptante revisa su lista,
+        ENTONCES el sistema debe mostrar su estado actualizado.
+Prototipo
+
+
+
+
+                      HU-18 – Historial de mascotas de interés
+Enunciado:
+             Como         Adoptante
+
+                                        KuyayPet – Historias de Usuario
+             Quiero       Consultar mi historial de mascotas que indiqué que me gustan
+              Para        Volver a revisar mis opciones de interés y conocer su estado actual
+
+
+
+Criterios de aceptación
+   -​   DADO que el adoptante ha iniciado sesión, CUANDO ingresa a su perfil, ENTONCES el sistema
+        debe mostrar la opción “Historial de interés”.
+   -​   DADO que el adoptante indicó anteriormente que una mascota le gusta, CUANDO consulta su
+        historial, ENTONCES el sistema debe mostrar dicha mascota.
+   -​   DADO que existen varias mascotas en el historial, CUANDO se presenta la lista, ENTONCES cada
+        registro debe mostrar fotografía, nombre, fecha de interacción y estado actual.
+   -​   DADO que una mascota del historial continúa disponible, CUANDO el adoptante la selecciona,
+        ENTONCES el sistema debe mostrar su perfil completo.
+   -​   DADO que una mascota del historial ya fue adoptada, CUANDO el adoptante consulta el registro,
+        ENTONCES el sistema debe mostrarla con el estado “Adoptada”.
+   -​   DADO que una mascota fue retirada de la plataforma, CUANDO aparece en el historial, ENTONCES
+        el sistema debe indicar que su perfil ya no está disponible.
+   -​   DADO que el adoptante nunca indicó interés en una mascota, CUANDO consulta esta sección,
+        ENTONCES el sistema debe mostrar un mensaje informativo indicando que su historial está vacío.
+   -​
+
+Prototipo
+
+
+
+
+               HU-19 – Actualización de mascota como adoptada
+                                         KuyayPet – Historias de Usuario
+Enunciado:
+             Como         Responsable de mascota
+             Quiero       Marcar una mascota como adoptada
+              Para        Dejar de mostrarla como disponible y evitar nuevas solicitudes de
+                          adopción
+
+
+
+Criterios de aceptación
+   -​   DADO que el responsable ha iniciado sesión, CUANDO ingresa a la sección “Mis publicaciones”,
+        ENTONCES el sistema debe mostrar las mascotas que tiene registradas.
+   -​   DADO que una mascota continúa disponible, CUANDO el responsable ingresa a su publicación,
+        ENTONCES el sistema debe mostrar la opción “Marcar como adoptada”.
+   -​   DADO que el responsable selecciona “Marcar como adoptada”, CUANDO realiza la acción,
+        ENTONCES el sistema debe solicitar una confirmación.
+   -​   DADO que el responsable confirma la acción, CUANDO el sistema procesa el cambio, ENTONCES el
+        estado de la mascota debe actualizarse a “Adoptada”.
+   -​   DADO que una mascota fue marcada como adoptada, CUANDO los adoptantes consultan las
+        mascotas disponibles, ENTONCES esta ya no debe aparecer entre las opciones de adopción.
+   -​   DADO que un adoptante había guardado esa mascota, CUANDO revisa sus favoritos o historial,
+        ENTONCES el sistema debe mostrarla con el estado “Adoptada”.
+   -​   DADO que la mascota ya fue adoptada, CUANDO un usuario intenta enviar una solicitud,
+        ENTONCES el sistema debe impedir la acción y mostrar un mensaje informativo.
+Prototipo
+
+
+
+
+                                         KuyayPet – Historias de Usuario
+                      HU-20 – Visualización de compatibilidades
+Enunciado:
+             Como         Adoptante
+             Quiero       Visualizar mis matches
+              Para        Revisar las mascotas con las que tengo mayor compatibilidad y tomar
+                          una mejor decisión de adopción
+
+
+
+Criterios de aceptación
+   -​   DADO que el adoptante ha iniciado sesión y completado sus preferencias, CUANDO ingresa a la
+        sección “Mis Matches”, ENTONCES el sistema debe mostrar las mascotas compatibles.
+   -​   DADO que existen varias mascotas compatibles, CUANDO se muestran los resultados, ENTONCES
+        deben ordenarse desde la mayor hasta la menor compatibilidad.
+   -​   DADO que se muestra una mascota compatible, CUANDO el adoptante visualiza su tarjeta,
+        ENTONCES el sistema debe presentar su fotografía, información básica y nivel de compatibilidad.
+   -​   DADO que el adoptante selecciona una mascota, CUANDO ingresa a su perfil, ENTONCES el
+        sistema debe mostrar los criterios principales que originaron la compatibilidad.
+   -​   DADO que una mascota compatible deja de estar disponible, CUANDO el adoptante consulta sus
+        matches, ENTONCES el sistema debe actualizar o retirar dicha opción.
+   -​   DADO que no existen mascotas compatibles, CUANDO el adoptante ingresa a la sección,
+        ENTONCES el sistema debe mostrar un mensaje informativo y permitirle modificar sus preferencias.
+   -​   DADO que el adoptante todavía no completó sus preferencias, CUANDO intenta consultar sus
+        matches, ENTONCES el sistema debe solicitarle completar la información necesaria.
+
+Prototipo
+                                         KuyayPet – Historias de Usuario
+                            HU-21 – Cierre seguro de sesión
+Enunciado:
+             Como         Usuario
+             Quiero       Cerrar sesión
+              Para        Proteger el acceso a mi cuenta y evitar que otras personas utilicen mi
+                          información
+
+
+
+Criterios de aceptación
+   -​   DADO que el usuario ha iniciado sesión, CUANDO accede al menú de su perfil, ENTONCES el
+        sistema debe mostrar la opción “Cerrar sesión”.
+   -​   DADO que el usuario selecciona “Cerrar sesión”, CUANDO confirma la acción, ENTONCES el
+        sistema debe finalizar su sesión activa.
+   -​   DADO que la sesión fue cerrada correctamente, CUANDO termina el proceso, ENTONCES el
+        sistema debe redirigir al usuario a la pantalla de inicio o inicio de sesión.
+   -​   DADO que el usuario ya cerró sesión, CUANDO intenta regresar a una página privada mediante el
+        navegador, ENTONCES el sistema debe solicitar nuevamente sus credenciales.
+   -​   DADO que la sesión se encuentra cerrada, CUANDO otra persona utiliza el mismo dispositivo,
+        ENTONCES no debe poder acceder a los datos personales del usuario anterior.
+   -​   DADO que la cuenta permanece inactiva durante el tiempo de seguridad establecido, CUANDO se
+        supera ese periodo, ENTONCES el sistema debe cerrar la sesión automáticamente.
+
+                                         KuyayPet – Historias de Usuario
+   -​   DADO que ocurre un error al intentar cerrar sesión, CUANDO el sistema no puede completar el
+        proceso, ENTONCES debe informar al usuario y permitirle volver a intentarlo.
+
+Prototipo
+
+
+
+
+                           HU-22 – GESTIONAR USUARIOS
+Enunciado:
+             Como         administrador de la plataforma
+             Quiero       gestionar las cuentas de los usuarios registrados
+              Para        mantener un control adecuado de los usuarios de KuyayPet
+
+
+
+Criterios de aceptación
+   -​   DADO que el administrador ha iniciado sesión, CUANDO accede al módulo de usuarios, ENTONCES
+        el sistema debe mostrar la lista de usuarios registrados.
+   -​   DADO que el administrador visualiza la lista de usuarios, CUANDO selecciona un usuario,
+        ENTONCES el sistema debe mostrar su información registrada.
+   -​   DADO que el administrador visualiza la información de un usuario, CUANDO selecciona la opción de
+        editar, ENTONCES el sistema debe permitir modificar sus datos.
+   -​   DADO que el administrador ha realizado cambios en los datos de un usuario, CUANDO selecciona la
+        opción “Guardar cambios”, ENTONCES el sistema debe actualizar la información del usuario.
+
+
+                                         KuyayPet – Historias de Usuario
+   -​   DADO que el administrador desea desactivar una cuenta, CUANDO selecciona la opción “Desactivar
+        usuario” y confirma la acción, ENTONCES el sistema debe cambiar el estado de la cuenta a inactivo.
+   -​   DADO que una cuenta ha sido desactivada, CUANDO el usuario intenta acceder a KuyayPet,
+        ENTONCES el sistema no debe permitirle iniciar sesión.
+   -​   DADO que el administrador realiza correctamente una modificación o desactivación, CUANDO
+        finaliza la operación, ENTONCES el sistema debe mostrar un mensaje de confirmación.
+
+Prototipo
+
+
+
+
+             HU-23 – REVISAR PUBLICACIONES DE MASCOTAS
+Enunciado:
+             Como           administrador de la plataforma
+             Quiero         revisar las publicaciones de mascotas
+              Para          mantener información adecuada y actualizada en KuyayPet
+
+
+
+Criterios de aceptación
+   -​   DADO que el administrador ha iniciado sesión, CUANDO accede al módulo de publicaciones de
+        mascotas, ENTONCES el sistema debe mostrar la lista de publicaciones registradas.
+   -​   DADO que el administrador visualiza la lista de publicaciones, CUANDO selecciona una mascota,
+        ENTONCES el sistema debe mostrar la información registrada de la mascota.
+   -​   DADO que el administrador visualiza una publicación, CUANDO revisa su información, ENTONCES
+        debe poder identificar los datos y características de la mascota.
+
+                                           KuyayPet – Historias de Usuario
+   -​   DADO que una publicación contiene información que necesita ser actualizada, CUANDO el
+        administrador selecciona la opción correspondiente, ENTONCES el sistema debe permitir modificar la
+        información de la publicación.
+   -​   DADO que el administrador ha realizado cambios en una publicación, CUANDO selecciona “Guardar
+        cambios”, ENTONCES el sistema debe actualizar la información de la mascota.
+   -​   DADO que la información de una publicación ha sido actualizada correctamente, CUANDO finaliza la
+        operación, ENTONCES el sistema debe mostrar un mensaje de confirmación.
+
+Prototipo
+
+
+
+
+HU-24 – APROBAR O RECHAZAR PUBLICACIONES DE MASCOTAS
+Enunciado:
+             Como         administrador de la plataforma
+             Quiero       aprobar o rechazar publicaciones de mascotas
+              Para        controlar las publicaciones que se muestran disponibles para adopción
+
+
+
+Criterios de aceptación
+   -​   DADO que el administrador ha iniciado sesión, CUANDO accede al módulo de publicaciones,
+        ENTONCES el sistema debe mostrar las publicaciones pendientes de revisión.
+   -​   DADO que el administrador visualiza las publicaciones pendientes, CUANDO selecciona una
+        publicación, ENTONCES el sistema debe mostrar la información registrada de la mascota.
+   -​   DADO que el administrador revisa una publicación, CUANDO selecciona la opción “Aprobar”,
+        ENTONCES el sistema debe solicitar la confirmación de la aprobación.
+                                         KuyayPet – Historias de Usuario
+   -​   DADO que el administrador confirma la aprobación, CUANDO finaliza la operación, ENTONCES el
+        sistema debe cambiar el estado de la publicación a “Aprobada”.
+   -​   DADO que el administrador revisa una publicación, CUANDO selecciona la opción “Rechazar”,
+        ENTONCES el sistema debe permitir indicar el motivo del rechazo.
+   -​   DADO que el administrador confirma el rechazo, CUANDO finaliza la operación, ENTONCES el
+        sistema debe cambiar el estado de la publicación a “Rechazada”.
+   -​   DADO que una publicación ha sido aprobada o rechazada correctamente, CUANDO el sistema
+        actualiza su estado, ENTONCES debe mostrar un mensaje de confirmación.
+
+Prototipo
+
+
+
+
+               HU-25 – DESACTIVAR CUENTAS DE USUARIOS
+Enunciado:
+             Como         administrador de la plataforma
+             Quiero       desactivar cuentas de usuarios que incumplan las condiciones de uso
+              Para        mantener un entorno seguro en KuyayPet
+
+
+
+Criterios de aceptación
+   -​   DADO que el administrador ha iniciado sesión, CUANDO accede al módulo de usuarios, ENTONCES
+        el sistema debe mostrar la lista de usuarios registrados.
+   -​   DADO que el administrador visualiza la lista de usuarios, CUANDO selecciona un usuario,
+        ENTONCES el sistema debe mostrar la información de su cuenta y su estado actual.
+   -​   DADO que el administrador ha seleccionado una cuenta activa, CUANDO selecciona la opción
+        “Desactivar usuario”, ENTONCES el sistema debe solicitar la confirmación de la acción.
+                                        KuyayPet – Historias de Usuario
+   -​   DADO que el administrador confirma la desactivación, CUANDO finaliza la operación, ENTONCES el
+        sistema debe cambiar el estado de la cuenta a “Inactiva”.
+   -​   DADO que una cuenta se encuentra inactiva, CUANDO el usuario intenta iniciar sesión, ENTONCES
+        el sistema no debe permitirle acceder a la plataforma.
+   -​   DADO que la cuenta ha sido desactivada correctamente, CUANDO termina la operación,
+        ENTONCES el sistema debe mostrar un mensaje de confirmación.
+   -​   DADO que el administrador intenta desactivar una cuenta que ya está inactiva, CUANDO selecciona
+        la opción correspondiente, ENTONCES el sistema debe informar que la cuenta ya se encuentra
+
+Prototipo
+
+
+
+
+                                        KuyayPet – Historias de Usuario
+
