@@ -1,4 +1,4 @@
-import { BookOpen, CheckCircle2, ChevronLeft, ChevronRight, Circle, Heart, HeartHandshake, Home, Play, RotateCcw, ShieldCheck } from 'lucide-react';
+import { BookOpen, CheckCircle2, ChevronLeft, ChevronRight, Circle, Columns2, Heart, HeartHandshake, Home, Play, RotateCcw, ShieldCheck } from 'lucide-react';
 import { QRCodeSVG } from 'qrcode.react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -12,6 +12,7 @@ import { LogoMark } from '@/components/brand/Logo';
 import type { Role } from '@/types';
 import team from '../../data/team.json';
 import { abortTour, startTour, TOUR } from './Tour';
+import { splitUrl } from './SplitStage';
 
 /** Runtime URL so each mirror (Hostinger / GitHub Pages / localhost) shows its own QR. */
 export function publicUrl() {
@@ -114,6 +115,9 @@ export function PresenterPanel() {
         >
           <Heart size={16} fill={guaranteed ? 'currentColor' : 'none'} /> Match garantizado en la próxima carta {guaranteed ? '✓' : ''}
         </button>
+        <a href={splitUrl()} className="col-span-2 flex items-center justify-center gap-1.5 rounded-2xl border-2 border-sage py-2 text-sm font-bold text-sage-600 hover:bg-sage-100">
+          <Columns2 size={16} /> Pantalla dividida: Adoptante | Responsable
+        </a>
       </div>
 
       <div className="mt-4 flex items-center gap-3 rounded-3xl bg-cream p-3">

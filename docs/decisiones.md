@@ -42,3 +42,8 @@ El panel muestra “Fase 1 en curso”; un clic revela “10/26 implementadas”
 **Clics:** cuatro bloqueadores rodean el recorte del spotlight; solo el objetivo es clicable, y solo en pasos de acción.
 **Popover:** posicionamiento propio con *flip* (abajo ↔ arriba) y *shift* dentro de la pantalla, y modo compacto si no cabe. No se usó la librería Floating UI porque el celular vive dentro de un marco con `transform`: mezclar su sistema de coordenadas con el del marco agrega riesgo y no gana nada en ~20 líneas. El test verifica en cada paso que el popover **no se superpone** al objetivo.
 **Tests:** `tests/tour.spec.ts` recorre el tour 3 veces (mismo estado final y restauración del estado previo) y hace otro recorrido con acciones fuera de guion que termina en el mismo estado que el de referencia.
+
+## ADR-13 · Pantalla dividida con dos sesiones reales (Bloque F)
+**Decisión:** `?split=1` muestra dos celulares: cada uno es un `iframe` de la misma app con `?as=adopter` / `?as=owner`. En esos marcos la sesión es **propia de cada celular**: no se escribe ni se lee del `localStorage` compartido (`partialize`/`merge` del persist). El resto de la BD sí se comparte, y el evento `storage` avisa a cada marco que el otro escribió: re-lee la BD y muestra lo que llegó (toast de la notificación o la celebración del Match).
+**Por qué:** el flujo estrella tiene dos actores. Verlos a la vez explica el “interés mutuo” mejor que cambiar de rol. Es la misma arquitectura que tendrá la Fase 2 con Supabase Realtime, solo que el canal hoy es el navegador.
+**Límite:** es solo para escritorio. Al salir, la ventana principal vuelve al inicio sin sesión.

@@ -3,6 +3,7 @@ import { ConfirmHost, ToastHost } from '@/components/ui';
 import { MatchCelebration } from '@/components/MatchCelebration';
 import { PresenterPanel } from './PresenterPanel';
 import { TourOverlay } from './Tour';
+import { IS_SPLIT_STAGE, SplitStage } from './SplitStage';
 
 function useIsDesktop() {
   const query = '(min-width: 1024px)';
@@ -31,6 +32,7 @@ export function DeviceFrame({ children }: { children: ReactNode }) {
   );
 
   if (!desktop) return <div className="h-[100dvh] w-full">{screen}</div>;
+  if (IS_SPLIT_STAGE) return <SplitStage />;
 
   return (
     <div className="flex h-screen items-center justify-center gap-10 overflow-hidden bg-gradient-to-br from-cream-200 via-cream to-terra-100 p-6">

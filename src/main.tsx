@@ -10,8 +10,10 @@ import '@fontsource/caveat/600.css';
 import './index.css';
 import { registerSW } from 'virtual:pwa-register';
 import App from './App';
+import { initFrameSync } from './services/session';
 
 registerSW({ immediate: true });
+initFrameSync();
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

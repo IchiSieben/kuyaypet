@@ -16,12 +16,17 @@ export interface DbState extends SeedData {
   };
 }
 
+/** Split-screen mode: each phone is an iframe of the app with `?as=<role>` and its own session. */
+const FRAME_SESSION: Record<string, string> = { adopter: 'u-adopter-demo', owner: 'u-owner-demo', admin: 'u-admin' };
+export const FRAME_ROLE = new URLSearchParams(location.search).get('as');
+const frameUser = FRAME_ROLE ? FRAME_SESSION[FRAME_ROLE] ?? null : null;
+
 function initialState(): DbState {
   // Deep clone so mutations never leak into the imported seed module.
   const seed = JSON.parse(JSON.stringify(SEED)) as SeedData;
   return {
     ...seed,
-    sessionUserId: null,
+    sessionUserId: frameUser,
     lastActivity: Date.now(),
     demo: { guaranteedMatch: false, tourDone: false, outbox: [] },
   };
@@ -32,6 +37,14 @@ export const useDb = create<DbState>()(
     name: 'kuyaypet-db',
     version: 1,
     storage: createJSONStorage(() => localStorage),
+    // In a split-screen frame the session is per phone: never written to, nor read from, the shared storage.
+    ...(frameUser && {
+      partialize: (s: DbState) => {
+        const { sessionUserId: _omit, ...rest } = s;
+        return rest as DbState;
+      },
+      merge: (persisted: unknown, current: DbState) => ({ ...current, ...(persisted as DbState), sessionUserId: current.sessionUserId }),
+    }),
   }),
 );
 
@@ -43,7 +56,7 @@ export const db = {
     const tourDone = useDb.getState().demo.tourDone;
     const next = initialState();
     next.demo.tourDone = tourDone;
-    if (keepSession) next.sessionUserId = session;
+    if (keepSession || frameUser) next.sessionUserId = frameUser ?? session;
     useDb.setState(next, true);
   },
 };
