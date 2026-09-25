@@ -1,4 +1,9 @@
-# HANDOFF — 2026-09-25 (fin de Fase 0)
+# HANDOFF — 2026-09-25 15:22 (Fase 1: bloques A–C y D rápidos cerrados; ver ESTADO_CLASE.md)
+
+- Desplegado `v0.2-clase`. Hostinger congelado 15:45–17:30: trabajar en rama `fase1-cont`; a main solo si pasan todos los tests (incl. tour ×3).
+- Siguiente: B completo → D (seed) → E → F. Ver ADR-09..11 en docs/decisiones.md.
+
+## Estado de Fase 0 (histórico)
 
 ## Estado
 - Fase 0 desplegada: https://firebrick-cod-910257.hostingersite.com/ y https://ichisieben.github.io/kuyaypet/ (Pages se publica solo con cada push).
