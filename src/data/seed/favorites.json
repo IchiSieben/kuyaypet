@@ -1,0 +1,17 @@
+[
+  {
+    "adopterId": "u-adopter-demo",
+    "petId": "p04",
+    "createdAt": "2026-09-19T17:00:00.000Z"
+  },
+  {
+    "adopterId": "u-adopter-demo",
+    "petId": "p21",
+    "createdAt": "2026-09-22T17:00:00.000Z"
+  },
+  {
+    "adopterId": "u-adopter-demo",
+    "petId": "p31",
+    "createdAt": "2026-09-13T17:00:00.000Z"
+  }
+]

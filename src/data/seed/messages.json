@@ -1,0 +1,79 @@
+[
+  {
+    "id": "msg-0001",
+    "threadId": "t-001",
+    "senderId": "u-owner-05",
+    "text": "Hola, vi que aceptaste mi interés. ¿Podemos coordinar una visita?",
+    "createdAt": "2026-09-17T17:00:00.000Z"
+  },
+  {
+    "id": "msg-0002",
+    "threadId": "t-001",
+    "senderId": "u-adopter-demo",
+    "text": "¡Hola! Claro que sí, ¿qué día te acomoda?",
+    "createdAt": "2026-09-18T18:00:00.000Z"
+  },
+  {
+    "id": "msg-0003",
+    "threadId": "t-001",
+    "senderId": "u-owner-05",
+    "text": "¿Este sábado en la tarde estaría bien?",
+    "createdAt": "2026-09-19T19:00:00.000Z"
+  },
+  {
+    "id": "msg-0004",
+    "threadId": "t-002",
+    "senderId": "u-owner-05",
+    "text": "Hola, vi que aceptaste mi interés. ¿Podemos coordinar una visita?",
+    "createdAt": "2026-09-17T17:00:00.000Z"
+  },
+  {
+    "id": "msg-0005",
+    "threadId": "t-002",
+    "senderId": "u-adopter-demo",
+    "text": "¡Hola! Claro que sí, ¿qué día te acomoda?",
+    "createdAt": "2026-09-18T18:00:00.000Z"
+  },
+  {
+    "id": "msg-0006",
+    "threadId": "t-002",
+    "senderId": "u-owner-05",
+    "text": "¿Este sábado en la tarde estaría bien?",
+    "createdAt": "2026-09-19T19:00:00.000Z"
+  },
+  {
+    "id": "msg-0007",
+    "threadId": "t-003",
+    "senderId": "u-adopter-04",
+    "text": "Hola a todos, vi la publicación de Porotopo, ¡qué lindo perrito!",
+    "createdAt": "2026-09-19T17:00:00.000Z"
+  },
+  {
+    "id": "msg-0008",
+    "threadId": "t-003",
+    "senderId": "u-adopter-demo",
+    "text": "¡Sí! Yo también estoy interesada, ¿alguien ya coordinó visita?",
+    "createdAt": "2026-09-20T18:00:00.000Z"
+  },
+  {
+    "id": "msg-0009",
+    "threadId": "t-003",
+    "senderId": "u-adopter-demo",
+    "text": "Yo escribí a la responsable, dice que está disponible este finde.",
+    "createdAt": "2026-09-21T19:00:00.000Z"
+  },
+  {
+    "id": "msg-0010",
+    "threadId": "t-003",
+    "senderId": "u-adopter-demo",
+    "text": "Genial, ojalá se pueda hacer una visita grupal.",
+    "createdAt": "2026-09-22T20:00:00.000Z"
+  },
+  {
+    "id": "msg-0011",
+    "threadId": "t-003",
+    "senderId": "u-adopter-07",
+    "text": "Les cuento cómo me va, ¡gracias por el dato!",
+    "createdAt": "2026-09-23T21:00:00.000Z"
+  }
+]

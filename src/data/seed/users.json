@@ -1,0 +1,472 @@
+[
+  {
+    "id": "u-admin",
+    "role": "admin",
+    "name": "Admin KuyayPet",
+    "email": "admin@kuyaypet.pe",
+    "password": "kuyay2026",
+    "avatar": "img/people/u-admin.webp",
+    "active": true,
+    "createdAt": "2026-03-09T17:00:00.000Z",
+    "provider": "email"
+  },
+  {
+    "id": "u-owner-demo",
+    "role": "owner",
+    "name": "Rosa Quispe",
+    "email": "responsable@kuyaypet.pe",
+    "password": "kuyay2026",
+    "avatar": "img/people/u-owner-demo.webp",
+    "phone": "969504170",
+    "district": "Pueblo Libre",
+    "bio": "Amante de los animales, dedico tiempo a rescatar y encontrar hogares responsables.",
+    "active": true,
+    "createdAt": "2025-12-29T17:00:00.000Z",
+    "provider": "email",
+    "kind": "persona",
+    "autoAcceptProbability": 0.39
+  },
+  {
+    "id": "u-owner-02",
+    "role": "owner",
+    "name": "Albergue Patitas del Sur",
+    "email": "albergue.patitas.del.sur@kuyaypet.pe",
+    "password": "kuyay2026",
+    "avatar": "img/people/u-owner-02.webp",
+    "phone": "936412189",
+    "district": "Los Olivos",
+    "bio": "Refugio sin fines de lucro dedicado al rescate y adopción responsable de mascotas en Lima.",
+    "active": true,
+    "createdAt": "2026-07-13T17:00:00.000Z",
+    "provider": "email",
+    "kind": "albergue",
+    "autoAcceptProbability": 0.34
+  },
+  {
+    "id": "u-owner-03",
+    "role": "owner",
+    "name": "Milagros Flores",
+    "email": "milagros.flores@kuyaypet.pe",
+    "password": "kuyay2026",
+    "avatar": "img/people/u-owner-03.webp",
+    "phone": "926154486",
+    "district": "Lince",
+    "bio": "Amante de los animales, dedico tiempo a rescatar y encontrar hogares responsables.",
+    "active": true,
+    "createdAt": "2026-04-06T17:00:00.000Z",
+    "provider": "email",
+    "kind": "persona",
+    "autoAcceptProbability": 0.54
+  },
+  {
+    "id": "u-owner-04",
+    "role": "owner",
+    "name": "Carlos Huamán",
+    "email": "carlos.huaman@kuyaypet.pe",
+    "password": "kuyay2026",
+    "avatar": "img/people/u-owner-04.webp",
+    "phone": "928344593",
+    "district": "Chorrillos",
+    "bio": "Amante de los animales, dedico tiempo a rescatar y encontrar hogares responsables.",
+    "active": true,
+    "createdAt": "2026-04-24T17:00:00.000Z",
+    "provider": "email",
+    "kind": "persona",
+    "autoAcceptProbability": 0.77
+  },
+  {
+    "id": "u-owner-05",
+    "role": "owner",
+    "name": "Patricia Salazar",
+    "email": "patricia.salazar@kuyaypet.pe",
+    "password": "kuyay2026",
+    "avatar": "img/people/u-owner-05.webp",
+    "phone": "935064535",
+    "district": "San Juan de Miraflores",
+    "bio": "Amante de los animales, dedico tiempo a rescatar y encontrar hogares responsables.",
+    "active": true,
+    "createdAt": "2026-04-25T17:00:00.000Z",
+    "provider": "email",
+    "kind": "persona",
+    "autoAcceptProbability": 0.55
+  },
+  {
+    "id": "u-owner-06",
+    "role": "owner",
+    "name": "Albergue Amigos de Cuatro Patas",
+    "email": "albergue.amigos.de.cuatro.patas@kuyaypet.pe",
+    "password": "kuyay2026",
+    "avatar": "img/people/u-owner-06.webp",
+    "phone": "937106664",
+    "district": "Los Olivos",
+    "bio": "Refugio sin fines de lucro dedicado al rescate y adopción responsable de mascotas en Lima.",
+    "active": true,
+    "createdAt": "2025-09-17T17:00:00.000Z",
+    "provider": "email",
+    "kind": "albergue",
+    "autoAcceptProbability": 0.35
+  },
+  {
+    "id": "u-owner-07",
+    "role": "owner",
+    "name": "Albergue Patitas del Sur",
+    "email": "albergue.patitas.del.sur@kuyaypet.pe",
+    "password": "kuyay2026",
+    "avatar": "img/people/u-owner-07.webp",
+    "phone": "976775852",
+    "district": "Jesús María",
+    "bio": "Refugio sin fines de lucro dedicado al rescate y adopción responsable de mascotas en Lima.",
+    "active": true,
+    "createdAt": "2026-03-15T17:00:00.000Z",
+    "provider": "email",
+    "kind": "albergue",
+    "autoAcceptProbability": 0.88
+  },
+  {
+    "id": "u-owner-08",
+    "role": "owner",
+    "name": "Rosa Quispe",
+    "email": "rosa.quispe@kuyaypet.pe",
+    "password": "kuyay2026",
+    "avatar": "img/people/u-owner-08.webp",
+    "phone": "912802411",
+    "district": "San Martín de Porres",
+    "bio": "Amante de los animales, dedico tiempo a rescatar y encontrar hogares responsables.",
+    "active": true,
+    "createdAt": "2025-08-23T17:00:00.000Z",
+    "provider": "email",
+    "kind": "persona",
+    "autoAcceptProbability": 0.41
+  },
+  {
+    "id": "u-owner-09",
+    "role": "owner",
+    "name": "Jorge Ramírez",
+    "email": "jorge.ramirez@kuyaypet.pe",
+    "password": "kuyay2026",
+    "avatar": "img/people/u-owner-09.webp",
+    "phone": "954340442",
+    "district": "Surquillo",
+    "bio": "Amante de los animales, dedico tiempo a rescatar y encontrar hogares responsables.",
+    "active": true,
+    "createdAt": "2026-05-28T17:00:00.000Z",
+    "provider": "email",
+    "kind": "persona",
+    "autoAcceptProbability": 0.89
+  },
+  {
+    "id": "u-owner-10",
+    "role": "owner",
+    "name": "Milagros Flores",
+    "email": "milagros.flores@kuyaypet.pe",
+    "password": "kuyay2026",
+    "avatar": "img/people/u-owner-10.webp",
+    "phone": "963933918",
+    "district": "Cercado de Lima",
+    "bio": "Amante de los animales, dedico tiempo a rescatar y encontrar hogares responsables.",
+    "active": true,
+    "createdAt": "2026-02-20T17:00:00.000Z",
+    "provider": "email",
+    "kind": "persona",
+    "autoAcceptProbability": 0.6
+  },
+  {
+    "id": "u-owner-11",
+    "role": "owner",
+    "name": "Carlos Huamán",
+    "email": "carlos.huaman@kuyaypet.pe",
+    "password": "kuyay2026",
+    "avatar": "img/people/u-owner-11.webp",
+    "phone": "970592462",
+    "district": "Ate",
+    "bio": "Amante de los animales, dedico tiempo a rescatar y encontrar hogares responsables.",
+    "active": true,
+    "createdAt": "2025-08-31T17:00:00.000Z",
+    "provider": "email",
+    "kind": "persona",
+    "autoAcceptProbability": 0.52
+  },
+  {
+    "id": "u-owner-12",
+    "role": "owner",
+    "name": "Albergue Patitas del Sur",
+    "email": "albergue.patitas.del.sur@kuyaypet.pe",
+    "password": "kuyay2026",
+    "avatar": "img/people/u-owner-12.webp",
+    "phone": "995655256",
+    "district": "Santiago de Surco",
+    "bio": "Refugio sin fines de lucro dedicado al rescate y adopción responsable de mascotas en Lima.",
+    "active": true,
+    "createdAt": "2025-09-14T17:00:00.000Z",
+    "provider": "email",
+    "kind": "albergue",
+    "autoAcceptProbability": 0.4
+  },
+  {
+    "id": "u-adopter-demo",
+    "role": "adopter",
+    "name": "Valeria Torres",
+    "email": "adoptante@kuyaypet.pe",
+    "password": "kuyay2026",
+    "avatar": "img/people/u-adopter-demo.webp",
+    "district": "Miraflores",
+    "active": true,
+    "createdAt": "2026-06-24T17:00:00.000Z",
+    "provider": "email",
+    "profile": {
+      "district": "Miraflores",
+      "location": {
+        "lat": -12.121340300212056,
+        "lng": -77.0282797594078
+      },
+      "radiusKm": 10,
+      "housing": "departamento",
+      "homeSize": "mediana",
+      "hoursAlone": "3-5",
+      "activity": "moderado",
+      "experience": "he_tenido",
+      "kids": "no",
+      "otherPets": "ninguna",
+      "allergies": false,
+      "prefs": {
+        "species": [],
+        "sizes": [],
+        "ages": [],
+        "sex": "cualquiera"
+      }
+    }
+  },
+  {
+    "id": "u-adopter-02",
+    "role": "adopter",
+    "name": "Diego Alvarado",
+    "email": "diego.alvarado@kuyaypet.pe",
+    "password": "kuyay2026",
+    "avatar": "img/people/u-adopter-02.webp",
+    "district": "San Juan de Miraflores",
+    "active": true,
+    "createdAt": "2026-09-15T17:00:00.000Z",
+    "provider": "email",
+    "profile": {
+      "district": "San Juan de Miraflores",
+      "location": {
+        "lat": -12.149404291307182,
+        "lng": -76.97029132263064
+      },
+      "radiusKm": 18,
+      "housing": "departamento",
+      "homeSize": "mediana",
+      "hoursAlone": "6-8",
+      "activity": "sedentario",
+      "experience": "experto",
+      "kids": "pequenos",
+      "otherPets": "ambos",
+      "allergies": false,
+      "prefs": {
+        "species": [
+          "gato"
+        ],
+        "sizes": [],
+        "ages": [],
+        "sex": "cualquiera"
+      }
+    }
+  },
+  {
+    "id": "u-adopter-03",
+    "role": "adopter",
+    "name": "Fiorella Castro",
+    "email": "fiorella.castro@kuyaypet.pe",
+    "password": "kuyay2026",
+    "avatar": "img/people/u-adopter-03.webp",
+    "district": "San Borja",
+    "active": true,
+    "createdAt": "2026-04-06T17:00:00.000Z",
+    "provider": "email"
+  },
+  {
+    "id": "u-adopter-04",
+    "role": "adopter",
+    "name": "Sebastián Rojas",
+    "email": "sebastian.rojas@kuyaypet.pe",
+    "password": "kuyay2026",
+    "avatar": "img/people/u-adopter-04.webp",
+    "district": "Santiago de Surco",
+    "active": true,
+    "createdAt": "2026-06-01T17:00:00.000Z",
+    "provider": "email",
+    "profile": {
+      "district": "Santiago de Surco",
+      "location": {
+        "lat": -12.138012685464322,
+        "lng": -76.98632532054484
+      },
+      "radiusKm": 7,
+      "housing": "departamento",
+      "homeSize": "grande",
+      "hoursAlone": "8+",
+      "activity": "sedentario",
+      "experience": "he_tenido",
+      "kids": "pequenos",
+      "otherPets": "ninguna",
+      "allergies": false,
+      "prefs": {
+        "species": [
+          "gato"
+        ],
+        "sizes": [],
+        "ages": [
+          "joven"
+        ],
+        "sex": "hembra"
+      }
+    }
+  },
+  {
+    "id": "u-adopter-05",
+    "role": "adopter",
+    "name": "Camila Mendoza",
+    "email": "camila.mendoza@kuyaypet.pe",
+    "password": "kuyay2026",
+    "avatar": "img/people/u-adopter-05.webp",
+    "district": "San Isidro",
+    "active": true,
+    "createdAt": "2025-12-26T17:00:00.000Z",
+    "provider": "email",
+    "profile": {
+      "district": "San Isidro",
+      "location": {
+        "lat": -12.091091088761388,
+        "lng": -77.03110527226329
+      },
+      "radiusKm": 14,
+      "housing": "casa_con_patio",
+      "homeSize": "mediana",
+      "hoursAlone": "0-2",
+      "activity": "moderado",
+      "experience": "primera",
+      "kids": "no",
+      "otherPets": "ninguna",
+      "allergies": false,
+      "prefs": {
+        "species": [
+          "gato"
+        ],
+        "sizes": [],
+        "ages": [
+          "cachorro"
+        ],
+        "sex": "cualquiera"
+      }
+    }
+  },
+  {
+    "id": "u-adopter-06",
+    "role": "adopter",
+    "name": "Andrés Paredes",
+    "email": "andres.paredes@kuyaypet.pe",
+    "password": "kuyay2026",
+    "avatar": "img/people/u-adopter-06.webp",
+    "district": "San Isidro",
+    "active": true,
+    "createdAt": "2026-06-07T17:00:00.000Z",
+    "provider": "email",
+    "profile": {
+      "district": "San Isidro",
+      "location": {
+        "lat": -12.096252591450511,
+        "lng": -77.03524750388041
+      },
+      "radiusKm": 20,
+      "housing": "casa_sin_patio",
+      "homeSize": "mediana",
+      "hoursAlone": "6-8",
+      "activity": "muy_activo",
+      "experience": "experto",
+      "kids": "mayores_6",
+      "otherPets": "perro",
+      "allergies": false,
+      "prefs": {
+        "species": [],
+        "sizes": [
+          "M"
+        ],
+        "ages": [],
+        "sex": "macho"
+      }
+    }
+  },
+  {
+    "id": "u-adopter-07",
+    "role": "adopter",
+    "name": "Gabriela Ríos",
+    "email": "gabriela.rios@kuyaypet.pe",
+    "password": "kuyay2026",
+    "avatar": "img/people/u-adopter-07.webp",
+    "district": "San Isidro",
+    "active": true,
+    "createdAt": "2026-06-17T17:00:00.000Z",
+    "provider": "email",
+    "profile": {
+      "district": "San Isidro",
+      "location": {
+        "lat": -12.102964197655021,
+        "lng": -77.0410032903254
+      },
+      "radiusKm": 7,
+      "housing": "casa_con_patio",
+      "homeSize": "grande",
+      "hoursAlone": "3-5",
+      "activity": "sedentario",
+      "experience": "primera",
+      "kids": "pequenos",
+      "otherPets": "ambos",
+      "allergies": false,
+      "prefs": {
+        "species": [],
+        "sizes": [
+          "M"
+        ],
+        "ages": [],
+        "sex": "cualquiera"
+      }
+    }
+  },
+  {
+    "id": "u-adopter-08",
+    "role": "adopter",
+    "name": "Martín Chávez",
+    "email": "martin.chavez@kuyaypet.pe",
+    "password": "kuyay2026",
+    "avatar": "img/people/u-adopter-08.webp",
+    "district": "Comas",
+    "active": false,
+    "createdAt": "2026-08-23T17:00:00.000Z",
+    "provider": "email",
+    "profile": {
+      "district": "Comas",
+      "location": {
+        "lat": -11.932776674582064,
+        "lng": -77.04141451509298
+      },
+      "radiusKm": 16,
+      "housing": "departamento",
+      "homeSize": "grande",
+      "hoursAlone": "0-2",
+      "activity": "sedentario",
+      "experience": "he_tenido",
+      "kids": "no",
+      "otherPets": "ninguna",
+      "allergies": true,
+      "prefs": {
+        "species": [],
+        "sizes": [
+          "M",
+          "S"
+        ],
+        "ages": [],
+        "sex": "macho"
+      }
+    }
+  }
+]

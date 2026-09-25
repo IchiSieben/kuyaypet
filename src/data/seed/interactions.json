@@ -1,0 +1,191 @@
+[
+  {
+    "id": "int-001",
+    "adopterId": "u-adopter-demo",
+    "petId": "p22",
+    "kind": "dislike",
+    "createdAt": "2026-09-15T17:00:00.000Z"
+  },
+  {
+    "id": "int-002",
+    "adopterId": "u-adopter-demo",
+    "petId": "p35",
+    "kind": "dislike",
+    "createdAt": "2026-09-05T17:00:00.000Z"
+  },
+  {
+    "id": "int-003",
+    "adopterId": "u-adopter-demo",
+    "petId": "p13",
+    "kind": "like",
+    "createdAt": "2026-09-09T17:00:00.000Z"
+  },
+  {
+    "id": "int-004",
+    "adopterId": "u-adopter-demo",
+    "petId": "p08",
+    "kind": "like",
+    "createdAt": "2026-09-07T17:00:00.000Z"
+  },
+  {
+    "id": "int-005",
+    "adopterId": "u-adopter-02",
+    "petId": "p16",
+    "kind": "dislike",
+    "createdAt": "2026-09-21T17:00:00.000Z"
+  },
+  {
+    "id": "int-006",
+    "adopterId": "u-adopter-02",
+    "petId": "p32",
+    "kind": "like",
+    "createdAt": "2026-09-13T17:00:00.000Z"
+  },
+  {
+    "id": "int-007",
+    "adopterId": "u-adopter-02",
+    "petId": "p27",
+    "kind": "like",
+    "createdAt": "2026-09-19T17:00:00.000Z"
+  },
+  {
+    "id": "int-008",
+    "adopterId": "u-adopter-03",
+    "petId": "p19",
+    "kind": "like",
+    "createdAt": "2026-09-04T17:00:00.000Z"
+  },
+  {
+    "id": "int-009",
+    "adopterId": "u-adopter-03",
+    "petId": "p18",
+    "kind": "like",
+    "createdAt": "2026-09-24T17:00:00.000Z"
+  },
+  {
+    "id": "int-010",
+    "adopterId": "u-adopter-03",
+    "petId": "p15",
+    "kind": "like",
+    "createdAt": "2026-09-20T17:00:00.000Z"
+  },
+  {
+    "id": "int-011",
+    "adopterId": "u-adopter-04",
+    "petId": "p22",
+    "kind": "dislike",
+    "createdAt": "2026-09-11T17:00:00.000Z"
+  },
+  {
+    "id": "int-012",
+    "adopterId": "u-adopter-04",
+    "petId": "p23",
+    "kind": "like",
+    "createdAt": "2026-09-06T17:00:00.000Z"
+  },
+  {
+    "id": "int-013",
+    "adopterId": "u-adopter-05",
+    "petId": "p11",
+    "kind": "like",
+    "createdAt": "2026-09-15T17:00:00.000Z"
+  },
+  {
+    "id": "int-014",
+    "adopterId": "u-adopter-05",
+    "petId": "p16",
+    "kind": "dislike",
+    "createdAt": "2026-09-23T17:00:00.000Z"
+  },
+  {
+    "id": "int-015",
+    "adopterId": "u-adopter-05",
+    "petId": "p28",
+    "kind": "like",
+    "createdAt": "2026-09-15T17:00:00.000Z"
+  },
+  {
+    "id": "int-016",
+    "adopterId": "u-adopter-05",
+    "petId": "p29",
+    "kind": "like",
+    "createdAt": "2026-09-05T17:00:00.000Z"
+  },
+  {
+    "id": "int-017",
+    "adopterId": "u-adopter-05",
+    "petId": "p22",
+    "kind": "dislike",
+    "createdAt": "2026-09-10T17:00:00.000Z"
+  },
+  {
+    "id": "int-018",
+    "adopterId": "u-adopter-06",
+    "petId": "p02",
+    "kind": "like",
+    "createdAt": "2026-09-16T17:00:00.000Z"
+  },
+  {
+    "id": "int-019",
+    "adopterId": "u-adopter-06",
+    "petId": "p09",
+    "kind": "like",
+    "createdAt": "2026-09-24T17:00:00.000Z"
+  },
+  {
+    "id": "int-020",
+    "adopterId": "u-adopter-06",
+    "petId": "p39",
+    "kind": "dislike",
+    "createdAt": "2026-09-21T17:00:00.000Z"
+  },
+  {
+    "id": "int-021",
+    "adopterId": "u-adopter-06",
+    "petId": "p11",
+    "kind": "dislike",
+    "createdAt": "2026-09-21T17:00:00.000Z"
+  },
+  {
+    "id": "int-022",
+    "adopterId": "u-adopter-07",
+    "petId": "p03",
+    "kind": "like",
+    "createdAt": "2026-09-14T17:00:00.000Z"
+  },
+  {
+    "id": "int-023",
+    "adopterId": "u-adopter-07",
+    "petId": "p19",
+    "kind": "like",
+    "createdAt": "2026-09-20T17:00:00.000Z"
+  },
+  {
+    "id": "int-024",
+    "adopterId": "u-adopter-07",
+    "petId": "p36",
+    "kind": "like",
+    "createdAt": "2026-09-15T17:00:00.000Z"
+  },
+  {
+    "id": "int-025",
+    "adopterId": "u-adopter-07",
+    "petId": "p11",
+    "kind": "like",
+    "createdAt": "2026-09-01T17:00:00.000Z"
+  },
+  {
+    "id": "int-026",
+    "adopterId": "u-adopter-08",
+    "petId": "p29",
+    "kind": "like",
+    "createdAt": "2026-09-07T17:00:00.000Z"
+  },
+  {
+    "id": "int-027",
+    "adopterId": "u-adopter-08",
+    "petId": "p25",
+    "kind": "like",
+    "createdAt": "2026-09-14T17:00:00.000Z"
+  }
+]

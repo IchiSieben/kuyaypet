@@ -1,0 +1,26 @@
+[
+  {
+    "id": "ad-001",
+    "adopterId": "u-adopter-07",
+    "petId": "p01",
+    "ownerId": "u-owner-demo",
+    "date": "2026-10-02",
+    "time": "16:00",
+    "place": "Parque Kennedy, Miraflores",
+    "message": "Hola, me encantaría conocer a la mascota y coordinar la adopción.",
+    "status": "pendiente",
+    "createdAt": "2026-09-23T17:00:00.000Z"
+  },
+  {
+    "id": "ad-002",
+    "adopterId": "u-adopter-demo",
+    "petId": "p36",
+    "ownerId": "u-owner-03",
+    "date": "2026-09-18",
+    "time": "11:00",
+    "place": "Parque Reducto N°2, Miraflores",
+    "message": "Quedamos en vernos para conocer al perrito.",
+    "status": "aceptada",
+    "createdAt": "2026-09-13T17:00:00.000Z"
+  }
+]

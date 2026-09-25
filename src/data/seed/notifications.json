@@ -1,0 +1,56 @@
+[
+  {
+    "id": "notif-001",
+    "userId": "u-owner-demo",
+    "kind": "interes",
+    "title": "Nuevo interés",
+    "body": "Alguien mostró interés en uno de tus peluditos.",
+    "read": false,
+    "createdAt": "2026-09-24T17:00:00.000Z"
+  },
+  {
+    "id": "notif-002",
+    "userId": "u-owner-demo",
+    "kind": "solicitud",
+    "title": "Solicitud de adopción",
+    "body": "Tienes una solicitud pendiente de revisar.",
+    "read": false,
+    "createdAt": "2026-09-23T17:00:00.000Z"
+  },
+  {
+    "id": "notif-003",
+    "userId": "u-owner-demo",
+    "kind": "interes",
+    "title": "Nuevo interés",
+    "body": "Recibiste un nuevo interés en tu publicación.",
+    "read": true,
+    "createdAt": "2026-09-20T17:00:00.000Z"
+  },
+  {
+    "id": "notif-004",
+    "userId": "u-adopter-demo",
+    "kind": "match",
+    "title": "¡Tienes un nuevo Match!",
+    "body": "Hiciste match con una mascota. ¡Escríbele!",
+    "read": false,
+    "createdAt": "2026-09-17T17:00:00.000Z"
+  },
+  {
+    "id": "notif-005",
+    "userId": "u-adopter-demo",
+    "kind": "mensaje",
+    "title": "Nuevo mensaje",
+    "body": "Tienes un mensaje sin leer en tus chats.",
+    "read": false,
+    "createdAt": "2026-09-24T17:00:00.000Z"
+  },
+  {
+    "id": "notif-006",
+    "userId": "u-admin",
+    "kind": "publicacion",
+    "title": "Publicaciones por revisar",
+    "body": "Hay mascotas nuevas esperando aprobación.",
+    "read": false,
+    "createdAt": "2026-09-24T17:00:00.000Z"
+  }
+]

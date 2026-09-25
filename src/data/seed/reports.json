@@ -1,0 +1,53 @@
+[
+  {
+    "id": "rep-001",
+    "reporterId": "u-adopter-02",
+    "targetType": "mascota",
+    "targetId": "p03",
+    "reason": "Publicación sospechosa",
+    "detail": "La publicación pide dinero por adelantado, algo inusual para una adopción.",
+    "status": "abierto",
+    "createdAt": "2026-09-21T17:00:00.000Z"
+  },
+  {
+    "id": "rep-002",
+    "reporterId": "u-adopter-03",
+    "targetType": "mensaje",
+    "targetId": "msg-0001",
+    "reason": "Mensaje ofensivo",
+    "detail": "El responsable me respondió de forma grosera en el chat.",
+    "status": "abierto",
+    "createdAt": "2026-09-19T17:00:00.000Z"
+  },
+  {
+    "id": "rep-003",
+    "reporterId": "u-adopter-04",
+    "targetType": "usuario",
+    "targetId": "u-owner-03",
+    "reason": "Perfil falso",
+    "detail": "El usuario parece tener datos inventados y fotos repetidas.",
+    "status": "abierto",
+    "createdAt": "2026-09-16T17:00:00.000Z"
+  },
+  {
+    "id": "rep-004",
+    "reporterId": "u-adopter-05",
+    "targetType": "mascota",
+    "targetId": "p10",
+    "reason": "Spam",
+    "detail": "La misma publicación aparece repetida varias veces.",
+    "status": "abierto",
+    "createdAt": "2026-09-22T17:00:00.000Z"
+  },
+  {
+    "id": "rep-005",
+    "reporterId": "u-adopter-06",
+    "targetType": "mascota",
+    "targetId": "p30",
+    "reason": "Información incorrecta",
+    "detail": "La edad de la mascota no coincide con la foto.",
+    "status": "resuelto",
+    "createdAt": "2026-09-05T17:00:00.000Z",
+    "resolution": "Se contactó al responsable y se corrigió la publicación."
+  }
+]

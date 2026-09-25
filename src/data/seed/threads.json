@@ -1,0 +1,48 @@
+[
+  {
+    "id": "t-001",
+    "kind": "direct",
+    "petId": "p13",
+    "memberIds": [
+      "u-adopter-demo",
+      "u-owner-05"
+    ],
+    "createdAt": "2026-09-16T17:00:00.000Z",
+    "lastReadAt": {
+      "u-adopter-demo": "2026-09-24T17:00:00.000Z",
+      "u-owner-05": "2026-09-23T17:00:00.000Z"
+    }
+  },
+  {
+    "id": "t-002",
+    "kind": "direct",
+    "petId": "p08",
+    "memberIds": [
+      "u-adopter-demo",
+      "u-owner-05"
+    ],
+    "createdAt": "2026-09-18T17:00:00.000Z",
+    "lastReadAt": {
+      "u-adopter-demo": "2026-09-24T17:00:00.000Z",
+      "u-owner-05": "2026-09-23T17:00:00.000Z"
+    }
+  },
+  {
+    "id": "t-003",
+    "kind": "group",
+    "petId": "p01",
+    "memberIds": [
+      "u-adopter-04",
+      "u-adopter-07",
+      "u-adopter-demo",
+      "u-owner-demo"
+    ],
+    "createdAt": "2026-09-19T17:00:00.000Z",
+    "lastReadAt": {
+      "u-adopter-04": "2026-09-24T17:00:00.000Z",
+      "u-adopter-07": "2026-09-24T17:00:00.000Z",
+      "u-adopter-demo": "2026-09-22T17:00:00.000Z",
+      "u-owner-demo": "2026-09-22T17:00:00.000Z"
+    }
+  }
+]

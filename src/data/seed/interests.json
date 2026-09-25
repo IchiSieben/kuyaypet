@@ -1,0 +1,104 @@
+[
+  {
+    "id": "is-001",
+    "adopterId": "u-adopter-demo",
+    "petId": "p13",
+    "ownerId": "u-owner-05",
+    "status": "aceptado",
+    "super": false,
+    "score": 92,
+    "createdAt": "2026-09-14T17:00:00.000Z",
+    "answeredAt": "2026-09-20T17:00:00.000Z"
+  },
+  {
+    "id": "is-002",
+    "adopterId": "u-adopter-demo",
+    "petId": "p08",
+    "ownerId": "u-owner-05",
+    "status": "aceptado",
+    "super": false,
+    "score": 73,
+    "createdAt": "2026-09-09T17:00:00.000Z",
+    "answeredAt": "2026-09-16T17:00:00.000Z"
+  },
+  {
+    "id": "is-003",
+    "adopterId": "u-adopter-06",
+    "petId": "p01",
+    "ownerId": "u-owner-demo",
+    "status": "pendiente",
+    "super": false,
+    "score": 84,
+    "createdAt": "2026-09-10T17:00:00.000Z"
+  },
+  {
+    "id": "is-004",
+    "adopterId": "u-adopter-05",
+    "petId": "p29",
+    "ownerId": "u-owner-demo",
+    "status": "aceptado",
+    "super": false,
+    "score": 81,
+    "createdAt": "2026-09-20T17:00:00.000Z"
+  },
+  {
+    "id": "is-005",
+    "adopterId": "u-adopter-04",
+    "petId": "p18",
+    "ownerId": "u-owner-02",
+    "status": "rechazado",
+    "super": false,
+    "score": 80,
+    "createdAt": "2026-09-13T17:00:00.000Z"
+  },
+  {
+    "id": "is-006",
+    "adopterId": "u-adopter-03",
+    "petId": "p08",
+    "ownerId": "u-owner-05",
+    "status": "aceptado",
+    "super": true,
+    "score": 51,
+    "createdAt": "2026-09-17T17:00:00.000Z"
+  },
+  {
+    "id": "is-007",
+    "adopterId": "u-adopter-05",
+    "petId": "p24",
+    "ownerId": "u-owner-06",
+    "status": "pendiente",
+    "super": false,
+    "score": 81,
+    "createdAt": "2026-09-22T17:00:00.000Z"
+  },
+  {
+    "id": "is-008",
+    "adopterId": "u-adopter-05",
+    "petId": "p36",
+    "ownerId": "u-owner-03",
+    "status": "rechazado",
+    "super": false,
+    "score": 57,
+    "createdAt": "2026-09-03T17:00:00.000Z"
+  },
+  {
+    "id": "is-009",
+    "adopterId": "u-adopter-08",
+    "petId": "p06",
+    "ownerId": "u-owner-07",
+    "status": "aceptado",
+    "super": true,
+    "score": 50,
+    "createdAt": "2026-09-08T17:00:00.000Z"
+  },
+  {
+    "id": "is-010",
+    "adopterId": "u-adopter-08",
+    "petId": "p05",
+    "ownerId": "u-owner-07",
+    "status": "pendiente",
+    "super": false,
+    "score": 72,
+    "createdAt": "2026-09-08T17:00:00.000Z"
+  }
+]

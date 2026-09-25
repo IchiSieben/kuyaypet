@@ -1,0 +1,588 @@
+[
+  {
+    "path": "img/people/u-admin.webp",
+    "kind": "person",
+    "gender": "M",
+    "index": 32
+  },
+  {
+    "path": "img/people/u-owner-demo.webp",
+    "kind": "person",
+    "gender": "F",
+    "index": 28
+  },
+  {
+    "path": "img/people/u-owner-03.webp",
+    "kind": "person",
+    "gender": "F",
+    "index": 11
+  },
+  {
+    "path": "img/people/u-owner-04.webp",
+    "kind": "person",
+    "gender": "M",
+    "index": 1
+  },
+  {
+    "path": "img/people/u-owner-05.webp",
+    "kind": "person",
+    "gender": "F",
+    "index": 69
+  },
+  {
+    "path": "img/people/u-owner-08.webp",
+    "kind": "person",
+    "gender": "F",
+    "index": 33
+  },
+  {
+    "path": "img/people/u-owner-09.webp",
+    "kind": "person",
+    "gender": "M",
+    "index": 25
+  },
+  {
+    "path": "img/people/u-owner-10.webp",
+    "kind": "person",
+    "gender": "F",
+    "index": 70
+  },
+  {
+    "path": "img/people/u-owner-11.webp",
+    "kind": "person",
+    "gender": "M",
+    "index": 52
+  },
+  {
+    "path": "img/people/u-adopter-demo.webp",
+    "kind": "person",
+    "gender": "F",
+    "index": 16
+  },
+  {
+    "path": "img/people/u-adopter-02.webp",
+    "kind": "person",
+    "gender": "M",
+    "index": 81
+  },
+  {
+    "path": "img/people/u-adopter-03.webp",
+    "kind": "person",
+    "gender": "F",
+    "index": 75
+  },
+  {
+    "path": "img/people/u-adopter-04.webp",
+    "kind": "person",
+    "gender": "M",
+    "index": 9
+  },
+  {
+    "path": "img/people/u-adopter-05.webp",
+    "kind": "person",
+    "gender": "F",
+    "index": 36
+  },
+  {
+    "path": "img/people/u-adopter-06.webp",
+    "kind": "person",
+    "gender": "M",
+    "index": 26
+  },
+  {
+    "path": "img/people/u-adopter-07.webp",
+    "kind": "person",
+    "gender": "F",
+    "index": 41
+  },
+  {
+    "path": "img/people/u-adopter-08.webp",
+    "kind": "person",
+    "gender": "M",
+    "index": 45
+  },
+  {
+    "path": "img/pets/p01-1.webp",
+    "kind": "pet-dog",
+    "breedPath": "schnauzer/miniature"
+  },
+  {
+    "path": "img/pets/p01-2.webp",
+    "kind": "pet-dog",
+    "breedPath": "schnauzer/miniature"
+  },
+  {
+    "path": "img/pets/p02-1.webp",
+    "kind": "pet-dog",
+    "breedPath": "schnauzer/miniature"
+  },
+  {
+    "path": "img/pets/p02-2.webp",
+    "kind": "pet-dog",
+    "breedPath": "schnauzer/miniature"
+  },
+  {
+    "path": "img/pets/p02-3.webp",
+    "kind": "pet-dog",
+    "breedPath": "schnauzer/miniature"
+  },
+  {
+    "path": "img/pets/p03-1.webp",
+    "kind": "pet-dog",
+    "breedPath": "spaniel/cocker"
+  },
+  {
+    "path": "img/pets/p03-2.webp",
+    "kind": "pet-dog",
+    "breedPath": "spaniel/cocker"
+  },
+  {
+    "path": "img/pets/p04-1.webp",
+    "kind": "pet-dog",
+    "breedPath": "beagle"
+  },
+  {
+    "path": "img/pets/p04-2.webp",
+    "kind": "pet-dog",
+    "breedPath": "beagle"
+  },
+  {
+    "path": "img/pets/p05-1.webp",
+    "kind": "pet-dog",
+    "breedPath": "shihtzu"
+  },
+  {
+    "path": "img/pets/p05-2.webp",
+    "kind": "pet-dog",
+    "breedPath": "shihtzu"
+  },
+  {
+    "path": "img/pets/p06-1.webp",
+    "kind": "pet-dog",
+    "breedPath": "pug"
+  },
+  {
+    "path": "img/pets/p06-2.webp",
+    "kind": "pet-dog",
+    "breedPath": "pug"
+  },
+  {
+    "path": "img/pets/p06-3.webp",
+    "kind": "pet-dog",
+    "breedPath": "pug"
+  },
+  {
+    "path": "img/pets/p07-1.webp",
+    "kind": "pet-dog",
+    "breedPath": "mix"
+  },
+  {
+    "path": "img/pets/p07-2.webp",
+    "kind": "pet-dog",
+    "breedPath": "mix"
+  },
+  {
+    "path": "img/pets/p08-1.webp",
+    "kind": "pet-dog",
+    "breedPath": "pug"
+  },
+  {
+    "path": "img/pets/p08-2.webp",
+    "kind": "pet-dog",
+    "breedPath": "pug"
+  },
+  {
+    "path": "img/pets/p09-1.webp",
+    "kind": "pet-dog",
+    "breedPath": "chihuahua"
+  },
+  {
+    "path": "img/pets/p09-2.webp",
+    "kind": "pet-dog",
+    "breedPath": "chihuahua"
+  },
+  {
+    "path": "img/pets/p09-3.webp",
+    "kind": "pet-dog",
+    "breedPath": "chihuahua"
+  },
+  {
+    "path": "img/pets/p10-1.webp",
+    "kind": "pet-dog",
+    "breedPath": "pomeranian"
+  },
+  {
+    "path": "img/pets/p10-2.webp",
+    "kind": "pet-dog",
+    "breedPath": "pomeranian"
+  },
+  {
+    "path": "img/pets/p10-3.webp",
+    "kind": "pet-dog",
+    "breedPath": "pomeranian"
+  },
+  {
+    "path": "img/pets/p11-1.webp",
+    "kind": "pet-dog",
+    "breedPath": "poodle/toy"
+  },
+  {
+    "path": "img/pets/p11-2.webp",
+    "kind": "pet-dog",
+    "breedPath": "poodle/toy"
+  },
+  {
+    "path": "img/pets/p12-1.webp",
+    "kind": "pet-dog",
+    "breedPath": "poodle/toy"
+  },
+  {
+    "path": "img/pets/p12-2.webp",
+    "kind": "pet-dog",
+    "breedPath": "poodle/toy"
+  },
+  {
+    "path": "img/pets/p12-3.webp",
+    "kind": "pet-dog",
+    "breedPath": "poodle/toy"
+  },
+  {
+    "path": "img/pets/p13-1.webp",
+    "kind": "pet-dog",
+    "breedPath": "retriever/golden"
+  },
+  {
+    "path": "img/pets/p13-2.webp",
+    "kind": "pet-dog",
+    "breedPath": "retriever/golden"
+  },
+  {
+    "path": "img/pets/p13-3.webp",
+    "kind": "pet-dog",
+    "breedPath": "retriever/golden"
+  },
+  {
+    "path": "img/pets/p14-1.webp",
+    "kind": "pet-dog",
+    "breedPath": "mix"
+  },
+  {
+    "path": "img/pets/p14-2.webp",
+    "kind": "pet-dog",
+    "breedPath": "mix"
+  },
+  {
+    "path": "img/pets/p15-1.webp",
+    "kind": "pet-dog",
+    "breedPath": "mix"
+  },
+  {
+    "path": "img/pets/p15-2.webp",
+    "kind": "pet-dog",
+    "breedPath": "mix"
+  },
+  {
+    "path": "img/pets/p16-1.webp",
+    "kind": "pet-dog",
+    "breedPath": "spaniel/cocker"
+  },
+  {
+    "path": "img/pets/p16-2.webp",
+    "kind": "pet-dog",
+    "breedPath": "spaniel/cocker"
+  },
+  {
+    "path": "img/pets/p16-3.webp",
+    "kind": "pet-dog",
+    "breedPath": "spaniel/cocker"
+  },
+  {
+    "path": "img/pets/p17-1.webp",
+    "kind": "pet-dog",
+    "breedPath": "germanshepherd"
+  },
+  {
+    "path": "img/pets/p17-2.webp",
+    "kind": "pet-dog",
+    "breedPath": "germanshepherd"
+  },
+  {
+    "path": "img/pets/p18-1.webp",
+    "kind": "pet-dog",
+    "breedPath": "mix"
+  },
+  {
+    "path": "img/pets/p18-2.webp",
+    "kind": "pet-dog",
+    "breedPath": "mix"
+  },
+  {
+    "path": "img/pets/p18-3.webp",
+    "kind": "pet-dog",
+    "breedPath": "mix"
+  },
+  {
+    "path": "img/pets/p19-1.webp",
+    "kind": "pet-dog",
+    "breedPath": "mix"
+  },
+  {
+    "path": "img/pets/p19-2.webp",
+    "kind": "pet-dog",
+    "breedPath": "mix"
+  },
+  {
+    "path": "img/pets/p19-3.webp",
+    "kind": "pet-dog",
+    "breedPath": "mix"
+  },
+  {
+    "path": "img/pets/p20-1.webp",
+    "kind": "pet-dog",
+    "breedPath": "maltese"
+  },
+  {
+    "path": "img/pets/p20-2.webp",
+    "kind": "pet-dog",
+    "breedPath": "maltese"
+  },
+  {
+    "path": "img/pets/p20-3.webp",
+    "kind": "pet-dog",
+    "breedPath": "maltese"
+  },
+  {
+    "path": "img/pets/p21-1.webp",
+    "kind": "pet-dog",
+    "breedPath": "mix"
+  },
+  {
+    "path": "img/pets/p21-2.webp",
+    "kind": "pet-dog",
+    "breedPath": "mix"
+  },
+  {
+    "path": "img/pets/p21-3.webp",
+    "kind": "pet-dog",
+    "breedPath": "mix"
+  },
+  {
+    "path": "img/pets/p22-1.webp",
+    "kind": "pet-dog",
+    "breedPath": "pomeranian"
+  },
+  {
+    "path": "img/pets/p22-2.webp",
+    "kind": "pet-dog",
+    "breedPath": "pomeranian"
+  },
+  {
+    "path": "img/pets/p22-3.webp",
+    "kind": "pet-dog",
+    "breedPath": "pomeranian"
+  },
+  {
+    "path": "img/pets/p23-1.webp",
+    "kind": "pet-dog",
+    "breedPath": "mix"
+  },
+  {
+    "path": "img/pets/p23-2.webp",
+    "kind": "pet-dog",
+    "breedPath": "mix"
+  },
+  {
+    "path": "img/pets/p24-1.webp",
+    "kind": "pet-dog",
+    "breedPath": "labrador"
+  },
+  {
+    "path": "img/pets/p24-2.webp",
+    "kind": "pet-dog",
+    "breedPath": "labrador"
+  },
+  {
+    "path": "img/pets/p24-3.webp",
+    "kind": "pet-dog",
+    "breedPath": "labrador"
+  },
+  {
+    "path": "img/pets/p25-1.webp",
+    "kind": "pet-dog",
+    "breedPath": "mix"
+  },
+  {
+    "path": "img/pets/p25-2.webp",
+    "kind": "pet-dog",
+    "breedPath": "mix"
+  },
+  {
+    "path": "img/pets/p26-1.webp",
+    "kind": "pet-dog",
+    "breedPath": "germanshepherd"
+  },
+  {
+    "path": "img/pets/p26-2.webp",
+    "kind": "pet-dog",
+    "breedPath": "germanshepherd"
+  },
+  {
+    "path": "img/pets/p27-1.webp",
+    "kind": "pet-dog",
+    "breedPath": "spaniel/cocker"
+  },
+  {
+    "path": "img/pets/p27-2.webp",
+    "kind": "pet-dog",
+    "breedPath": "spaniel/cocker"
+  },
+  {
+    "path": "img/pets/p27-3.webp",
+    "kind": "pet-dog",
+    "breedPath": "spaniel/cocker"
+  },
+  {
+    "path": "img/pets/p28-1.webp",
+    "kind": "pet-dog",
+    "breedPath": "spaniel/cocker"
+  },
+  {
+    "path": "img/pets/p28-2.webp",
+    "kind": "pet-dog",
+    "breedPath": "spaniel/cocker"
+  },
+  {
+    "path": "img/pets/p28-3.webp",
+    "kind": "pet-dog",
+    "breedPath": "spaniel/cocker"
+  },
+  {
+    "path": "img/pets/p29-1.webp",
+    "kind": "pet-cat"
+  },
+  {
+    "path": "img/pets/p29-2.webp",
+    "kind": "pet-cat"
+  },
+  {
+    "path": "img/pets/p29-3.webp",
+    "kind": "pet-cat"
+  },
+  {
+    "path": "img/pets/p30-1.webp",
+    "kind": "pet-cat",
+    "catBreedId": "pers"
+  },
+  {
+    "path": "img/pets/p30-2.webp",
+    "kind": "pet-cat",
+    "catBreedId": "pers"
+  },
+  {
+    "path": "img/pets/p30-3.webp",
+    "kind": "pet-cat",
+    "catBreedId": "pers"
+  },
+  {
+    "path": "img/pets/p31-1.webp",
+    "kind": "pet-cat"
+  },
+  {
+    "path": "img/pets/p31-2.webp",
+    "kind": "pet-cat"
+  },
+  {
+    "path": "img/pets/p31-3.webp",
+    "kind": "pet-cat"
+  },
+  {
+    "path": "img/pets/p32-1.webp",
+    "kind": "pet-cat",
+    "catBreedId": "rblu"
+  },
+  {
+    "path": "img/pets/p32-2.webp",
+    "kind": "pet-cat",
+    "catBreedId": "rblu"
+  },
+  {
+    "path": "img/pets/p33-1.webp",
+    "kind": "pet-cat",
+    "catBreedId": "rblu"
+  },
+  {
+    "path": "img/pets/p33-2.webp",
+    "kind": "pet-cat",
+    "catBreedId": "rblu"
+  },
+  {
+    "path": "img/pets/p34-1.webp",
+    "kind": "pet-cat",
+    "catBreedId": "beng"
+  },
+  {
+    "path": "img/pets/p34-2.webp",
+    "kind": "pet-cat",
+    "catBreedId": "beng"
+  },
+  {
+    "path": "img/pets/p35-1.webp",
+    "kind": "pet-cat",
+    "catBreedId": "siam"
+  },
+  {
+    "path": "img/pets/p35-2.webp",
+    "kind": "pet-cat",
+    "catBreedId": "siam"
+  },
+  {
+    "path": "img/pets/p36-1.webp",
+    "kind": "pet-cat"
+  },
+  {
+    "path": "img/pets/p36-2.webp",
+    "kind": "pet-cat"
+  },
+  {
+    "path": "img/pets/p36-3.webp",
+    "kind": "pet-cat"
+  },
+  {
+    "path": "img/pets/p37-1.webp",
+    "kind": "pet-cat"
+  },
+  {
+    "path": "img/pets/p37-2.webp",
+    "kind": "pet-cat"
+  },
+  {
+    "path": "img/pets/p38-1.webp",
+    "kind": "pet-cat",
+    "catBreedId": "beng"
+  },
+  {
+    "path": "img/pets/p38-2.webp",
+    "kind": "pet-cat",
+    "catBreedId": "beng"
+  },
+  {
+    "path": "img/pets/p39-1.webp",
+    "kind": "pet-cat"
+  },
+  {
+    "path": "img/pets/p39-2.webp",
+    "kind": "pet-cat"
+  },
+  {
+    "path": "img/pets/p39-3.webp",
+    "kind": "pet-cat"
+  },
+  {
+    "path": "img/pets/p40-1.webp",
+    "kind": "pet-cat"
+  },
+  {
+    "path": "img/pets/p40-2.webp",
+    "kind": "pet-cat"
+  }
+]
