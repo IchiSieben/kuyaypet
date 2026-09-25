@@ -1,5 +1,8 @@
 import { expect, test, type Page } from '@playwright/test';
 
+// Report screenshots without mid-animation numbers (the dashboard honours reduced motion).
+test.use({ reducedMotion: 'reduce' });
+
 const shot = (page: Page, name: string) => page.screenshot({ path: `docs/screenshots/${name}.png` });
 
 async function loginAdmin(page: Page) {

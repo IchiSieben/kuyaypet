@@ -89,5 +89,6 @@ test('Responsable ve notificaciones y acepta solicitud; admin aprueba', async ({
   await page.locator('#password').fill('kuyay2026');
   await page.getByRole('button', { name: 'Entrar' }).click();
   await expect(page.locator('[data-tour="admin-pending"]')).toBeVisible();
+  await page.waitForTimeout(4200); // KPI count-up and welcome toast finish before the report screenshot
   await shot(page, 'HU-24-admin');
 });
