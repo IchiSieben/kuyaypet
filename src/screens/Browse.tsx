@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { lazy, Suspense, useMemo, useState } from 'react';
 import { LocateFixed, SlidersHorizontal, X } from 'lucide-react';
 import { Button, Chip, EmptyState, Sheet } from '@/components/ui';
 import { PetCard } from '@/components/PetCard';
@@ -12,6 +12,9 @@ import type { GeoPoint, Sex, Size, Species } from '@/types';
 function toggle<T>(list: T[], v: T): T[] {
   return list.includes(v) ? list.filter((x) => x !== v) : [...list, v];
 }
+
+// Leaflet only loads when someone opens the map view (ADR-14).
+const PetMap = lazy(() => import('@/components/PetMap'));
 
 /** HU-02 (grilla) + HU-04 (filtros) + HU-05 (cercanía). */
 export function Browse() {
@@ -29,6 +32,7 @@ export function Browse() {
   const [origin, setOrigin] = useState<GeoPoint | null>(null);
   const [originLabel, setOriginLabel] = useState('');
   const [searched, setSearched] = useState(false);
+  const [view, setView] = useState<'lista' | 'mapa'>('lista');
 
   const filtered = useMemo(() => filterPets(available, applied), [available, applied]);
 
@@ -149,6 +153,20 @@ export function Browse() {
           )}
         </div>
         {origin && searched && <p className="text-xs text-cocoa-500">Mostrando mascotas cerca de {originLabel || 'tu ubicación'}.</p>}
+        {origin && (
+          <div className="flex rounded-full bg-cream-200 p-1 text-sm font-bold" role="group" aria-label="Vista de resultados">
+            {(['lista', 'mapa'] as const).map((v) => (
+              <button key={v} onClick={() => setView(v)} aria-pressed={view === v} className={`flex-1 rounded-full py-1.5 transition ${view === v ? 'bg-white text-terra shadow-soft' : 'text-cocoa-500'}`}>
+                {v === 'lista' ? 'Lista' : 'Mapa'}
+              </button>
+            ))}
+          </div>
+        )}
+        {origin && view === 'mapa' && (
+          <Suspense fallback={<div className="h-72 animate-pulse rounded-2xl bg-cream-200" />}>
+            <PetMap center={origin} radiusKm={radiusKm} pets={results.map((r) => r.pet)} distances={new Map(results.map((r) => [r.pet.id, r.distanceKm ?? 0]))} />
+          </Suspense>
+        )}
       </div>
 
       {results.length === 0 ? (

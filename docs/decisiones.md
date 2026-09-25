@@ -47,3 +47,8 @@ El panel muestra “Fase 1 en curso”; un clic revela “10/26 implementadas”
 **Decisión:** `?split=1` muestra dos celulares: cada uno es un `iframe` de la misma app con `?as=adopter` / `?as=owner`. En esos marcos la sesión es **propia de cada celular**: no se escribe ni se lee del `localStorage` compartido (`partialize`/`merge` del persist). El resto de la BD sí se comparte, y el evento `storage` avisa a cada marco que el otro escribió: re-lee la BD y muestra lo que llegó (toast de la notificación o la celebración del Match).
 **Por qué:** el flujo estrella tiene dos actores. Verlos a la vez explica el “interés mutuo” mejor que cambiar de rol. Es la misma arquitectura que tendrá la Fase 2 con Supabase Realtime, solo que el canal hoy es el navegador.
 **Límite:** es solo para escritorio. Al salir, la ventana principal vuelve al inicio sin sesión.
+
+## ADR-14 · Mapa de HU-05 con tiles de OpenStreetMap
+**Decisión:** Leaflet con los tiles estándar de OpenStreetMap (`tile.openstreetmap.org`) y la atribución obligatoria “© OpenStreetMap contributors”.
+**Por qué no CARTO:** se probó primero CARTO Voyager, como pedía el prompt, pero hoy esa URL responde con tiles “API KEY REQUIRED”. La política de uso de OSM permite un uso liviano con atribución, y una demo de clase lo es. Para producción con tráfico real habría que usar un proveedor con clave (MapTiler, Stadia) o tiles propios.
+**Offline:** los tiles requieren internet. Si fallan (`tileerror`), aparece el aviso “Mapa sin conexión: usa la vista Lista”, y la lista sigue funcionando sin red con los datos semilla. El componente se carga con `React.lazy` para no crecer el bundle inicial.
