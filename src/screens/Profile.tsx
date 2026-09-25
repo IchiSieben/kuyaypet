@@ -38,8 +38,6 @@ export function Profile() {
   const history = useHistory(user?.id);
   if (!user) return null;
 
-  const soon = (what: string) => () => toast({ title: `${what} llega en la Fase 1`, emoji: '🛠️' });
-
   const onLogout = async () => {
     const ok = await confirm({ title: '¿Cerrar sesión?', body: 'Tendrás que volver a ingresar tus datos para entrar.', emoji: '👋', confirmLabel: 'Cerrar sesión', danger: true });
     if (!ok) return;
@@ -62,12 +60,12 @@ export function Profile() {
       {user.role === 'adopter' && (
         <Card className="divide-y divide-cream-200 overflow-hidden">
           <Row icon={<Settings2 size={20} />} label="Mis preferencias" hint="Cuestionario de compatibilidad" to="/onboarding" />
-          <Row icon={<Heart size={20} />} label="Favoritos" hint={`${favs.length} mascotas guardadas`} onClick={soon('Favoritos')} soon />
-          <Row icon={<History size={20} />} label="Historial de interés" hint={`${history.length} mascotas`} onClick={soon('El historial')} soon />
+          <Row icon={<Heart size={20} />} label="Favoritos" hint={`${favs.length} mascotas guardadas`} to="/favoritos" />
+          <Row icon={<History size={20} />} label="Historial de interés" hint={`${history.length} mascotas`} to="/historial" />
         </Card>
       )}
       <Card className="divide-y divide-cream-200 overflow-hidden">
-        <Row icon={<BookOpen size={20} />} label="Guía de adopción" hint="Requisitos, vacunas, Ley 30407 y 31807" onClick={soon('La guía')} soon />
+        <Row icon={<BookOpen size={20} />} label="Guía de adopción" hint="Requisitos, vacunas, Ley 30407 y 31807" to="/guia" />
         <Row icon={<Users size={20} />} label="Equipo KuyayPet" hint="Créditos del proyecto · UPCH" to="/creditos" />
       </Card>
       <Card className="overflow-hidden">

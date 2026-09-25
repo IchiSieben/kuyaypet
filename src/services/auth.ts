@@ -97,6 +97,67 @@ export function loginWithGoogleProfile(profile: { name: string; email: string; p
   return { ok: true, user };
 }
 
+/* Recuperar contraseña (HU-15). El correo es SIMULADO: se guarda en demo.outbox, nunca se envía de verdad. */
+export interface PendingReset {
+  email: string;
+  code: string;
+  expiresAt: number;
+}
+
+let pendingReset: PendingReset | null = null;
+
+function randomCode(): string {
+  return String(Math.floor(100000 + Math.random() * 900000));
+}
+
+/** Paso 1: valida el correo y "envía" (simula) el enlace/código de recuperación. */
+export function requestPasswordReset(email: string): { ok: true } | { ok: false; error: string } {
+  const clean = email.trim();
+  if (!EMAIL_RE.test(clean)) return { ok: false, error: 'Ingresa un correo con formato válido (ej. nombre@correo.com).' };
+  const user = findByEmail(clean);
+  if (!user) return { ok: false, error: 'No encontramos una cuenta con ese correo.' };
+  const code = randomCode();
+  pendingReset = { email: user.email, code, expiresAt: Date.now() + 15 * 60 * 1000 };
+  db.set((s) => ({
+    demo: {
+      ...s.demo,
+      outbox: [
+        ...s.demo.outbox,
+        {
+          id: uid('mail'),
+          to: user.email,
+          subject: 'Recupera tu contraseña de KuyayPet',
+          body: `Hola ${user.name.split(' ')[0]}, usa este código para restablecer tu contraseña: ${code}. Vence en 15 minutos. Si no lo pediste, ignora este correo.`,
+          code,
+          createdAt: nowIso(),
+        },
+      ],
+    },
+  }));
+  return { ok: true };
+}
+
+/** Paso 2: valida el código + nueva contraseña y la actualiza. */
+export function confirmPasswordReset(
+  email: string,
+  code: string,
+  password: string,
+  confirmPw: string,
+): { ok: true } | { ok: false; error: string } {
+  if (!pendingReset || pendingReset.email.toLowerCase() !== email.trim().toLowerCase()) {
+    return { ok: false, error: 'Solicita un nuevo código de recuperación.' };
+  }
+  if (Date.now() > pendingReset.expiresAt) return { ok: false, error: 'El código venció. Solicita uno nuevo.' };
+  if (pendingReset.code !== code.trim()) return { ok: false, error: 'El código ingresado no es correcto.' };
+  if (password.length < 8) return { ok: false, error: 'La contraseña debe tener al menos 8 caracteres.' };
+  if (password !== confirmPw) return { ok: false, error: 'Las contraseñas no coinciden.' };
+  const user = findByEmail(email);
+  if (!user) return { ok: false, error: 'No encontramos esa cuenta.' };
+  db.set((s) => ({ users: s.users.map((u) => (u.id === user.id ? { ...u, password } : u)) }));
+  pendingReset = null;
+  return { ok: true };
+}
+
 export function logout() {
   db.set({ sessionUserId: null });
 }
@@ -122,7 +183,7 @@ export const HOME_BY_ROLE: Record<User['role'], string> = {
 
 // Control de acceso (UML): which role(s) may open which private route.
 const ROLE_ONLY: [RegExp, User['role'][]][] = [
-  [/^\/(descubrir|buscar|matches|onboarding|coordinar)/, ['adopter']],
+  [/^\/(descubrir|buscar|matches|onboarding|coordinar|favoritos|historial)/, ['adopter']],
   [/^\/responsable/, ['owner']],
   [/^\/admin/, ['admin']],
   [/^\/adoptante\//, ['owner', 'admin']],

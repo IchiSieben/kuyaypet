@@ -35,6 +35,11 @@ export function Login() {
         <Button type="submit" size="lg" block>
           Entrar
         </Button>
+        <p className="text-center">
+          <Link to="/recuperar" className="text-sm font-semibold text-terra underline underline-offset-4">
+            ¿Olvidaste tu contraseña?
+          </Link>
+        </p>
         <p className="rounded-2xl bg-honey-100 px-4 py-2.5 text-xs text-cocoa-700">
           <b>Cuentas demo</b> (contraseña <code>kuyay2026</code>): adoptante@kuyaypet.pe · responsable@kuyaypet.pe · admin@kuyaypet.pe
         </p>
