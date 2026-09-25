@@ -11,7 +11,7 @@ import { resetDemo } from '@/services/users';
 import { LogoMark } from '@/components/brand/Logo';
 import type { Role } from '@/types';
 import team from '../../data/team.json';
-import { startTour, TOUR } from './Tour';
+import { abortTour, startTour, TOUR } from './Tour';
 
 /** Runtime URL so each mirror (Hostinger / GitHub Pages / localhost) shows its own QR. */
 export function publicUrl() {
@@ -64,8 +64,8 @@ export function PresenterPanel() {
   const reset = async () => {
     const ok = await confirm({ title: '¿Reiniciar la demo?', body: 'Se restauran los datos semilla y se cierra la sesión.', emoji: '↺', confirmLabel: 'Reiniciar', danger: true });
     if (!ok) return;
+    abortTour();
     resetDemo();
-    useUi.setState({ tourStep: null, pinnedPetId: null, celebrationMatchId: null });
     navigate('/');
     toast({ title: 'Demo reiniciada', emoji: '🌱' });
   };

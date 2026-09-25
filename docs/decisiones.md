@@ -36,3 +36,9 @@ La propuesta `02-Proyectos/upch/kuyaypet/` no existe en la estructura de `REGIST
 
 ## ADR-11 · Contador de HU oculto por defecto
 El panel muestra “Fase 1 en curso”; un clic revela “10/26 implementadas”. Evita que la clase lea el prototipo como incompleto sin ocultar el dato.
+
+## ADR-12 · Tour como máquina de estados con guion determinista (Bloque B, rama `fase1-cont`)
+**Decisión:** cada paso declara rol, ruta, objetivo y cómo avanza: *Siguiente* o una **acción real** del presentador (“Toca ♥ en Luna”), con el botón **“Hazlo por mí”**. A los 30 s sin acción, la pista parpadea: no se hace sola, para no sorprender al presentador mientras habla. Al iniciar se guarda el estado previo y se carga la semilla. En la entrada de cada paso se toma una **foto** de la BD: *Atrás* y cualquier acción fuera de guion (cambiar de rol desde el panel, navegar a mano) restauran esa foto y re-entran al paso, en vez de romperse. Al salir (*Terminar*, *Saltar*, Esc) se restaura lo que había antes del tour.
+**Clics:** cuatro bloqueadores rodean el recorte del spotlight; solo el objetivo es clicable, y solo en pasos de acción.
+**Popover:** posicionamiento propio con *flip* (abajo ↔ arriba) y *shift* dentro de la pantalla, y modo compacto si no cabe. No se usó la librería Floating UI porque el celular vive dentro de un marco con `transform`: mezclar su sistema de coordenadas con el del marco agrega riesgo y no gana nada en ~20 líneas. El test verifica en cada paso que el popover **no se superpone** al objetivo.
+**Tests:** `tests/tour.spec.ts` recorre el tour 3 veces (mismo estado final y restauración del estado previo) y hace otro recorrido con acciones fuera de guion que termina en el mismo estado que el de referencia.

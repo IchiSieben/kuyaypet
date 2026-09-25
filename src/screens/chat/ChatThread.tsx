@@ -33,6 +33,7 @@ export function ChatThreadScreen() {
       </div>
     );
 
+  const lastMineId = [...messages].reverse().find((m) => m.senderId === user.id && !m.system)?.id;
   const other = users.find((u) => u.id === thread.memberIds.find((m) => m !== user.id));
   const submit = (e: FormEvent) => {
     e.preventDefault();
@@ -80,7 +81,7 @@ export function ChatThreadScreen() {
           const mine = m.senderId === user.id;
           const sender = users.find((u) => u.id === m.senderId);
           return (
-            <motion.div key={m.id} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} className={`flex items-end gap-2 ${mine ? 'justify-end' : ''}`}>
+            <motion.div key={m.id} data-tour={m.id === lastMineId ? 'chat-mine-last' : undefined} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} className={`flex items-end gap-2 ${mine ? 'justify-end' : ''}`}>
               {!mine && <Avatar src={sender?.avatar} name={sender?.name ?? '?'} size={28} />}
               <div className={`max-w-[75%] rounded-3xl px-3.5 py-2 shadow-soft ${mine ? 'rounded-br-md bg-terra text-white' : 'rounded-bl-md bg-white'}`}>
                 {!mine && thread.kind === 'group' && <p className="text-xs font-bold text-terra">{sender?.name}</p>}

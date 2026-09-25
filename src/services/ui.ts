@@ -26,6 +26,8 @@ interface UiState {
   typing: Record<string, boolean>;
   presenterOpen: boolean;
   tourStep: number | null;
+  /** Bumped on every (re)start so the tour re-enters step 0 even if it was already there. */
+  tourRun: number;
   /** Presenter/tour: force this pet to be the next card in the deck. */
   pinnedPetId: string | null;
   pushToast: (t: Omit<Toast, 'id'>) => void;
@@ -42,6 +44,7 @@ export const useUi = create<UiState>()((set, get) => ({
   typing: {},
   presenterOpen: true,
   tourStep: null,
+  tourRun: 0,
   pinnedPetId: null,
   pushToast: (t) => {
     const id = ++toastId;

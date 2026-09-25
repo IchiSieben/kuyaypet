@@ -4,7 +4,7 @@ import { useState, type FormEvent } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Button, EmptyState } from '@/components/ui';
 import { useCurrentUser } from '@/services/auth';
-import { requestAdoption } from '@/services/adoptions';
+import { ADOPTION_STATUS_LABEL, requestAdoption, useAdoptionsForAdopter } from '@/services/adoptions';
 import { ageLabel, SEX_LABEL, usePet, useUser } from '@/services/pets';
 
 function nextSaturday() {
@@ -23,6 +23,7 @@ export function Coordinate() {
   const [form, setForm] = useState({ date: nextSaturday(), time: '10:00', place: '', message: '' });
   const [error, setError] = useState('');
   const [sent, setSent] = useState(false);
+  const open = useAdoptionsForAdopter(user?.id).filter((a) => a.petId === petId && a.status !== 'rechazada').at(-1);
 
   if (!pet || !user) return <EmptyState emoji="🔍" title="Mascota no encontrada" />;
 
@@ -33,7 +34,7 @@ export function Coordinate() {
     setSent(true);
   };
 
-  if (sent)
+  if (sent || open)
     return (
       <div className="flex h-full flex-col items-center justify-center px-8 text-center" data-hu="HU-10" data-tour="coordinate-done">
         <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ type: 'spring', stiffness: 200, damping: 12 }} className="flex h-24 w-24 items-center justify-center rounded-full bg-sage-100 text-5xl">
@@ -43,7 +44,9 @@ export function Coordinate() {
         <p className="mt-2 text-cocoa-500">
           Tu solicitud de adopción fue enviada a {owner?.name ?? 'el responsable'} de {pet.name}. Te avisaremos cuando responda.
         </p>
-        <p className="mt-3 rounded-full bg-honey-100 px-4 py-1 text-sm font-bold">Estado: Pendiente</p>
+        <p className="mt-3 rounded-full bg-honey-100 px-4 py-1 text-sm font-bold" data-tour="coordinate-status">
+          Estado: {open ? ADOPTION_STATUS_LABEL[open.status] : 'Pendiente'}
+        </p>
         <div className="mt-8 flex w-full max-w-xs flex-col gap-2">
           <Button onClick={() => navigate(`/mascota/${pet.id}`, { replace: true })}>Volver a la mascota</Button>
           <Button variant="ghost" onClick={() => navigate('/chats')}>
