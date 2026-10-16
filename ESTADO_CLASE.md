@@ -1,4 +1,19 @@
-# ESTADO_CLASE — actualizado 2026-10-16 15:10 (Lima)
+# ESTADO_CLASE — actualizado 2026-10-16 16:45 (Lima)
+
+## Qué versión está dónde
+| URL | Versión | Build |
+|---|---|---|
+| https://firebrick-cod-910257.hostingersite.com/ | **producción `v0.3-fase1`** (la que se presenta) | `index-BmydHsl6.js` |
+| https://firebrick-cod-910257.hostingersite.com/next/ | preview `v0.4-ui` | `index-DoPHrMAe.js` |
+| https://firebrick-cod-910257.hostingersite.com/next2/ | preview **`v0.5-ui`** (rediseño completo) | `index-DwMPTle2.js` |
+
+**Aviso de service worker:** el de la v0.3 (alcance `/`) responde las navegaciones a `/next/` y `/next2/` en navegadores que ya abrieron la raíz. Abrir las previews en **ventana de incógnito** (o borrar los datos del sitio). Arreglo pendiente: `denylist: [/^\/next2?\//]` en el próximo deploy de producción.
+
+## v0.5-ui en preview (16 oct 2026)
+- Rama `v0.5-ui` (IchiSieben/kuyaypet). Deploys a `/next2/`: 16:02 (fases 1 y 5) y **16:35 (final)**.
+- Rediseño de las 26 rutas: adoptante, responsable, admin (back-office), login/registro/recuperar/guía; carta → perfil animada; contraste AA verificado con axe; fecha de entrega de `/sprints` corregida (UTC).
+- Tests: 22/22 Vitest · 21/21 Playwright (`--workers=1`). Lighthouse `/next2/`: móvil 88–93, escritorio 100 (accesibilidad 100).
+- Capturas: `Inge software/kuyaypet-v05-shots/` (`00-antes`, `fase1`…`fase4`, `fase6/movil`, `fase6/escritorio`).
 
 ## v0.4-ui en preview (16 oct 2026)
 - **Preview:** https://firebrick-cod-910257.hostingersite.com/next/ — rama `v0.4-ui` (4 commits sobre `v0.3-fase1`), build con `VITE_BASE=/next/` (`index-DoPHrMAe.js`).

@@ -1,4 +1,11 @@
-# HANDOFF — 2026-10-16 (v0.5-ui en curso, preview destino `/next2/`)
+# HANDOFF — 2026-10-16 16:45 (v0.5-ui terminada, preview en `/next2/`)
+
+- **Dónde está cada versión:** raíz = producción **`v0.3-fase1`** (`index-BmydHsl6.js`) · `/next/` = `v0.4-ui` (`index-DoPHrMAe.js`) · `/next2/` = **`v0.5-ui`** (`index-DwMPTle2.js`). `main` de IchiSieben/kuyaypet sin cambios (`898a9f6`).
+- **Service worker:** el de la v0.3 (alcance `/`) captura `/next/` y `/next2/` en navegadores que ya abrieron la raíz → abrir las previews en **incógnito**. Arreglo: `denylist: [/\/manual\//, /^\/next2?\//]` en el próximo deploy de producción (no se hizo: toca la raíz).
+- **Tests v0.5:** 22/22 Vitest · 21/21 Playwright (`--workers=1`, `BASE_URL=http://localhost:4199/`) tras cada integración y al cierre. axe: 0 violaciones en 32 rutas.
+- **Lighthouse `/next2/`:** móvil 88 y 93 (dos corridas; `/next/` 89) · escritorio 100/100/100/100. Bundle 482,9 → 507,3 kB (+5 %).
+- **Redesplegar `/next2/`:** PowerShell `$env:VITE_BASE='/next2/'; npx vite build --outDir dist-next2 --emptyOutDir` → `hosting_files_generate-upload-url` → `tus_upload.py creds.json dist-next2 next2 next2.htaccess=.htaccess` (curl, TLS verificado, reintentos, `index.html` al final) → borrar `creds.json`. `.htaccess` con `RewriteBase /next2/` y regla a `/next2/index.html`.
+- **Pendiente:** ver "Otra sesión" abajo.
 
 ## v0.5-ui — progreso por fase (rama `v0.5-ui`, desde `origin/v0.4-ui`)
 
@@ -7,11 +14,11 @@
 | Prep | Primitivas `PageHeader/Section/ListGroup/ListRow/StatTile/Skeleton/IconButton`, `docs/v05-design.md`, `docs/test-selectors.txt` | hilo principal | hecho (`e4496db`) |
 | 1a | Browse, PetMap, Favoritos, Historial, Matches | agente A (worktree `kuyaypet-wt/f1a`) | hecho (`2794bf7`) |
 | 1b | Chats (lista y conversación), Coordinar, Perfil, Onboarding | agente B (`kuyaypet-wt/f1b`) | hecho (`cb7fea7`) · **1er deploy `/next2/` 2026-10-16 16:02** |
-| 2 | Responsable (panel, nueva, editar), Notificaciones, perfil del adoptante | agente C (`kuyaypet-wt/f2`) | en curso |
-| 3 | Admin (shell, dashboard, usuarios, publicaciones, reportes, detalles) | agente D (`kuyaypet-wt/f3`) | en curso |
-| 4 | Login, registro, recuperar, bandeja simulada, guía | agente E (`kuyaypet-wt/f4`) | en curso |
-| 5 | Movimiento: carta → perfil (`layoutId`), Match, transiciones de ruta, skeletons de Descubrir/Perfil | hilo principal | en curso |
-| 6 | Pulido transversal, fecha UTC en /sprints, 26 rutas, Lighthouse | hilo principal | pendiente |
+| 2 | Responsable (panel, nueva, editar), Notificaciones, perfil del adoptante | agente C (`kuyaypet-wt/f2`) | hecho (`35bb570`) |
+| 3 | Admin (shell, dashboard, usuarios, publicaciones, reportes, detalles) | agente D (`kuyaypet-wt/f3`) | hecho (`f7ae9a5`) |
+| 4 | Login, registro, recuperar, bandeja simulada, guía | agente E (`kuyaypet-wt/f4`) | hecho (`cc66914`) |
+| 5 | Movimiento: carta → perfil (`layoutId`), Match, transiciones de ruta, skeletons de Descubrir/Perfil | hilo principal | hecho (`bac2b28`, `0e…` sin startTransition) |
+| 6 | Pulido transversal, fecha UTC en /sprints, 26 rutas, Lighthouse | hilo principal | hecho (`0b8525b`) · **deploy final 16:35** |
 
 ### Decisiones v0.5 (sin consulta, modo desatendido)
 - **Seguimiento en esta tabla** en vez de TaskCreate (no disponible en esta sesión).
@@ -22,7 +29,14 @@
 - **Perfil de mascota sale del code-splitting** (bundle inicial +19 kB, 507 kB): con `v7_startTransition` la animación `layoutId` sobrevivía al chunk perezoso, pero el `pathname` diferido hacía que el tour se re-sincronizara a destiempo (flaky en `tour.spec.ts`). Cargarlo de entrada da el mismo commit carta→perfil sin tocar el router. Revertir: volver a `lazyNamed` en `App.tsx` (se pierde la animación la primera vez).
 - **Copy nuevo mínimo aceptado** de los agentes (conteo "N mascotas", acciones en estados vacíos, separadores de fecha del chat, nombres de pasos): no reemplaza texto existente ni nombres accesibles que use la suite.
 - **Subida TUS con reintentos** (4 por archivo): una subida de 232 archivos tuvo un `Connection reset`; `index.html` va al final, así que un fallo nunca deja la preview apuntando a assets ausentes.
+- **Contraste por uso, no por paleta:** blanco sobre `sage`/`coral` no llega a AA; se usan `sage-600`/`coral-600` (o texto oscuro sobre miel) en botones e insignias con texto. Los valores de la paleta no cambian.
+- **Worktrees `kuyaypet-wt/f1a…f4` y ramas `v0.5-ui-*`** quedan locales (ya integradas). Se pueden quitar con `git worktree remove`; no se borraron (borrado = OK explícito).
 - **Build de despliegue en `dist-next2/`** (`--outDir`) para no pisar el `dist/` que sirve la preview local de tests.
+
+### Otra sesión (en orden)
+1. Producción: `denylist` del SW para `/next*/` y decidir si `v0.5-ui` pasa a la raíz (fusionar a `main`, deploy completo, suite contra Hostinger).
+2. Lighthouse móvil ≥ 95 estable: TBT 260–390 ms viene del bundle principal (507 kB); sacar Leaflet/confeti/Tour del chunk inicial y precargar el perfil en vez de importarlo de entrada.
+3. Promover a `components/ui` los helpers que los agentes dejaron locales (`Field`/`FormAlert` de auth, `FilterBar`/`ActionBar`/`RejectSheet` de admin, `Stepper` de NewPet, `Tile` de Perfil) y dar a `PageHeader` un `backLabel`.
 
 # HANDOFF anterior — 2026-10-16 15:10 (v0.4-ui en preview `/next/`)
 
