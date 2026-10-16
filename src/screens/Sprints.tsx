@@ -1,5 +1,6 @@
 import { ArrowLeft, CalendarDays, CheckCircle2, Circle, ExternalLink, RefreshCw } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button, EmptyState } from '@/components/ui';
 import { agoLabel, ISSUES_URL, MILESTONES_URL, PROJECTS_URL, REPO, REPO_URL, useGh, type GhIssue, type GhLabel, type GhMilestone } from '@/services/github';
@@ -46,12 +47,23 @@ function LabelChips({ labels }: { labels: GhLabel[] }) {
   );
 }
 
+function AssigneeAvatar({ login, src }: { login: string; src: string }) {
+  const [broken, setBroken] = useState(false);
+  if (broken)
+    return (
+      <span title={login} className="flex h-[22px] w-[22px] items-center justify-center rounded-full bg-terra-100 text-[9px] font-extrabold uppercase text-terra-600 ring-2 ring-white">
+        {login.slice(0, 2)}
+      </span>
+    );
+  return <img src={`${src}${src.includes('?') ? '&' : '?'}s=48`} alt="" title={login} width={22} height={22} loading="lazy" onError={() => setBroken(true)} className="h-[22px] w-[22px] rounded-full bg-cream-200 ring-2 ring-white" />;
+}
+
 function Avatars({ issue }: { issue: GhIssue }) {
   if (!issue.assignees.length) return null;
   return (
-    <span className="flex -space-x-2" aria-label={`Asignado a ${issue.assignees.map((a) => a.login).join(', ')}`}>
+    <span className="flex shrink-0 -space-x-2" aria-label={`Asignado a ${issue.assignees.map((a) => a.login).join(', ')}`}>
       {issue.assignees.slice(0, 3).map((a) => (
-        <img key={a.login} src={`${a.avatar_url}&s=48`} alt="" title={a.login} width={22} height={22} loading="lazy" className="h-[22px] w-[22px] rounded-full bg-cream-200 ring-2 ring-white" />
+        <AssigneeAvatar key={a.login} login={a.login} src={a.avatar_url} />
       ))}
     </span>
   );
@@ -107,7 +119,7 @@ function MilestoneCard({ m, issues }: { m: GhMilestone; issues: GhIssue[] }) {
 
       {keys.map((k) => (
         <div key={k} className="mt-3">
-          <p className="eyebrow px-2">{groupLabel(k)}</p>
+          {(keys.length > 1 || groupLabel(k) !== m.title) && <p className="eyebrow px-2">{groupLabel(k)}</p>}
           <ul className="mt-1">
             {(groups.get(k) ?? []).map((i) => (
               <IssueRow key={i.number} issue={i} />

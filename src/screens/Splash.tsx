@@ -57,33 +57,38 @@ export function Splash() {
         initial={reduceMotion ? { opacity: 1 } : { y: -20, opacity: 0, scale: 0.85 }}
         animate={{ y: 0, opacity: 1, scale: 1 }}
         transition={{ type: 'spring', stiffness: 160, damping: 14 }}
-        className="relative z-10 w-72"
+        className="relative z-10 w-64"
       >
         <Logo />
       </motion.div>
-      <p className="relative z-10 mt-1 text-xs font-bold uppercase tracking-wide text-cocoa-500">Plataforma de conexión y adopción de mascotas</p>
+      <p className="relative z-10 mt-1 text-xs font-bold text-cocoa-400">Plataforma de conexión y adopción de mascotas</p>
       <motion.h1
         initial={reduceMotion ? { opacity: 1 } : { opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.35, duration: 0.5 }}
-        className="relative z-10 mt-6 font-hand text-4xl text-terra"
+        transition={{ delay: 0.35, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+        className="relative z-10 mt-5 font-hand text-4xl leading-[1.05] text-terra"
       >
         Conecta corazones, cambia vidas
       </motion.h1>
-      <p className="mt-2 max-w-xs text-cocoa-500">Desliza, haz match por compatibilidad y coordina la adopción de tu nuevo compañero en Lima.</p>
+      <p className="mt-2 max-w-[17rem] text-[15px] leading-snug text-cocoa-500">Desliza, haz match por compatibilidad y coordina la adopción de tu nuevo compañero en Lima.</p>
 
-      <div className="mt-8 flex w-full max-w-xs flex-col gap-3">
+      <motion.div
+        initial={reduceMotion ? { opacity: 1 } : { opacity: 0, y: 12 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.5, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+        className="mt-6 flex w-full max-w-xs flex-col gap-2.5"
+      >
         <Button size="lg" block onClick={() => navigate('/registro')}>
           Crear cuenta
         </Button>
         <Button size="lg" variant="outline" block onClick={() => navigate('/login')}>
           Iniciar sesión
         </Button>
-      </div>
+      </motion.div>
 
       {!tourDone && (
-        <button onClick={startTour} className="mt-6 flex w-full max-w-xs items-center gap-3 rounded-3xl border-2 border-dashed border-terra-400 bg-terra-100/60 px-4 py-3 text-left">
-          <span className="text-2xl">🧭</span>
+        <button onClick={startTour} className="pressable mt-5 flex w-full max-w-xs items-center gap-3 rounded-3xl bg-terra-100/70 px-4 py-3 text-left shadow-hairline hover:bg-terra-100">
+          <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white text-xl shadow-soft">🧭</span>
           <span>
             <span className="block font-bold text-terra-600">¿Primera vez? Ver el tour guiado</span>
             <span className="block text-xs text-cocoa-500">2 minutos: del swipe a la adopción</span>
@@ -91,18 +96,18 @@ export function Splash() {
         </button>
       )}
 
-      <div className="mt-6 w-full max-w-xs rounded-3xl bg-white/80 p-4 shadow-soft" data-tour="roles">
-        <p className="text-sm font-bold text-cocoa-700">Probar la demo como…</p>
-        <div className="mt-3 grid grid-cols-3 gap-2">
+      <div className="surface-1 mt-5 w-full max-w-xs rounded-3xl p-3" data-tour="roles">
+        <p className="px-1 text-sm font-bold text-cocoa-700">Probar la demo como…</p>
+        <div className="mt-2.5 grid grid-cols-3 gap-2">
           {ROLES.map((r) => (
             <button
               key={r.role}
               onClick={() => enterAs(r.role)}
-              className="flex flex-col items-center rounded-2xl border-2 border-cream-300 bg-cream px-1 py-2.5 transition hover:border-terra active:scale-95"
+              className="pressable flex flex-col items-center rounded-2xl bg-white px-1 py-2.5 shadow-soft hover:-translate-y-0.5 hover:shadow-raised"
             >
               <span className="text-2xl">{r.emoji}</span>
-              <span className="text-sm font-bold">{r.label}</span>
-              <span className="text-[11px] text-cocoa-500">{r.hint}</span>
+              <span className="mt-0.5 text-sm font-bold">{r.label}</span>
+              <span className="text-2xs text-cocoa-500">{r.hint}</span>
             </button>
           ))}
         </div>
