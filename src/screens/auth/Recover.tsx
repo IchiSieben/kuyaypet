@@ -2,11 +2,11 @@
 import { KeyRound, Lock, Mail, MailCheck } from 'lucide-react';
 import { useState, type FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Button, Sheet } from '@/components/ui';
+import { Button, Card, Sheet } from '@/components/ui';
 import { confirmPasswordReset, requestPasswordReset } from '@/services/auth';
 import { useDb } from '@/services/store';
 import { toast } from '@/services/ui';
-import { AuthShell, Field } from './shared';
+import { AuthShell, Field, FormAlert } from './shared';
 
 export function Recover() {
   const navigate = useNavigate();
@@ -42,65 +42,64 @@ export function Recover() {
   return (
     <AuthShell title="Recuperar contraseña" subtitle={step === 'email' ? 'Te enviaremos un código para restablecerla.' : 'Ingresa el código que recibiste y tu nueva contraseña.'} hu="HU-15">
       {step === 'email' ? (
-        <form onSubmit={submitEmail} noValidate className="space-y-3.5">
-          <Field id="recover-email" label="Correo electrónico" type="email" icon={<Mail size={20} />} value={email} onChange={(e) => setEmail(e.target.value)} autoComplete="email" placeholder="nombre@correo.com" error={!!error} />
-          {error && (
-            <p role="alert" className="rounded-2xl bg-coral-100 px-4 py-2.5 text-sm font-semibold text-coral-600">
-              {error}
-            </p>
-          )}
-          <Button type="submit" size="lg" block>
+        <form onSubmit={submitEmail} noValidate>
+          <Card className="space-y-4 p-4">
+            <Field id="recover-email" label="Correo electrónico" type="email" icon={<Mail size={20} />} value={email} onChange={(e) => setEmail(e.target.value)} autoComplete="email" placeholder="nombre@correo.com" error={!!error} />
+            {error && <FormAlert>{error}</FormAlert>}
+          </Card>
+          <Button type="submit" size="lg" block className="mt-5">
             Enviar enlace de recuperación
           </Button>
         </form>
       ) : (
-        <form onSubmit={submitCode} noValidate className="space-y-3.5">
-          <p className="rounded-2xl bg-honey-100 px-4 py-2.5 text-xs text-cocoa-700">
+        <form onSubmit={submitCode} noValidate>
+          <p className="surface-1 mb-4 rounded-2xl px-4 py-3 text-sm leading-relaxed text-cocoa-700">
             <b>Correo simulado.</b> Nadie recibe un correo real: revisa el código en{' '}
-            <button type="button" onClick={() => setInboxOpen(true)} className="font-bold text-terra underline underline-offset-2">
+            <button type="button" onClick={() => setInboxOpen(true)} className="rounded font-bold text-terra underline underline-offset-2">
               la bandeja de entrada simulada
             </button>
             .
           </p>
-          <Field id="recover-code" label="Código de 6 dígitos" type="text" inputMode="numeric" icon={<KeyRound size={20} />} value={code} onChange={(e) => setCode(e.target.value)} placeholder="123456" error={!!error} />
-          <Field id="recover-password" label="Nueva contraseña" type="password" icon={<Lock size={20} />} value={password} onChange={(e) => setPassword(e.target.value)} autoComplete="new-password" placeholder="Mínimo 8 caracteres" error={!!error} />
-          <Field id="recover-confirm" label="Confirmar contraseña" type="password" icon={<Lock size={20} />} value={confirmPw} onChange={(e) => setConfirmPw(e.target.value)} autoComplete="new-password" placeholder="Repite tu contraseña" error={!!error} />
-          {error && (
-            <p role="alert" className="rounded-2xl bg-coral-100 px-4 py-2.5 text-sm font-semibold text-coral-600">
-              {error}
-            </p>
-          )}
-          <Button type="submit" size="lg" block>
+          <Card className="space-y-4 p-4">
+            <Field id="recover-code" label="Código de 6 dígitos" type="text" inputMode="numeric" autoComplete="one-time-code" className="tabular-nums tracking-widest" icon={<KeyRound size={20} />} value={code} onChange={(e) => setCode(e.target.value)} placeholder="123456" error={!!error} />
+            <Field id="recover-password" label="Nueva contraseña" type="password" icon={<Lock size={20} />} value={password} onChange={(e) => setPassword(e.target.value)} autoComplete="new-password" placeholder="Mínimo 8 caracteres" error={!!error} />
+            <Field id="recover-confirm" label="Confirmar contraseña" type="password" icon={<Lock size={20} />} value={confirmPw} onChange={(e) => setConfirmPw(e.target.value)} autoComplete="new-password" placeholder="Repite tu contraseña" error={!!error} />
+            {error && <FormAlert>{error}</FormAlert>}
+          </Card>
+          <Button type="submit" size="lg" block className="mt-5">
             Cambiar contraseña
           </Button>
         </form>
       )}
 
       <Sheet open={inboxOpen} onClose={() => setInboxOpen(false)} title="Bandeja de correo simulada">
-        <p className="-mt-2 mb-3 text-xs text-cocoa-500">
-          <MailCheck size={14} className="mr-1 inline" />
-          Estos correos <b>no se envían de verdad</b>: viven solo en esta demo, para que puedas ver el flujo completo.
+        <p className="-mt-2 mb-4 flex items-start gap-2 text-sm leading-snug text-cocoa-500">
+          <MailCheck size={16} className="mt-0.5 shrink-0" />
+          <span>
+            Estos correos <b>no se envían de verdad</b>: viven solo en esta demo, para que puedas ver el flujo completo.
+          </span>
         </p>
         {lastMailForMe ? (
-          <div className="rounded-2xl border-2 border-cream-300 bg-white p-4">
-            <p className="text-xs text-cocoa-300">Para: {lastMailForMe.to}</p>
-            <p className="font-bold">{lastMailForMe.subject}</p>
-            <p className="mt-2 text-sm text-cocoa-700">{lastMailForMe.body}</p>
+          <Card className="p-4">
+            <p className="text-sm text-cocoa-500">Para: {lastMailForMe.to}</p>
+            <p className="mt-1 font-display text-lg font-bold text-cocoa-900">{lastMailForMe.subject}</p>
+            <p className="mt-2 text-sm leading-relaxed text-cocoa-700">{lastMailForMe.body}</p>
             {lastMailForMe.code && (
-              <button
+              <Button
                 type="button"
+                block
+                className="mt-4"
                 onClick={() => {
                   setCode(lastMailForMe.code!);
                   setInboxOpen(false);
                 }}
-                className="mt-3 w-full rounded-full bg-terra-100 py-2 text-center font-bold text-terra-600"
               >
                 Usar código {lastMailForMe.code}
-              </button>
+              </Button>
             )}
-          </div>
+          </Card>
         ) : (
-          <p className="text-center text-sm text-cocoa-500">Todavía no hay correos para esta dirección.</p>
+          <p className="py-4 text-center text-sm text-cocoa-500">Todavía no hay correos para esta dirección.</p>
         )}
       </Sheet>
     </AuthShell>

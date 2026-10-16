@@ -1,25 +1,23 @@
-import { ArrowLeft, Eye, EyeOff } from 'lucide-react';
+import { Eye, EyeOff } from 'lucide-react';
 import { useState, type InputHTMLAttributes, type ReactNode } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Avatar, Button, Sheet } from '@/components/ui';
+import { Avatar, Button, Chip, ListGroup, ListRow, PageHeader, Sheet } from '@/components/ui';
 import { LogoMark } from '@/components/brand/Logo';
 import { HOME_BY_ROLE, loginWithGoogleProfile } from '@/services/auth';
 import { GOOGLE_CLIENT_ID, SIMULATED_GOOGLE_ACCOUNTS, signInWithRealGoogle, type GoogleProfile } from '@/services/google';
 import { toast } from '@/services/ui';
 
 export function AuthShell({ title, subtitle, children, hu }: { title: string; subtitle: string; children: ReactNode; hu: string }) {
-  const navigate = useNavigate();
   return (
-    <div className="scroll-area h-full px-6 pb-8 pt-5" data-hu={hu}>
-      <button onClick={() => navigate('/')} className="-ml-2 flex items-center gap-1 rounded-full px-2 py-1 font-semibold text-cocoa-500 hover:bg-cream-200">
-        <ArrowLeft size={18} /> Volver
-      </button>
-      <div className="mx-auto mt-2 w-40">
-        <LogoMark />
-      </div>
-      <h1 className="mt-4 text-3xl font-extrabold">{title}</h1>
-      <p className="text-cocoa-500">{subtitle}</p>
-      <div className="mt-5">{children}</div>
+    <div className="scroll-area h-full px-4 pb-8 pt-3" data-hu={hu}>
+      <PageHeader
+        back="/"
+        title={title}
+        subtitle={subtitle}
+        action={<LogoMark className="w-24" />}
+        className="pb-5"
+      />
+      {children}
     </div>
   );
 }
@@ -30,7 +28,7 @@ interface FieldProps extends InputHTMLAttributes<HTMLInputElement> {
   error?: boolean;
 }
 
-export function Field({ label, icon, error, type, id, ...rest }: FieldProps) {
+export function Field({ label, icon, error, type, id, className = '', ...rest }: FieldProps) {
   const [show, setShow] = useState(false);
   const isPassword = type === 'password';
   return (
@@ -38,16 +36,30 @@ export function Field({ label, icon, error, type, id, ...rest }: FieldProps) {
       <label htmlFor={id} className="label">
         {label} <span className="text-coral">*</span>
       </label>
-      <div className={`flex items-center rounded-2xl border-2 bg-white transition focus-within:border-terra ${error ? 'border-coral' : 'border-cream-300'}`}>
-        <span className="pl-3.5 text-cocoa-300">{icon}</span>
-        <input id={id} type={isPassword && show ? 'text' : type} aria-invalid={error} className="w-full bg-transparent px-3 py-3 outline-none placeholder:text-cocoa-300" {...rest} />
+      <div className="relative">
+        <span className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-cocoa-300">{icon}</span>
+        <input id={id} type={isPassword && show ? 'text' : type} aria-invalid={error || undefined} className={`input pl-11 ${isPassword ? 'pr-12' : ''} ${className}`} {...rest} />
         {isPassword && (
-          <button type="button" onClick={() => setShow((s) => !s)} className="pr-3.5 text-cocoa-300 hover:text-cocoa" aria-label={show ? 'Ocultar contraseña' : 'Mostrar contraseña'}>
+          <button
+            type="button"
+            onClick={() => setShow((s) => !s)}
+            className="pressable absolute right-1.5 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full text-cocoa-500 hover:text-cocoa"
+            aria-label={show ? 'Ocultar contraseña' : 'Mostrar contraseña'}
+          >
             {show ? <EyeOff size={20} /> : <Eye size={20} />}
           </button>
         )}
       </div>
     </div>
+  );
+}
+
+/** Inline form error. Always role="alert" so assistive tech and the e2e suite can find it. */
+export function FormAlert({ children }: { children: ReactNode }) {
+  return (
+    <p role="alert" className="rounded-2xl bg-coral-100 px-4 py-2.5 text-sm font-semibold text-coral-600">
+      {children}
+    </p>
   );
 }
 
@@ -82,35 +94,30 @@ export function SocialLogin({ verb }: { verb: string }) {
 
   return (
     <>
-      <div className="my-5 flex items-center gap-3 text-sm text-cocoa-500">
-        <span className="h-px flex-1 bg-cream-300" /> o {verb} con <span className="h-px flex-1 bg-cream-300" />
+      <div className="my-6 flex items-center gap-3 text-sm text-cocoa-500">
+        <span className="h-px flex-1 bg-cocoa/10" /> o {verb} con <span className="h-px flex-1 bg-cocoa/10" />
       </div>
       <div className="grid grid-cols-2 gap-3">
         <Button variant="outline" icon={<GoogleG />} onClick={onGoogle}>
           Google
         </Button>
         <Button variant="outline" onClick={() => toast({ title: 'Apple llegará en la Fase 2', body: 'Por ahora usa correo o Google.', emoji: '🍎' })}>
-           Apple
+          Apple
         </Button>
       </div>
       <Sheet open={picker} onClose={() => setPicker(false)} title="Elige una cuenta">
-        <p className="-mt-2 mb-3 text-sm text-cocoa-500">
-          <GoogleG /> <span className="align-middle">Continuar en KuyayPet · </span>
-          <span className="rounded bg-honey-100 px-1.5 text-xs font-bold align-middle">Simulado{GOOGLE_CLIENT_ID ? '' : ' (sin Client ID)'}</span>
+        <p className="-mt-2 mb-4 flex flex-wrap items-center gap-2 text-sm text-cocoa-500">
+          <GoogleG />
+          <span>Continuar en KuyayPet</span>
+          <Chip tone="honey" className="px-2 py-0 text-xs">
+            Simulado{GOOGLE_CLIENT_ID ? '' : ' (sin Client ID)'}
+          </Chip>
         </p>
-        <ul className="divide-y divide-cream-300 rounded-2xl bg-white">
+        <ListGroup>
           {SIMULATED_GOOGLE_ACCOUNTS.map((a) => (
-            <li key={a.email}>
-              <button onClick={() => finish(a)} className="flex w-full items-center gap-3 px-4 py-3 text-left hover:bg-cream-100">
-                <Avatar src={a.picture} name={a.name} size={40} />
-                <span>
-                  <span className="block font-bold">{a.name}</span>
-                  <span className="block text-sm text-cocoa-500">{a.email}</span>
-                </span>
-              </button>
-            </li>
+            <ListRow key={a.email} leading={<Avatar src={a.picture} name={a.name} size={40} />} title={a.name} subtitle={a.email} chevron={false} onClick={() => finish(a)} />
           ))}
-        </ul>
+        </ListGroup>
       </Sheet>
     </>
   );

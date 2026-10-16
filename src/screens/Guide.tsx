@@ -1,8 +1,8 @@
 // Info (UML): guía de adopción responsable (HU-14). Accesible con o sin sesión.
-import { ArrowLeft, ChevronDown, Search } from 'lucide-react';
+import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
+import { ChevronDown, Search } from 'lucide-react';
 import { useMemo, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Card } from '@/components/ui';
+import { Button, EmptyState, PageHeader } from '@/components/ui';
 
 interface GuideSection {
   id: string;
@@ -101,7 +101,7 @@ function highlight(text: string, query: string) {
 }
 
 export function Guide() {
-  const navigate = useNavigate();
+  const reduce = useReducedMotion();
   const [query, setQuery] = useState('');
   const [open, setOpen] = useState<string | null>('requisitos');
 
@@ -112,54 +112,78 @@ export function Guide() {
   }, [query]);
 
   return (
-    <div className="scroll-area h-full px-5 pb-8 pt-4" data-hu="HU-14">
-      <button onClick={() => navigate(-1)} className="-ml-2 flex items-center gap-1 rounded-full px-2 py-1 font-semibold text-cocoa-500 hover:bg-cream-200">
-        <ArrowLeft size={18} /> Volver
-      </button>
-      <h1 className="mt-3 text-3xl font-extrabold">Guía de adopción responsable</h1>
-      <p className="text-cocoa-500">Información general para adoptar con responsabilidad en Lima. Ante dudas específicas, consulta siempre a un veterinario o al MINSA.</p>
+    <div className="scroll-area h-full px-4 pb-8 pt-3" data-hu="HU-14">
+      <PageHeader
+        back
+        title="Guía de adopción responsable"
+        subtitle="Información general para adoptar con responsabilidad en Lima. Ante dudas específicas, consulta siempre a un veterinario o al MINSA."
+      />
 
-      <div className="mt-4 flex items-center gap-2 rounded-2xl border-2 border-cream-300 bg-white px-3.5 py-2.5 focus-within:border-terra">
-        <Search size={18} className="text-cocoa-300" />
+      <div className="relative">
+        <Search size={18} className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-cocoa-300" aria-hidden />
         <input
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder="Buscar (ej. vacunas, contrato, seguimiento)…"
           aria-label="Buscar en la guía"
-          className="w-full bg-transparent outline-none placeholder:text-cocoa-300"
+          autoComplete="off"
+          className="input h-12 pl-11 placeholder:text-sm"
         />
       </div>
 
       {results.length === 0 ? (
-        <p className="mt-6 text-center text-cocoa-500">No encontramos resultados para “{query}”. Prueba con otra palabra.</p>
+        <EmptyState
+          emoji="🔍"
+          title={`No encontramos resultados para “${query}”`}
+          body="Prueba con otra palabra."
+          action={
+            <Button variant="soft" size="sm" onClick={() => setQuery('')}>
+              Limpiar búsqueda
+            </Button>
+          }
+        />
       ) : (
-        <div className="mt-4 space-y-3">
+        <ul className="surface-2 mt-5 divide-y divide-cocoa/[.07] overflow-hidden rounded-3xl">
           {results.map((s) => {
             const isOpen = open === s.id || (!!query.trim() && results.length <= 3);
             return (
-              <Card key={s.id} className="overflow-hidden">
+              <li key={s.id}>
                 <button
+                  type="button"
                   onClick={() => setOpen(isOpen ? null : s.id)}
                   aria-expanded={isOpen}
-                  className="flex w-full items-center gap-3 px-4 py-3.5 text-left"
+                  className="pressable flex w-full items-center gap-3 px-4 py-3.5 text-left hover:bg-white/80"
                 >
-                  <span className="text-2xl">{s.emoji}</span>
-                  <span className="flex-1 font-bold">{highlight(s.title, query)}</span>
-                  <ChevronDown size={18} className={`text-cocoa-300 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
+                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-terra-100/70 text-xl" aria-hidden>
+                    {s.emoji}
+                  </span>
+                  <span className="flex-1 font-display font-bold text-cocoa-900">{highlight(s.title, query)}</span>
+                  <ChevronDown size={18} className={`shrink-0 text-cocoa-300 transition-transform ${isOpen ? 'rotate-180' : ''}`} aria-hidden />
                 </button>
-                {isOpen && (
-                  <div className="space-y-2 px-4 pb-4 text-sm leading-relaxed text-cocoa-700">
-                    {s.body.map((p, i) => (
-                      <p key={i}>{highlight(p, query)}</p>
-                    ))}
-                  </div>
-                )}
-              </Card>
+                <AnimatePresence initial={false}>
+                  {isOpen && (
+                    <motion.div
+                      key="body"
+                      initial={reduce ? false : { height: 0, opacity: 0 }}
+                      animate={{ height: 'auto', opacity: 1 }}
+                      exit={reduce ? { opacity: 0 } : { height: 0, opacity: 0 }}
+                      transition={{ duration: reduce ? 0 : 0.22, ease: [0.22, 1, 0.36, 1] }}
+                      className="overflow-hidden"
+                    >
+                      <div className="space-y-3 px-5 pb-5 text-[0.95rem] leading-relaxed text-cocoa-700">
+                        {s.body.map((p, i) => (
+                          <p key={i}>{highlight(p, query)}</p>
+                        ))}
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </li>
             );
           })}
-        </div>
+        </ul>
       )}
-      <p className="mt-6 text-center text-xs text-cocoa-300">Contenido informativo elaborado para fines académicos. No reemplaza asesoría veterinaria o legal profesional.</p>
+      <p className="mt-8 px-2 text-center text-xs leading-relaxed text-cocoa-500">Contenido informativo elaborado para fines académicos. No reemplaza asesoría veterinaria o legal profesional.</p>
     </div>
   );
 }
