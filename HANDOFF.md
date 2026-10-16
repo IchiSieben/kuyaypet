@@ -1,4 +1,12 @@
-# HANDOFF — 2026-09-25 17:45 (Fase 1 desplegada: `v0.3-fase1`)
+# HANDOFF — 2026-10-16 15:10 (v0.4-ui en preview `/next/`)
+
+- **Producción:** sigue `v0.3-fase1` en la raíz de Hostinger y en Pages. `main` sin cambios (`898a9f6`).
+- **Preview:** rama `v0.4-ui` en https://firebrick-cod-910257.hostingersite.com/next/ (build `VITE_BASE=/next/`). 22/22 Vitest y 21/21 Playwright.
+- **Cómo se desplegó la preview (sin tocar la raíz):** `VITE_BASE=/next/ npm run build` desde PowerShell (en Git Bash, MSYS convierte `/next/` en `C:/Program Files/Git/next/`; usar `MSYS_NO_PATHCONV=1`). Luego MCP `hosting_files_generate-upload-url` y TUS archivo por archivo a `next/<ruta>`, con `index.html` al final y un `.htaccess` propio en `next/`. **Nunca** `hosting_deployStaticSiteArchiveV1` para la preview: reemplaza el sitio completo.
+- **Pendiente v0.4:** transición carta → perfil; pase de tokens en Browse, Matches, Chats, Onboarding y Owner/Admin; fecha de entrega en `/sprints` un día antes (formatear el hito en UTC); el service worker de la v0.3 captura `/next/` en navegadores que ya lo tenían (agregar `/^\/next\//` al `denylist` en el próximo deploy de producción).
+- **Lecciones:** el Python de Windows rechaza la cadena TLS (válida) de `srv*-files.hstgr.io` con "certificate has expired"; `curl` (schannel) la verifica bien: subir con curl. El puerto 4173 puede estar ocupado por otra app: servir en 4199 y usar `BASE_URL`.
+
+## Estado al 2026-09-25 17:45 (Fase 1 desplegada: `v0.3-fase1`)
 
 - **Producción:** `v0.3-fase1` en Hostinger y Pages; 21/21 Playwright contra Hostinger. `main` = `fase1-cont`.
 - **Hecho:** A–E completos; F: Match cinematográfico, pantalla dividida (ADR-13), barras por factor, stack de 3 cartas, splash, mapa OSM (ADR-14), rendimiento (ADR-15).

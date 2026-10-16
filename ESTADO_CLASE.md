@@ -1,4 +1,14 @@
-# ESTADO_CLASE — actualizado 2026-09-25 17:45 (Lima)
+# ESTADO_CLASE — actualizado 2026-10-16 15:10 (Lima)
+
+## v0.4-ui en preview (16 oct 2026)
+- **Preview:** https://firebrick-cod-910257.hostingersite.com/next/ — rama `v0.4-ui` (4 commits sobre `v0.3-fase1`), build con `VITE_BASE=/next/` (`index-DoPHrMAe.js`).
+- **Producción sin cambios:** la raíz sigue en **`v0.3-fase1`** (`index-BmydHsl6.js`). La preview vive solo en `public_html/next/`, con su propio `.htaccess` (fallback a `/next/index.html`).
+- **Tests de la rama:** 22/22 Vitest · 21/21 Playwright (`--workers=1`, local en el puerto 4199).
+- **En vivo desde GitHub:** `/next/#/historias` lee `docs/historias-de-usuario.md` y `/next/#/sprints` lee hitos e issues de ClxNode/KuyayPet (verificado: respuestas 200, sin errores de consola).
+- **Aviso:** si el navegador ya abrió la v0.3, su service worker (alcance `/`) responde las navegaciones a `/next/` con la v0.3. Para ver la preview: ventana de incógnito o borrar los datos del sitio. El arreglo es agregar `/next/` al `denylist` del service worker de producción (no se hizo: toca la raíz).
+- **Pendiente v0.4:** transición carta → perfil; pase de tokens en Browse, Matches, Chats, Onboarding y Owner/Admin; en `/sprints` la fecha de entrega se muestra un día antes (el hito vence `2026-10-30T00:00Z` y se formatea en hora de Lima).
+
+## Estado al 2026-09-25 17:45 (v0.3-fase1)
 
 ## Links para la clase
 - **App (Hostinger):** https://firebrick-cod-910257.hostingersite.com/
