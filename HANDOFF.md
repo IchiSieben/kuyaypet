@@ -17,7 +17,7 @@
 | 2 | Responsable (panel, nueva, editar), Notificaciones, perfil del adoptante | agente C (`kuyaypet-wt/f2`) | hecho (`35bb570`) |
 | 3 | Admin (shell, dashboard, usuarios, publicaciones, reportes, detalles) | agente D (`kuyaypet-wt/f3`) | hecho (`f7ae9a5`) |
 | 4 | Login, registro, recuperar, bandeja simulada, guía | agente E (`kuyaypet-wt/f4`) | hecho (`cc66914`) |
-| 5 | Movimiento: carta → perfil (`layoutId`), Match, transiciones de ruta, skeletons de Descubrir/Perfil | hilo principal | hecho (`bac2b28`, `0e…` sin startTransition) |
+| 5 | Movimiento: carta → perfil (`layoutId`), Match, transiciones de ruta, skeletons de Descubrir/Perfil | hilo principal | hecho (`bac2b28`, `39a81c1` sin startTransition) |
 | 6 | Pulido transversal, fecha UTC en /sprints, 26 rutas, Lighthouse | hilo principal | hecho (`0b8525b`) · **deploy final 16:35** |
 
 ### Decisiones v0.5 (sin consulta, modo desatendido)
