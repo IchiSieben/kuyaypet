@@ -15,6 +15,9 @@ import { Splash } from "@/screens/Splash";
 import { Login } from "@/screens/auth/Login";
 import { Register } from "@/screens/auth/Register";
 import { Discover } from "@/screens/Discover";
+// Eager on purpose: the card -> profile shared-element transition (layoutId) needs the profile to
+// mount in the same commit the card unmounts; a lazy chunk would put a Suspense fallback in between.
+import { PetProfile } from "@/screens/PetProfile";
 
 // Code-splitting by screen: the first paint only needs the splash, auth and the deck.
 const lazyNamed = <K extends string>(
@@ -28,10 +31,6 @@ const Onboarding = lazyNamed(
 );
 const Browse = lazyNamed(() => import("@/screens/Browse"), "Browse");
 const Matches = lazyNamed(() => import("@/screens/Matches"), "Matches");
-const PetProfile = lazyNamed(
-  () => import("@/screens/PetProfile"),
-  "PetProfile",
-);
 const ChatList = lazyNamed(() => import("@/screens/chat/ChatList"), "ChatList");
 const ChatThreadScreen = lazyNamed(
   () => import("@/screens/chat/ChatThread"),
@@ -116,11 +115,7 @@ function Loading() {
 
 export default function App() {
   return (
-    // v7_startTransition: navigations render in a transition, so React keeps the current screen
-    // while a lazy chunk loads and swaps both in one commit (what layoutId needs: card -> profile).
-    <HashRouter
-      future={{ v7_startTransition: true, v7_relativeSplatPath: true }}
-    >
+    <HashRouter>
       <MotionConfig reducedMotion="user">
         <DeviceFrame>
           <Suspense fallback={<Loading />}>
