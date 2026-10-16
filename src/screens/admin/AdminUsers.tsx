@@ -1,9 +1,9 @@
 import { Search } from 'lucide-react';
 import { useMemo, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { Avatar, Card, Chip, EmptyState } from '@/components/ui';
+import { Avatar, Chip, EmptyState, ListGroup, ListRow, Section } from '@/components/ui';
 import { useUsers } from '@/services/users';
 import type { Role } from '@/types';
+import { FilterBar } from './adminUi';
 
 const ROLE_LABEL: Record<Role, string> = { adopter: 'Adoptante', owner: 'Responsable', admin: 'Administrador' };
 const ROLE_FILTERS: (Role | 'todos')[] = ['todos', 'adopter', 'owner', 'admin'];
@@ -28,56 +28,58 @@ export function AdminUsers() {
   }, [users, q, role, state]);
 
   return (
-    <div className="space-y-4 pt-2" data-hu="HU-22">
-      <h2 className="text-lg font-bold">Usuarios ({users.length})</h2>
-      <div className="relative">
-        <Search size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-cocoa-300" />
-        <input
-          className="input pl-10"
-          placeholder="Buscar por nombre o correo"
-          aria-label="Buscar usuario por nombre o correo"
-          value={q}
-          onChange={(e) => setQ(e.target.value)}
-        />
-      </div>
-      <div className="flex flex-wrap gap-2">
-        {ROLE_FILTERS.map((r) => (
-          <Chip key={r} active={role === r} onClick={() => setRole(r)}>
-            {r === 'todos' ? 'Todos los roles' : ROLE_LABEL[r]}
-          </Chip>
-        ))}
-      </div>
-      <div className="flex flex-wrap gap-2">
-        {STATE_FILTERS.map((s) => (
-          <Chip key={s} active={state === s} onClick={() => setState(s)}>
-            {s === 'todos' ? 'Cualquier estado' : s === 'activo' ? 'Activos' : 'Inactivos'}
-          </Chip>
-        ))}
-      </div>
+    <div data-hu="HU-22">
+      <Section title={`Usuarios (${users.length})`} aside={filtered.length !== users.length ? <span className="tabular-nums">{filtered.length} resultados</span> : undefined}>
+        <div className="mb-3 space-y-2.5">
+          <div className="relative">
+            <Search size={18} className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-cocoa-400" aria-hidden />
+            <input
+              className="input !rounded-xl !py-2.5 pl-10"
+              placeholder="Buscar por nombre o correo"
+              aria-label="Buscar usuario por nombre o correo"
+              value={q}
+              onChange={(e) => setQ(e.target.value)}
+            />
+          </div>
+          <FilterBar
+            value={role}
+            onChange={setRole}
+            options={ROLE_FILTERS.map((r) => ({ value: r, label: r === 'todos' ? 'Todos los roles' : ROLE_LABEL[r] }))}
+          />
+          <FilterBar
+            value={state}
+            onChange={setState}
+            options={STATE_FILTERS.map((s) => ({ value: s, label: s === 'todos' ? 'Cualquier estado' : s === 'activo' ? 'Activos' : 'Inactivos' }))}
+          />
+        </div>
 
-      {filtered.length === 0 ? (
-        <EmptyState emoji="🔍" title="Sin resultados" body="Ningún usuario coincide con la búsqueda o los filtros." />
-      ) : (
-        <ul className="space-y-2">
-          {filtered.map((u) => (
-            <li key={u.id}>
-              <Link to={`/admin/usuarios/${u.id}`}>
-                <Card className="flex items-center gap-3 p-3">
-                  <Avatar src={u.avatar} name={u.name} size={44} />
-                  <div className="min-w-0 flex-1">
-                    <p className="truncate font-bold">{u.name}</p>
-                    <p className="truncate text-xs text-cocoa-500">{u.email}</p>
-                  </div>
-                  <div className="flex flex-col items-end gap-1">
-                    <Chip tone="terra">{ROLE_LABEL[u.role]}</Chip>
-                    <Chip tone={u.active ? 'sage' : 'coral'}>{u.active ? 'Activo' : 'Inactivo'}</Chip>
-                  </div>
-                </Card>
-              </Link>
-            </li>
-          ))}
-        </ul>
-      )}
+        {filtered.length === 0 ? (
+          <EmptyState emoji="🔍" title="Sin resultados" body="Ningún usuario coincide con la búsqueda o los filtros." />
+        ) : (
+          <ListGroup>
+            {filtered.map((u) => (
+              <ListRow
+                key={u.id}
+                to={`/admin/usuarios/${u.id}`}
+                className="!py-2.5"
+                leading={<Avatar src={u.avatar} name={u.name} size={40} />}
+                title={u.name}
+                subtitle={
+                  <>
+                    <span className="block truncate">{u.email}</span>
+                    <span className="block text-xs">{ROLE_LABEL[u.role]}</span>
+                  </>
+                }
+                trailing={
+                  <Chip tone={u.active ? 'sage' : 'coral'} className="!px-2.5 !py-0.5 !text-[13px]">
+                    {u.active ? 'Activo' : 'Inactivo'}
+                  </Chip>
+                }
+              />
+            ))}
+          </ListGroup>
+        )}
+      </Section>
     </div>
   );
 }

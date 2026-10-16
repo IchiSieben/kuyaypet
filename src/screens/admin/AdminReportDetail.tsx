@@ -1,13 +1,14 @@
-import { ArrowLeft } from 'lucide-react';
 import { useState } from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
-import { Avatar, Button, Card, Chip, EmptyState, Sheet } from '@/components/ui';
+import { useNavigate, useParams } from 'react-router-dom';
+import { Avatar, Button, Card, Chip, EmptyState, ListGroup, ListRow, PageHeader, Section, Sheet } from '@/components/ui';
 import { deactivateUserFromReport, discardReport, hidePublicationFromReport, reportTargetLink, reportTargetUser, useReport } from '@/services/moderation';
 import { useDb } from '@/services/store';
 import { confirm, toast } from '@/services/ui';
 import type { ReportStatus } from '@/types';
+import { Field, fmtDay } from './adminUi';
 
 const STATUS_LABEL: Record<ReportStatus, string> = { abierto: 'Abierto', resuelto: 'Resuelto', descartado: 'Descartado' };
+const STATUS_TONE: Record<ReportStatus, 'honey' | 'sage' | 'neutral'> = { abierto: 'honey', resuelto: 'sage', descartado: 'neutral' };
 
 /** HU-26: detalle del reporte + acciones (ocultar publicación, desactivar cuenta, descartar). */
 export function AdminReportDetail() {
@@ -21,7 +22,7 @@ export function AdminReportDetail() {
   if (!report)
     return (
       <div className="pt-10" data-hu="HU-26">
-        <EmptyState emoji="🔍" title="Reporte no encontrado" action={<Link to="/admin/reportes"><Button>Volver</Button></Link>} />
+        <EmptyState emoji="🔍" title="Reporte no encontrado" action={<Button onClick={() => navigate('/admin/reportes')}>Volver</Button>} />
       </div>
     );
 
@@ -29,6 +30,7 @@ export function AdminReportDetail() {
   const targetUser = reportTargetUser(report);
   const targetLink = reportTargetLink(report);
   const resolved = report.status !== 'abierto';
+  const hidesPet = report.targetType === 'mascota';
 
   const hide = async () => {
     const ok = await confirm({ title: '¿Ocultar la publicación reportada?', body: 'Se retirará de Descubrir y quedará como rechazada.', emoji: '🙈', confirmLabel: 'Ocultar', danger: true });
@@ -53,60 +55,66 @@ export function AdminReportDetail() {
   };
 
   return (
-    <div className="space-y-4 pt-2" data-hu="HU-26">
-      <button onClick={() => navigate('/admin/reportes')} className="flex items-center gap-1 text-sm font-bold text-terra">
-        <ArrowLeft size={16} /> Reportes
-      </button>
+    <div data-hu="HU-26">
+      <PageHeader back="/admin/reportes" title="Reporte" subtitle={fmtDay(report.createdAt)} />
 
-      <Card className="space-y-3 p-4">
-        <div className="flex items-center justify-between">
-          <Chip tone="coral">{report.targetType}</Chip>
-          <Chip tone={report.status === 'abierto' ? 'honey' : report.status === 'resuelto' ? 'sage' : 'neutral'}>{STATUS_LABEL[report.status]}</Chip>
+      <Card className="p-4">
+        <div className="flex items-center gap-2">
+          <Chip tone="coral" className="!px-2.5 !py-0.5 !text-[13px] capitalize">
+            {report.targetType}
+          </Chip>
+          <Chip tone={STATUS_TONE[report.status]} className="!px-2.5 !py-0.5 !text-[13px]">
+            {STATUS_LABEL[report.status]}
+          </Chip>
         </div>
-        <div className="flex items-center gap-3">
-          <Avatar src={reporter?.avatar} name={reporter?.name ?? '?'} size={44} />
-          <div>
-            <p className="text-xs font-bold text-cocoa-300">Reportado por</p>
-            <p className="font-bold">{reporter?.name ?? 'Usuario eliminado'}</p>
-          </div>
-        </div>
-        <div>
-          <p className="text-xs font-bold text-cocoa-300">Motivo</p>
-          <p className="font-bold">{report.reason}</p>
-        </div>
-        <div>
-          <p className="text-xs font-bold text-cocoa-300">Detalle</p>
-          <p className="text-cocoa-700">{report.detail}</p>
-        </div>
-        {targetLink && (
-          <Link to={targetLink} className="text-sm font-semibold text-terra underline underline-offset-4">
-            Ver {report.targetType} reportado
-          </Link>
-        )}
+        <dl className="mt-4 space-y-4">
+          <Field label="Reportado por">
+            <span className="flex items-center gap-2.5">
+              <Avatar src={reporter?.avatar} name={reporter?.name ?? '?'} size={36} />
+              {reporter?.name ?? 'Usuario eliminado'}
+            </span>
+          </Field>
+          <Field label="Motivo">{report.reason}</Field>
+          <Field label="Detalle">
+            <span className="font-normal text-cocoa-700">{report.detail}</span>
+          </Field>
+        </dl>
         {report.resolution && (
-          <p className="rounded-2xl bg-cream-200 p-3 text-sm">
+          <p className="mt-4 rounded-2xl bg-cream-200 p-3 text-sm text-cocoa-900">
             <b>Resolución:</b> {report.resolution}
           </p>
         )}
       </Card>
 
+      {targetLink && (
+        <ListGroup className="mt-3">
+          <ListRow to={targetLink} title={`Ver ${report.targetType} reportado`} />
+        </ListGroup>
+      )}
+
       {!resolved && (
-        <Card className="space-y-2 p-4">
-          <h2 className="text-lg font-bold">Acciones</h2>
-          {report.targetType === 'mascota' && (
-            <Button block variant="danger" onClick={hide}>
-              Ocultar publicación
+        <Section title="Acciones" className="mt-6">
+          <Card className="space-y-2 p-4">
+            {hidesPet && (
+              <Button block variant="danger" onClick={hide}>
+                Ocultar publicación
+              </Button>
+            )}
+            {targetUser && (
+              <Button
+                block
+                variant={hidesPet ? 'outline' : 'danger'}
+                className={hidesPet ? '!border-coral/40 !text-coral-600 hover:!bg-coral-100/60' : ''}
+                onClick={deactivate}
+              >
+                Desactivar cuenta de {targetUser.name}
+              </Button>
+            )}
+            <Button block variant={hidesPet || targetUser ? 'ghost' : 'outline'} onClick={() => setDiscarding(true)}>
+              Descartar reporte
             </Button>
-          )}
-          {targetUser && (
-            <Button block variant="danger" onClick={deactivate}>
-              Desactivar cuenta de {targetUser.name}
-            </Button>
-          )}
-          <Button block variant="outline" onClick={() => setDiscarding(true)}>
-            Descartar reporte
-          </Button>
-        </Card>
+          </Card>
+        </Section>
       )}
 
       <Sheet open={discarding} onClose={() => setDiscarding(false)} title="Descartar reporte">

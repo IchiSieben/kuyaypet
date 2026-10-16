@@ -1,14 +1,15 @@
-import { ArrowLeft } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
-import { Button, Card, Chip, EmptyState, Sheet } from '@/components/ui';
+import { useNavigate, useParams } from 'react-router-dom';
+import { Button, Card, Chip, EmptyState, PageHeader, Section } from '@/components/ui';
 import { approvePublication, rejectPublication, updatePublication, usePublication } from '@/services/moderation';
+import { ageLabel, SPECIES_LABEL } from '@/services/pets';
 import { useDb } from '@/services/store';
 import { confirm, toast } from '@/services/ui';
 import type { ApprovalStatus } from '@/types';
+import { ActionBar, RejectSheet } from './adminUi';
 
 const APPROVAL_LABEL: Record<ApprovalStatus, string> = { pendiente: 'Pendiente', aprobada: 'Aprobada', rechazada: 'Rechazada' };
-const REASONS = ['Fotos no corresponden a la mascota', 'Información incompleta o falsa', 'Posible venta encubierta', 'Contenido inapropiado'];
+const APPROVAL_TONE: Record<ApprovalStatus, 'honey' | 'sage' | 'coral'> = { pendiente: 'honey', aprobada: 'sage', rechazada: 'coral' };
 
 /** HU-23: ver/editar campos de texto de una publicación. HU-24: aprobar/rechazar también desde aquí. */
 export function AdminPublicationDetail() {
@@ -22,7 +23,6 @@ export function AdminPublicationDetail() {
   const [story, setStory] = useState(pet?.story ?? '');
   const [specialCare, setSpecialCare] = useState(pet?.specialCare ?? '');
   const [rejecting, setRejecting] = useState(false);
-  const [reason, setReason] = useState('');
 
   useEffect(() => {
     setName(pet?.name ?? '');
@@ -35,9 +35,11 @@ export function AdminPublicationDetail() {
   if (!pet)
     return (
       <div className="pt-10" data-hu="HU-23">
-        <EmptyState emoji="🔍" title="Publicación no encontrada" action={<Link to="/admin/publicaciones"><Button>Volver</Button></Link>} />
+        <EmptyState emoji="🔍" title="Publicación no encontrada" action={<Button onClick={() => navigate('/admin/publicaciones')}>Volver</Button>} />
       </div>
     );
+
+  const isPending = pet.approval === 'pendiente';
 
   const save = () => {
     if (!name.trim()) return toast({ title: 'El nombre no puede estar vacío', tone: 'error' });
@@ -52,81 +54,74 @@ export function AdminPublicationDetail() {
     toast({ title: `Publicación de ${pet.name} aprobada`, tone: 'success' });
   };
 
-  const doReject = () => {
-    if (!reason.trim()) return;
-    rejectPublication(pet.id, reason.trim());
+  const doReject = (reason: string) => {
+    rejectPublication(pet.id, reason);
     toast({ title: `Publicación de ${pet.name} rechazada`, body: 'Se notificó al responsable con el motivo.' });
     setRejecting(false);
-    setReason('');
   };
 
   return (
-    <div className="space-y-4 pt-2" data-hu="HU-23">
-      <button onClick={() => navigate('/admin/publicaciones')} className="flex items-center gap-1 text-sm font-bold text-terra">
-        <ArrowLeft size={16} /> Publicaciones
-      </button>
-      <Card className="flex items-center gap-3 p-3">
-        <img src={pet.photos[0]} alt="" className="h-16 w-16 rounded-2xl object-cover" />
-        <div className="min-w-0 flex-1">
-          <p className="font-bold">{pet.name}</p>
-          <p className="text-xs text-cocoa-500">Por {owner?.name}</p>
-        </div>
-        <Chip tone={pet.approval === 'aprobada' ? 'sage' : pet.approval === 'rechazada' ? 'coral' : 'honey'}>{APPROVAL_LABEL[pet.approval]}</Chip>
-      </Card>
+    <div data-hu="HU-23">
+      <PageHeader back="/admin/publicaciones" title={pet.name} subtitle={`Por ${owner?.name ?? ''}`} />
 
-      <Card className="space-y-3 p-4">
-        <h2 className="text-lg font-bold">Editar publicación</h2>
-        <label className="block text-sm font-bold">
-          Nombre
-          <input className="input mt-1" value={name} onChange={(e) => setName(e.target.value)} />
-        </label>
-        <label className="block text-sm font-bold">
-          Raza
-          <input className="input mt-1" value={breed} onChange={(e) => setBreed(e.target.value)} />
-        </label>
-        <label className="block text-sm font-bold">
-          Sobre mí
-          <textarea rows={3} className="input mt-1 resize-none" value={about} onChange={(e) => setAbout(e.target.value)} />
-        </label>
-        <label className="block text-sm font-bold">
-          Historia
-          <textarea rows={2} className="input mt-1 resize-none" value={story} onChange={(e) => setStory(e.target.value)} />
-        </label>
-        <label className="block text-sm font-bold">
-          Cuidados especiales
-          <textarea rows={2} className="input mt-1 resize-none" value={specialCare} onChange={(e) => setSpecialCare(e.target.value)} />
-        </label>
-        <Button block onClick={save}>
-          Guardar cambios
-        </Button>
-      </Card>
+      <div className="relative overflow-hidden rounded-3xl bg-cream-200 ring-1 ring-cocoa/10">
+        <img src={pet.photos[0]} alt="" className="h-52 w-full object-cover" />
+        <Chip tone={APPROVAL_TONE[pet.approval]} className="absolute left-3 top-3 !bg-white/90 !py-0.5 shadow-soft">
+          {APPROVAL_LABEL[pet.approval]}
+        </Chip>
+      </div>
+      <p className="mt-2 px-1 text-sm text-cocoa-500">
+        {SPECIES_LABEL[pet.species]} · {pet.breed} · {ageLabel(pet.ageMonths)}
+      </p>
 
-      {pet.approval === 'pendiente' && (
-        <div className="grid grid-cols-2 gap-2" data-hu="HU-24">
-          <Button variant="outline" onClick={() => setRejecting(true)}>
-            Rechazar
-          </Button>
-          <Button variant="success" onClick={approve}>
-            Aprobar
-          </Button>
-        </div>
+      {pet.rejectionReason && (
+        <p className="mt-3 rounded-2xl bg-coral-100/70 p-3 text-sm text-cocoa-900">
+          <b>Motivo de rechazo:</b> {pet.rejectionReason}
+        </p>
       )}
-      {pet.rejectionReason && <p className="rounded-2xl bg-cream-200 p-3 text-sm"><b>Motivo de rechazo:</b> {pet.rejectionReason}</p>}
 
-      <Sheet open={rejecting} onClose={() => setRejecting(false)} title={`Rechazar a ${pet.name}`}>
-        <p className="mb-3 text-sm text-cocoa-500">El motivo se enviará al responsable.</p>
-        <div className="mb-3 flex flex-wrap gap-2">
-          {REASONS.map((r) => (
-            <Chip key={r} active={reason === r} onClick={() => setReason(r)}>
-              {r}
-            </Chip>
-          ))}
-        </div>
-        <textarea rows={3} className="input resize-none" placeholder="Escribe el motivo del rechazo" value={reason} onChange={(e) => setReason(e.target.value)} aria-label="Motivo del rechazo" />
-        <Button block variant="danger" className="mt-3" disabled={!reason.trim()} onClick={doReject}>
-          Rechazar publicación
-        </Button>
-      </Sheet>
+      <Section title="Editar publicación" className="mt-6">
+        <Card className="space-y-4 p-4">
+          <label className="block text-sm font-bold text-cocoa-700">
+            Nombre
+            <input className="input mt-1.5" value={name} onChange={(e) => setName(e.target.value)} />
+          </label>
+          <label className="block text-sm font-bold text-cocoa-700">
+            Raza
+            <input className="input mt-1.5" value={breed} onChange={(e) => setBreed(e.target.value)} />
+          </label>
+          <label className="block text-sm font-bold text-cocoa-700">
+            Sobre mí
+            <textarea rows={3} className="input mt-1.5 resize-none" value={about} onChange={(e) => setAbout(e.target.value)} />
+          </label>
+          <label className="block text-sm font-bold text-cocoa-700">
+            Historia
+            <textarea rows={2} className="input mt-1.5 resize-none" value={story} onChange={(e) => setStory(e.target.value)} />
+          </label>
+          <label className="block text-sm font-bold text-cocoa-700">
+            Cuidados especiales
+            <textarea rows={2} className="input mt-1.5 resize-none" value={specialCare} onChange={(e) => setSpecialCare(e.target.value)} />
+          </label>
+          <Button block variant={isPending ? 'outline' : 'primary'} onClick={save}>
+            Guardar cambios
+          </Button>
+        </Card>
+      </Section>
+
+      {isPending && (
+        <ActionBar>
+          <div className="grid grid-cols-2 gap-2" data-hu="HU-24">
+            <Button variant="outline" onClick={() => setRejecting(true)}>
+              Rechazar
+            </Button>
+            <Button variant="success" onClick={approve}>
+              Aprobar
+            </Button>
+          </div>
+        </ActionBar>
+      )}
+
+      <RejectSheet name={pet.name} open={rejecting} onClose={() => setRejecting(false)} onConfirm={doReject} />
     </div>
   );
 }
