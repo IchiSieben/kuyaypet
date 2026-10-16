@@ -1,6 +1,7 @@
 node_modules
 dist
 dev-dist
+dist-next2
 *.local
 .env
 .env.*.local

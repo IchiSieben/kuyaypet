@@ -5,8 +5,8 @@
 | Fase | Alcance | Responsable | Estado |
 |---|---|---|---|
 | Prep | Primitivas `PageHeader/Section/ListGroup/ListRow/StatTile/Skeleton/IconButton`, `docs/v05-design.md`, `docs/test-selectors.txt` | hilo principal | hecho (`e4496db`) |
-| 1a | Browse, PetMap, Favoritos, Historial, Matches | agente A (worktree `kuyaypet-wt/f1a`) | en curso |
-| 1b | Chats (lista y conversación), Coordinar, Perfil, Onboarding | agente B (`kuyaypet-wt/f1b`) | en curso |
+| 1a | Browse, PetMap, Favoritos, Historial, Matches | agente A (worktree `kuyaypet-wt/f1a`) | hecho (`2794bf7`) |
+| 1b | Chats (lista y conversación), Coordinar, Perfil, Onboarding | agente B (`kuyaypet-wt/f1b`) | hecho (`cb7fea7`) · **1er deploy `/next2/` 2026-10-16 16:02** |
 | 2 | Responsable (panel, nueva, editar), Notificaciones, perfil del adoptante | agente C (`kuyaypet-wt/f2`) | en curso |
 | 3 | Admin (shell, dashboard, usuarios, publicaciones, reportes, detalles) | agente D (`kuyaypet-wt/f3`) | en curso |
 | 4 | Login, registro, recuperar, bandeja simulada, guía | agente E (`kuyaypet-wt/f4`) | en curso |
@@ -19,6 +19,9 @@
 - **Archivos disjuntos**: `components/ui/index.tsx`, `PetCard`, `MatchCelebration`, `shell/*`, `App.tsx` y Splash solo los toca el hilo principal; la firma de props de `PetCard` queda congelada. Cada agente pone sus propios skeletons en sus pantallas.
 - **Playwright solo en el hilo principal**, `--workers=1`, puerto 4199. Agentes: build + Vitest, capturas en puertos 4201+.
 - **`scripts/v05-shots.mjs` queda fuera de git** (`.git/info/exclude`): es herramienta local de capturas.
+- **Perfil de mascota sale del code-splitting** (bundle inicial +19 kB, 507 kB): con `v7_startTransition` la animación `layoutId` sobrevivía al chunk perezoso, pero el `pathname` diferido hacía que el tour se re-sincronizara a destiempo (flaky en `tour.spec.ts`). Cargarlo de entrada da el mismo commit carta→perfil sin tocar el router. Revertir: volver a `lazyNamed` en `App.tsx` (se pierde la animación la primera vez).
+- **Copy nuevo mínimo aceptado** de los agentes (conteo "N mascotas", acciones en estados vacíos, separadores de fecha del chat, nombres de pasos): no reemplaza texto existente ni nombres accesibles que use la suite.
+- **Subida TUS con reintentos** (4 por archivo): una subida de 232 archivos tuvo un `Connection reset`; `index.html` va al final, así que un fallo nunca deja la preview apuntando a assets ausentes.
 - **Build de despliegue en `dist-next2/`** (`--outDir`) para no pisar el `dist/` que sirve la preview local de tests.
 
 # HANDOFF anterior — 2026-10-16 15:10 (v0.4-ui en preview `/next/`)
