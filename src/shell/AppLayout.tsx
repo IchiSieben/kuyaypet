@@ -1,10 +1,12 @@
 import { Bell, Heart, LayoutDashboard, MessageCircle, Search, Sparkles, User as UserIcon, PawPrint, type LucideIcon } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { Link, NavLink, Outlet } from 'react-router-dom';
+import { useEffect, useRef } from 'react';
+import { Link, NavLink, Outlet, useLocation } from 'react-router-dom';
 
 import { useCurrentUser } from '@/services/auth';
 import { useUnreadCount } from '@/services/notifications';
 import { LogoMark } from '@/components/brand/Logo';
+import { RouteFade } from '@/shell/RouteFade';
 import type { Role } from '@/types';
 
 type Tab = { to: string; label: string; icon: LucideIcon; tour?: string };
@@ -35,6 +37,12 @@ const ROLE_LABEL: Record<Role, string> = { adopter: 'Adoptante', owner: 'Respons
 export function AppLayout() {
   const user = useCurrentUser();
   const unread = useUnreadCount(user?.id);
+  const { pathname } = useLocation();
+  const main = useRef<HTMLElement>(null);
+  // The scroller outlives the screens inside it: a new tab starts at the top, not where the last one was.
+  useEffect(() => {
+    if (main.current) main.current.scrollTop = 0;
+  }, [pathname]);
   if (!user) return null;
   const tabs = TABS[user.role];
   return (
@@ -60,8 +68,11 @@ export function AppLayout() {
           </Link>
         </div>
       </header>
-      <main className="scroll-area relative flex-1">
-        <Outlet />
+      <main ref={main} className="scroll-area relative flex-1">
+        {/* Admin sub-tabs share one fade so AdminShell (and its tab strip) is not remounted. */}
+        <RouteFade key={pathname.startsWith('/admin') ? '/admin' : pathname}>
+          <Outlet />
+        </RouteFade>
       </main>
       <nav className="glass relative z-10 shrink-0 px-2 pb-safe-b pt-1.5" aria-label="Navegación principal">
         <ul className="flex justify-around">

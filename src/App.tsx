@@ -1,8 +1,16 @@
 import { lazy, Suspense, type ComponentType } from "react";
-import { HashRouter, Navigate, Route, Routes } from "react-router-dom";
+import { MotionConfig } from "framer-motion";
+import {
+  HashRouter,
+  Navigate,
+  Route,
+  Routes,
+  useLocation,
+} from "react-router-dom";
 import { DeviceFrame } from "@/shell/DeviceFrame";
 import { AppLayout } from "@/shell/AppLayout";
 import { RequireAuth } from "@/shell/RequireAuth";
+import { isTabRoute, RouteFade } from "@/shell/RouteFade";
 import { Splash } from "@/screens/Splash";
 import { Login } from "@/screens/auth/Login";
 import { Register } from "@/screens/auth/Register";
@@ -87,67 +95,95 @@ const AdopterProfileView = lazyNamed(
   "AdopterProfileView",
 );
 
+/** Route-chunk fallback: the shape of a screen (title, filter row, two cards), never a lone spinner. */
 function Loading() {
   return (
-    <div
-      className="flex h-full items-center justify-center"
-      aria-label="Cargando"
-    >
-      <span className="animate-bounce text-4xl">🐾</span>
+    <div className="h-full px-4 pt-6" role="status" aria-label="Cargando">
+      <div className="skeleton h-8 w-2/3 rounded-xl" />
+      <div className="skeleton mt-3 h-4 w-1/2 rounded-lg" />
+      <div className="mt-6 flex gap-2">
+        <div className="skeleton h-9 w-20 rounded-full" />
+        <div className="skeleton h-9 w-24 rounded-full" />
+        <div className="skeleton h-9 w-16 rounded-full" />
+      </div>
+      <div className="mt-5 grid grid-cols-2 gap-3">
+        <div className="skeleton aspect-[3/4] rounded-3xl" />
+        <div className="skeleton aspect-[3/4] rounded-3xl" />
+      </div>
     </div>
   );
 }
 
 export default function App() {
   return (
-    <HashRouter>
-      <DeviceFrame>
-        <Suspense fallback={<Loading />}>
-          <Routes>
-            <Route path="/" element={<Splash />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/registro" element={<Register />} />
-            <Route path="/recuperar" element={<Recover />} />
-            <Route path="/creditos" element={<Credits />} />
-            <Route path="/guia" element={<Guide />} />
-            <Route path="/historias" element={<Historias />} />
-            <Route path="/sprints" element={<Sprints />} />
-            <Route element={<RequireAuth />}>
-              <Route path="/onboarding" element={<Onboarding />} />
-              <Route path="/mascota/:id" element={<PetProfile />} />
-              <Route path="/chats/:id" element={<ChatThreadScreen />} />
-              <Route path="/coordinar/:petId" element={<Coordinate />} />
-              <Route path="/responsable/nueva" element={<NewPet />} />
-              <Route path="/responsable/editar/:id" element={<EditPet />} />
-              <Route path="/adoptante/:id" element={<AdopterProfileView />} />
-              <Route path="/favoritos" element={<Favorites />} />
-              <Route path="/historial" element={<History />} />
-              <Route element={<AppLayout />}>
-                <Route path="/descubrir" element={<Discover />} />
-                <Route path="/buscar" element={<Browse />} />
-                <Route path="/matches" element={<Matches />} />
-                <Route path="/chats" element={<ChatList />} />
-                <Route path="/perfil" element={<Profile />} />
-                <Route path="/notificaciones" element={<Notifications />} />
-                <Route path="/responsable" element={<OwnerHome />} />
-                <Route path="/admin" element={<AdminShell />}>
-                  <Route index element={<AdminDashboard />} />
-                  <Route path="usuarios" element={<AdminUsers />} />
-                  <Route path="usuarios/:id" element={<AdminUserDetail />} />
-                  <Route path="publicaciones" element={<AdminPublications />} />
-                  <Route
-                    path="publicaciones/:id"
-                    element={<AdminPublicationDetail />}
-                  />
-                  <Route path="reportes" element={<AdminReports />} />
-                  <Route path="reportes/:id" element={<AdminReportDetail />} />
-                </Route>
-              </Route>
-            </Route>
-            <Route path="*" element={<Navigate to="/" replace />} />
-          </Routes>
-        </Suspense>
-      </DeviceFrame>
+    // v7_startTransition: navigations render in a transition, so React keeps the current screen
+    // while a lazy chunk loads and swaps both in one commit (what layoutId needs: card -> profile).
+    <HashRouter
+      future={{ v7_startTransition: true, v7_relativeSplatPath: true }}
+    >
+      <MotionConfig reducedMotion="user">
+        <DeviceFrame>
+          <Suspense fallback={<Loading />}>
+            <AppRoutes />
+          </Suspense>
+        </DeviceFrame>
+      </MotionConfig>
     </HashRouter>
+  );
+}
+
+function AppRoutes() {
+  const { pathname } = useLocation();
+  // Tab screens fade inside AppLayout; everything else fades here. The pet profile enters as a
+  // shared element from its card, so it skips the fade.
+  return (
+    <RouteFade
+      key={isTabRoute(pathname) ? "tabs" : pathname}
+      skip={pathname.startsWith("/mascota/")}
+    >
+      <Routes>
+        <Route path="/" element={<Splash />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/registro" element={<Register />} />
+        <Route path="/recuperar" element={<Recover />} />
+        <Route path="/creditos" element={<Credits />} />
+        <Route path="/guia" element={<Guide />} />
+        <Route path="/historias" element={<Historias />} />
+        <Route path="/sprints" element={<Sprints />} />
+        <Route element={<RequireAuth />}>
+          <Route path="/onboarding" element={<Onboarding />} />
+          <Route path="/mascota/:id" element={<PetProfile />} />
+          <Route path="/chats/:id" element={<ChatThreadScreen />} />
+          <Route path="/coordinar/:petId" element={<Coordinate />} />
+          <Route path="/responsable/nueva" element={<NewPet />} />
+          <Route path="/responsable/editar/:id" element={<EditPet />} />
+          <Route path="/adoptante/:id" element={<AdopterProfileView />} />
+          <Route path="/favoritos" element={<Favorites />} />
+          <Route path="/historial" element={<History />} />
+          <Route element={<AppLayout />}>
+            <Route path="/descubrir" element={<Discover />} />
+            <Route path="/buscar" element={<Browse />} />
+            <Route path="/matches" element={<Matches />} />
+            <Route path="/chats" element={<ChatList />} />
+            <Route path="/perfil" element={<Profile />} />
+            <Route path="/notificaciones" element={<Notifications />} />
+            <Route path="/responsable" element={<OwnerHome />} />
+            <Route path="/admin" element={<AdminShell />}>
+              <Route index element={<AdminDashboard />} />
+              <Route path="usuarios" element={<AdminUsers />} />
+              <Route path="usuarios/:id" element={<AdminUserDetail />} />
+              <Route path="publicaciones" element={<AdminPublications />} />
+              <Route
+                path="publicaciones/:id"
+                element={<AdminPublicationDetail />}
+              />
+              <Route path="reportes" element={<AdminReports />} />
+              <Route path="reportes/:id" element={<AdminReportDetail />} />
+            </Route>
+          </Route>
+        </Route>
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
+    </RouteFade>
   );
 }

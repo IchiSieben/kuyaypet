@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion';
 import { Calendar, Heart, MapPin, PawPrint } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { ScoreBadge } from '@/components/ui';
@@ -33,10 +34,13 @@ export function StatusBadge({ pet }: { pet: Pet }) {
   return null;
 }
 
+export const petHeroId = (id: string) => `pet-hero-${id}`;
+
 export function PetCard({ pet, score, distance }: { pet: Pet; score?: number; distance?: string }) {
   return (
     <Link to={`/mascota/${pet.id}`} className="pressable group block overflow-hidden rounded-3xl bg-white shadow-soft ring-1 ring-cocoa/[.04] hover:-translate-y-0.5 hover:shadow-card">
-      <div className="relative aspect-square overflow-hidden bg-cream-200">
+      {/* Shared element: the photo grows into the profile hero (same layoutId in PetProfile). */}
+      <motion.div layoutId={petHeroId(pet.id)} className="relative aspect-square overflow-hidden bg-cream-200">
         <img src={pet.photos[0]} alt={`Foto de ${pet.name}`} loading="lazy" className="h-full w-full object-cover transition-transform duration-slow ease-out group-hover:scale-105" />
         <div className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-cocoa-900/35 to-transparent" aria-hidden="true" />
         <FavoriteButton pet={pet} className="absolute right-2 top-2" />
@@ -44,7 +48,7 @@ export function PetCard({ pet, score, distance }: { pet: Pet; score?: number; di
         <span className="absolute left-2 top-2">
           <StatusBadge pet={pet} />
         </span>
-      </div>
+      </motion.div>
       <div className="space-y-0.5 p-3 text-[13px] text-cocoa-500">
         <h3 className="text-lg font-bold leading-tight text-cocoa">{pet.name}</h3>
         <p className="flex items-center gap-1.5">

@@ -3,7 +3,7 @@ import { ArrowLeft, BookOpen, CalendarCheck, Check, ChevronLeft, ChevronRight, F
 import { useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Avatar, Button, Card, Chip, EmptyState, ScoreBadge, Sheet } from '@/components/ui';
-import { FavoriteButton, StatusBadge } from '@/components/PetCard';
+import { FavoriteButton, petHeroId, StatusBadge } from '@/components/PetCard';
 import { formatKm } from '@/lib/match';
 import { WEIGHTS } from '@/lib/match/weights';
 import { useCurrentUser } from '@/services/auth';
@@ -116,7 +116,7 @@ export function PetProfile() {
     <div className="flex h-full flex-col" data-hu="HU-03">
       <div className="scroll-area flex-1 pb-4">
         {/* carousel */}
-        <div className="relative aspect-[4/3.6] bg-cocoa">
+        <motion.div layoutId={petHeroId(pet.id)} className="relative aspect-[4/3.6] bg-cocoa">
           <AnimatePresence mode="wait">
             <motion.img key={photo} src={photos[photo]} alt={`Foto ${photo + 1} de ${pet.name}`} className="h-full w-full object-cover" initial={{ opacity: 0.4, scale: 1.02 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0.4 }} transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }} />
           </AnimatePresence>
@@ -149,9 +149,15 @@ export function PetProfile() {
               </div>
             </>
           )}
-        </div>
+        </motion.div>
 
-        <div className="relative -mt-7 space-y-4 rounded-t-5xl bg-cream px-5 pt-5 shadow-[0_-12px_30px_-16px_rgba(46,26,18,.45)]">
+        {/* The sheet rises a little after the photo lands, so the eye follows the photo first. */}
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.32, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
+          className="relative -mt-7 space-y-4 rounded-t-5xl bg-cream px-5 pt-5 shadow-[0_-12px_30px_-16px_rgba(46,26,18,.45)]"
+        >
           <div className="flex items-start justify-between gap-2">
             <div>
               <h1 className="text-4xl font-extrabold leading-none">{pet.name}</h1>
@@ -285,7 +291,7 @@ export function PetProfile() {
               <MessageCircle size={16} /> Unirme al chat de la mascota
             </button>
           )}
-        </div>
+        </motion.div>
       </div>
 
       {isAdopter && (

@@ -1,7 +1,7 @@
 import confetti from 'canvas-confetti';
 import { animate, AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { MessageCircle } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCurrentUser } from '@/services/auth';
 import { findDirectThread } from '@/services/chat';
@@ -25,6 +25,21 @@ export function MatchCelebration() {
   const reduced = useReducedMotion();
   const score = match?.score ?? result?.score ?? 0;
   const [shown, setShown] = useState(0);
+  const primary = useRef<HTMLButtonElement>(null);
+
+  // A modal dialog: focus lands on the main action, Escape dismisses, focus returns where it was.
+  useEffect(() => {
+    if (!match) return;
+    const before = document.activeElement as HTMLElement | null;
+    const t = setTimeout(() => primary.current?.focus({ preventScroll: true }), 50);
+    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && useUi.setState({ celebrationMatchId: null });
+    window.addEventListener('keydown', onKey);
+    return () => {
+      clearTimeout(t);
+      window.removeEventListener('keydown', onKey);
+      before?.focus?.({ preventScroll: true });
+    };
+  }, [match]);
 
   // Compatibility ring fills and counts up (instant with reduced motion).
   useEffect(() => {
@@ -89,6 +104,7 @@ export function MatchCelebration() {
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
               transition={{ type: 'spring', stiffness: 220, damping: 14, delay: 0.25 }}
+              role="img"
               aria-label={`${score}% de compatibilidad`}
               data-match-score={score}
             >
@@ -146,6 +162,7 @@ export function MatchCelebration() {
           )}
           <div className="mt-6 flex w-full max-w-xs flex-col gap-2">
             <Button
+              ref={primary}
               size="lg"
               variant="outline"
               data-tour="match-chat"
