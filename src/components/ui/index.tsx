@@ -1,6 +1,7 @@
 import { AnimatePresence, motion } from 'framer-motion';
-import { X } from 'lucide-react';
+import { ArrowLeft, ChevronRight, X } from 'lucide-react';
 import { forwardRef, type ButtonHTMLAttributes, type ReactNode } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { useUi } from '@/services/ui';
 
 type Variant = 'primary' | 'like' | 'success' | 'outline' | 'ghost' | 'soft' | 'danger';
@@ -222,6 +223,200 @@ export function Avatar({ src, name, size = 40 }: { src?: string; name: string; s
       {initials}
     </span>
   );
+}
+
+/* ─────────────────────────────────────────────────────────────
+   v0.5 layout primitives. Every screen is built from these so the
+   app reads as one system: a large-title header, grouped sections,
+   inset lists, stat tiles and skeletons. See docs/v05-design.md.
+   ───────────────────────────────────────────────────────────── */
+
+/** Round icon button. `glass` floats over photos, `surface` sits on the paper. Always needs a label. */
+export const IconButton = forwardRef<
+  HTMLButtonElement,
+  ButtonHTMLAttributes<HTMLButtonElement> & { label: string; tone?: 'glass' | 'surface' | 'dark'; size?: 'sm' | 'md' }
+>(function IconButton({ label, tone = 'surface', size = 'md', className = '', children, ...rest }, ref) {
+  const tones = {
+    glass: 'glass text-cocoa hover:bg-white/90',
+    surface: 'surface-3 text-cocoa-700 hover:text-terra hover:shadow-card',
+    dark: 'glass-dark text-white hover:bg-cocoa-900/70',
+  };
+  const sizes = { sm: 'h-9 w-9', md: 'h-11 w-11' };
+  return (
+    <button
+      ref={ref}
+      type="button"
+      aria-label={label}
+      title={label}
+      className={`pressable inline-flex shrink-0 items-center justify-center rounded-full ${tones[tone]} ${sizes[size]} ${className}`}
+      {...rest}
+    >
+      {children}
+    </button>
+  );
+});
+
+/**
+ * Large-title page header. `back` renders a labelled "Volver" control (navigate(-1) unless a path is given).
+ * The title is the screen's single h1; `subtitle` is one plain sentence, never a label strip.
+ */
+export function PageHeader({
+  title,
+  subtitle,
+  back,
+  action,
+  aside,
+  className = '',
+}: {
+  title: ReactNode;
+  subtitle?: ReactNode;
+  back?: boolean | string;
+  action?: ReactNode;
+  aside?: ReactNode;
+  className?: string;
+}) {
+  const navigate = useNavigate();
+  return (
+    <header className={`pb-4 pt-2 ${className}`}>
+      {(back || action) && (
+        <div className="mb-3 flex min-h-11 items-center justify-between gap-3">
+          {back ? (
+            <button
+              type="button"
+              onClick={() => (typeof back === 'string' ? navigate(back) : navigate(-1))}
+              className="pressable -ml-1 inline-flex h-11 items-center gap-1.5 rounded-full pl-1 pr-3.5 font-display font-bold text-cocoa-700 hover:bg-white/70 hover:text-terra"
+            >
+              <span className="surface-3 inline-flex h-9 w-9 items-center justify-center rounded-full">
+                <ArrowLeft size={18} strokeWidth={2.4} />
+              </span>
+              Volver
+            </button>
+          ) : (
+            <span />
+          )}
+          {action}
+        </div>
+      )}
+      <div className="flex items-end justify-between gap-3">
+        <div className="min-w-0">
+          <h1 className="text-3xl font-extrabold text-cocoa-900">{title}</h1>
+          {subtitle && <p className="mt-1 text-[0.95rem] leading-snug text-cocoa-500">{subtitle}</p>}
+        </div>
+        {aside && <div className="shrink-0">{aside}</div>}
+      </div>
+    </header>
+  );
+}
+
+/** A titled group of content. The title is an h2; `aside` is a quiet trailing link or count. */
+export function Section({
+  title,
+  aside,
+  children,
+  className = '',
+  ...rest
+}: { title?: ReactNode; aside?: ReactNode; children: ReactNode; className?: string } & Record<`data-${string}`, string | undefined>) {
+  return (
+    <section className={`mt-6 first:mt-0 ${className}`} {...rest}>
+      {(title || aside) && (
+        <div className="mb-2.5 flex items-baseline justify-between gap-3 px-1">
+          {title && <h2 className="text-lg font-bold text-cocoa-900">{title}</h2>}
+          {aside && <div className="text-sm font-semibold text-cocoa-500">{aside}</div>}
+        </div>
+      )}
+      {children}
+    </section>
+  );
+}
+
+/** Inset grouped list (one card, hairline separators). Children should be <ListRow>s. */
+export function ListGroup({ children, className = '' }: { children: ReactNode; className?: string }) {
+  return <ul className={`surface-2 divide-y divide-cocoa/[.07] overflow-hidden rounded-3xl ${className}`}>{children}</ul>;
+}
+
+/** One row of a ListGroup. Becomes a link (`to`) or a button (`onClick`); otherwise static. */
+export function ListRow({
+  leading,
+  title,
+  subtitle,
+  trailing,
+  to,
+  onClick,
+  chevron,
+  className = '',
+}: {
+  leading?: ReactNode;
+  title: ReactNode;
+  subtitle?: ReactNode;
+  trailing?: ReactNode;
+  to?: string;
+  onClick?: () => void;
+  chevron?: boolean;
+  className?: string;
+}) {
+  const body = (
+    <>
+      {leading && <span className="shrink-0">{leading}</span>}
+      <span className="min-w-0 flex-1">
+        <span className="block truncate font-bold text-cocoa-900">{title}</span>
+        {subtitle && <span className="mt-0.5 block text-sm leading-snug text-cocoa-500">{subtitle}</span>}
+      </span>
+      {trailing && <span className="shrink-0 text-sm text-cocoa-500">{trailing}</span>}
+      {(chevron ?? !!(to || onClick)) && <ChevronRight size={18} className="shrink-0 text-cocoa-300" aria-hidden />}
+    </>
+  );
+  const cls = `flex w-full items-center gap-3 px-4 py-3.5 text-left ${className}`;
+  const interactive = 'pressable hover:bg-white/80 active:bg-cream-100';
+  return (
+    <li>
+      {to ? (
+        <Link to={to} className={`${cls} ${interactive}`}>
+          {body}
+        </Link>
+      ) : onClick ? (
+        <button type="button" onClick={onClick} className={`${cls} ${interactive}`}>
+          {body}
+        </button>
+      ) : (
+        <div className={cls}>{body}</div>
+      )}
+    </li>
+  );
+}
+
+/** KPI tile: the number is the content, the label is a short plain phrase under it. */
+export function StatTile({
+  value,
+  label,
+  tone = 'neutral',
+  icon,
+  className = '',
+}: {
+  value: ReactNode;
+  label: ReactNode;
+  tone?: 'neutral' | 'terra' | 'sage' | 'coral' | 'honey';
+  icon?: ReactNode;
+  className?: string;
+}) {
+  const tones = {
+    neutral: 'text-cocoa-900',
+    terra: 'text-terra-600',
+    sage: 'text-sage-600',
+    coral: 'text-coral-600',
+    honey: 'text-honey-600',
+  };
+  return (
+    <div className={`surface-2 rounded-3xl p-4 ${className}`}>
+      {icon && <div className={`mb-2 ${tones[tone]}`}>{icon}</div>}
+      <div className={`font-display text-3xl font-extrabold leading-none tabular-nums ${tones[tone]}`}>{value}</div>
+      <div className="mt-1.5 text-sm font-semibold leading-snug text-cocoa-500">{label}</div>
+    </div>
+  );
+}
+
+/** Loading placeholder with the shimmer token. Purely visual: hidden from assistive tech. */
+export function Skeleton({ className = '' }: { className?: string }) {
+  return <div aria-hidden className={`skeleton ${className}`} />;
 }
 
 export function ScoreBadge({ score, className = '' }: { score: number; className?: string }) {
