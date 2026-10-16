@@ -1,4 +1,27 @@
-# HANDOFF — 2026-10-16 15:10 (v0.4-ui en preview `/next/`)
+# HANDOFF — 2026-10-16 (v0.5-ui en curso, preview destino `/next2/`)
+
+## v0.5-ui — progreso por fase (rama `v0.5-ui`, desde `origin/v0.4-ui`)
+
+| Fase | Alcance | Responsable | Estado |
+|---|---|---|---|
+| Prep | Primitivas `PageHeader/Section/ListGroup/ListRow/StatTile/Skeleton/IconButton`, `docs/v05-design.md`, `docs/test-selectors.txt` | hilo principal | hecho (`e4496db`) |
+| 1a | Browse, PetMap, Favoritos, Historial, Matches | agente A (worktree `kuyaypet-wt/f1a`) | en curso |
+| 1b | Chats (lista y conversación), Coordinar, Perfil, Onboarding | agente B (`kuyaypet-wt/f1b`) | en curso |
+| 2 | Responsable (panel, nueva, editar), Notificaciones, perfil del adoptante | agente C (`kuyaypet-wt/f2`) | en curso |
+| 3 | Admin (shell, dashboard, usuarios, publicaciones, reportes, detalles) | agente D (`kuyaypet-wt/f3`) | en curso |
+| 4 | Login, registro, recuperar, bandeja simulada, guía | agente E (`kuyaypet-wt/f4`) | en curso |
+| 5 | Movimiento: carta → perfil (`layoutId`), Match, transiciones de ruta, skeletons de Descubrir/Perfil | hilo principal | en curso |
+| 6 | Pulido transversal, fecha UTC en /sprints, 26 rutas, Lighthouse | hilo principal | pendiente |
+
+### Decisiones v0.5 (sin consulta, modo desatendido)
+- **Seguimiento en esta tabla** en vez de TaskCreate (no disponible en esta sesión).
+- **Worktrees creados a mano** (`git worktree add -b v0.5-ui-<fase> … v0.5-ui`), no con el aislamiento del Agent: los worktrees automáticos nacen de la rama por defecto del remoto (lección de Fase 1). Integración una rama a la vez, con `git diff --stat` revisado contra la lista de archivos del agente.
+- **Archivos disjuntos**: `components/ui/index.tsx`, `PetCard`, `MatchCelebration`, `shell/*`, `App.tsx` y Splash solo los toca el hilo principal; la firma de props de `PetCard` queda congelada. Cada agente pone sus propios skeletons en sus pantallas.
+- **Playwright solo en el hilo principal**, `--workers=1`, puerto 4199. Agentes: build + Vitest, capturas en puertos 4201+.
+- **`scripts/v05-shots.mjs` queda fuera de git** (`.git/info/exclude`): es herramienta local de capturas.
+- **Build de despliegue en `dist-next2/`** (`--outDir`) para no pisar el `dist/` que sirve la preview local de tests.
+
+# HANDOFF anterior — 2026-10-16 15:10 (v0.4-ui en preview `/next/`)
 
 - **Producción:** sigue `v0.3-fase1` en la raíz de Hostinger y en Pages. `main` sin cambios (`898a9f6`).
 - **Preview:** rama `v0.4-ui` en https://firebrick-cod-910257.hostingersite.com/next/ (build `VITE_BASE=/next/`). 22/22 Vitest y 21/21 Playwright.
