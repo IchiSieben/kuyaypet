@@ -1,6 +1,6 @@
 import { lazy, Suspense, useMemo, useState } from 'react';
 import { LocateFixed, SlidersHorizontal, X } from 'lucide-react';
-import { Button, Chip, EmptyState, Sheet } from '@/components/ui';
+import { Button, Chip, EmptyState, PageHeader, Sheet, Skeleton } from '@/components/ui';
 import { PetCard } from '@/components/PetCard';
 import { formatKm } from '@/lib/match';
 import { DISTRICTS, districtByName } from '@/data/districts';
@@ -104,19 +104,14 @@ export function Browse() {
     : 'No hay mascotas que cumplan estos criterios. Prueba con otros filtros.';
 
   return (
-    <div className="px-4 pb-6" data-hu="HU-02">
-      <div className="flex items-start justify-between gap-2">
-        <div>
-          <h1 className="text-2xl font-extrabold">Mascotas disponibles</h1>
-          <p className="text-sm text-cocoa-500">Cada mascota merece una segunda oportunidad ♥</p>
-        </div>
-        <Button variant={activeCount ? 'primary' : 'outline'} size="sm" icon={<SlidersHorizontal size={16} />} onClick={openFilters}>
-          Filtros{activeCount ? ` (${activeCount})` : ''}
-        </Button>
-      </div>
+    <div className="px-4 pb-8" data-hu="HU-02">
+      <PageHeader
+        title="Mascotas disponibles"
+        subtitle="Cada mascota merece una segunda oportunidad ♥"
+      />
 
-      <div className="my-4 space-y-3 rounded-3xl bg-white p-4 shadow-soft" data-hu="HU-05">
-        <p className="font-bold">📍 Buscar por cercanía</p>
+      <div className="surface-2 mb-5 space-y-4 rounded-3xl p-4" data-hu="HU-05">
+        <p className="font-display text-lg font-bold text-cocoa-900">📍 Buscar por cercanía</p>
         <Button variant="soft" block size="sm" icon={<LocateFixed size={16} />} onClick={useMyLocation} disabled={locating}>
           {locating ? 'Buscando…' : 'Usar mi ubicación actual'}
         </Button>
@@ -124,12 +119,7 @@ export function Browse() {
           <label htmlFor="browse-district" className="label">
             O elige tu distrito
           </label>
-          <select
-            id="browse-district"
-            className="input"
-            value={district}
-            onChange={(e) => setDistrict(e.target.value)}
-          >
+          <select id="browse-district" className="input" value={district} onChange={(e) => setDistrict(e.target.value)}>
             <option value="">Selecciona un distrito…</option>
             {DISTRICTS.map((d) => (
               <option key={d.name}>{d.name}</option>
@@ -138,7 +128,7 @@ export function Browse() {
         </div>
         <div>
           <label htmlFor="browse-radius" className="label">
-            Radio de búsqueda: <span className="text-terra">{radiusKm} km</span>
+            Radio de búsqueda: <span className="tabular-nums text-terra-600">{radiusKm} km</span>
           </label>
           <input id="browse-radius" type="range" min={1} max={20} value={radiusKm} onChange={(e) => setRadiusKm(Number(e.target.value))} className="w-full accent-terra" />
         </div>
@@ -147,40 +137,62 @@ export function Browse() {
             Buscar
           </Button>
           {origin && (
-            <Button variant="outline" size="sm" icon={<X size={16} />} onClick={clearLocation}>
+            <Button variant="outline" size="sm" className="whitespace-nowrap" icon={<X size={16} />} onClick={clearLocation}>
               Limpiar ubicación
             </Button>
           )}
         </div>
-        {origin && searched && <p className="text-xs text-cocoa-500">Mostrando mascotas cerca de {originLabel || 'tu ubicación'}.</p>}
+        {origin && searched && <p className="text-sm text-cocoa-500">Mostrando mascotas cerca de {originLabel || 'tu ubicación'}.</p>}
         {origin && (
-          <div className="flex rounded-full bg-cream-200 p-1 text-sm font-bold" role="group" aria-label="Vista de resultados">
+          <div className="surface-1 flex rounded-full p-1 text-sm font-bold ring-1 ring-cocoa/[.06]" role="group" aria-label="Vista de resultados">
             {(['lista', 'mapa'] as const).map((v) => (
-              <button key={v} onClick={() => setView(v)} aria-pressed={view === v} className={`flex-1 rounded-full py-1.5 transition ${view === v ? 'bg-white text-terra shadow-soft' : 'text-cocoa-500'}`}>
+              <button
+                key={v}
+                onClick={() => setView(v)}
+                aria-pressed={view === v}
+                className={`pressable flex-1 rounded-full py-2 font-display ${view === v ? 'surface-3 text-terra-600' : 'text-cocoa-500 hover:text-cocoa-900'}`}
+              >
                 {v === 'lista' ? 'Lista' : 'Mapa'}
               </button>
             ))}
           </div>
         )}
         {origin && view === 'mapa' && (
-          <Suspense fallback={<div className="h-72 animate-pulse rounded-2xl bg-cream-200" />}>
+          <Suspense fallback={<Skeleton className="h-72 w-full rounded-3xl" />}>
             <PetMap center={origin} radiusKm={radiusKm} pets={results.map((r) => r.pet)} distances={new Map(results.map((r) => [r.pet.id, r.distanceKm ?? 0]))} />
           </Suspense>
         )}
       </div>
 
       {results.length === 0 ? (
-        <EmptyState emoji="🐾" title={emptyMessage} body={origin ? 'Prueba con un radio más amplio o cambia de distrito.' : 'Vuelve pronto: los albergues publican nuevas mascotas cada semana.'} />
+        <>
+          <div className="flex justify-end px-1">
+            <Button variant={activeCount ? 'primary' : 'outline'} size="sm" icon={<SlidersHorizontal size={16} />} onClick={openFilters}>
+              Filtros{activeCount ? ` (${activeCount})` : ''}
+            </Button>
+          </div>
+          <EmptyState emoji="🐾" title={emptyMessage} body={origin ? 'Prueba con un radio más amplio o cambia de distrito.' : 'Vuelve pronto: los albergues publican nuevas mascotas cada semana.'} />
+        </>
       ) : (
-        <div className="grid grid-cols-2 gap-3">
-          {results.map(({ pet, distanceKm }) => (
-            <PetCard key={pet.id} pet={pet} distance={distanceKm != null ? formatKm(distanceKm) : undefined} />
-          ))}
-        </div>
+        <>
+          <div className="mb-3 flex items-center justify-between gap-3 px-1">
+            <p className="text-sm font-semibold tabular-nums text-cocoa-500">
+              {results.length} {results.length === 1 ? 'mascota' : 'mascotas'}
+            </p>
+            <Button variant={activeCount ? 'primary' : 'outline'} size="sm" icon={<SlidersHorizontal size={16} />} onClick={openFilters}>
+              Filtros{activeCount ? ` (${activeCount})` : ''}
+            </Button>
+          </div>
+          <div className="grid grid-cols-2 gap-3">
+            {results.map(({ pet, distanceKm }) => (
+              <PetCard key={pet.id} pet={pet} distance={distanceKm != null ? formatKm(distanceKm) : undefined} />
+            ))}
+          </div>
+        </>
       )}
 
       <Sheet open={filtersOpen} onClose={() => setFiltersOpen(false)} title="Filtros">
-        <div className="space-y-5" data-hu="HU-04">
+        <div className="space-y-6" data-hu="HU-04">
           <div>
             <p className="label">Especie</p>
             <div className="flex flex-wrap gap-2">
@@ -213,7 +225,7 @@ export function Browse() {
                 value={draft.ageMin ?? ''}
                 onChange={(e) => setDraft((d) => ({ ...d, ageMin: e.target.value === '' ? null : Number(e.target.value) }))}
               />
-              <span className="text-cocoa-300">a</span>
+              <span className="text-cocoa-500">a</span>
               <input
                 type="number"
                 min={0}
@@ -251,7 +263,7 @@ export function Browse() {
               ))}
             </div>
           </div>
-          <div className="flex gap-2 pt-2">
+          <div className="glass sticky -bottom-8 -mx-5 -mb-8 flex gap-2 px-5 pb-6 pt-3">
             <Button
               variant="outline"
               block
