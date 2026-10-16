@@ -5,7 +5,8 @@ import { useNavigate } from 'react-router-dom';
 import { Button, EmptyState } from '@/components/ui';
 import { agoLabel, ISSUES_URL, MILESTONES_URL, PROJECTS_URL, REPO, REPO_URL, useGh, type GhIssue, type GhLabel, type GhMilestone } from '@/services/github';
 
-const DATE = new Intl.DateTimeFormat('es-PE', { day: 'numeric', month: 'short', year: 'numeric' });
+// GitHub stores a milestone's due date as midnight UTC of that day; read it in UTC or Lima shows the day before.
+const DUE = new Intl.DateTimeFormat('es-PE', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' });
 
 function labelTone(name: string): string {
   if (name.startsWith('prioridad:alta')) return 'bg-coral-100/80 text-coral-600';
@@ -103,11 +104,11 @@ function MilestoneCard({ m, issues }: { m: GhMilestone; issues: GhIssue[] }) {
           <h2 className="text-xl font-extrabold">{m.title}</h2>
           {m.due_on && (
             <p className="mt-0.5 flex items-center gap-1 text-xs font-semibold text-cocoa-500">
-              <CalendarDays size={13} /> Entrega: {DATE.format(new Date(m.due_on))}
+              <CalendarDays size={13} /> Entrega: {DUE.format(new Date(m.due_on))}
             </p>
           )}
         </div>
-        <span className={`shrink-0 rounded-full px-2.5 py-1 font-display text-sm font-extrabold ${m.state === 'closed' ? 'bg-sage text-white' : 'bg-terra-100 text-terra-600'}`}>
+        <span className={`shrink-0 rounded-full px-2.5 py-1 font-display text-sm font-extrabold ${m.state === 'closed' ? 'bg-sage-600 text-white' : 'bg-terra-100 text-terra-600'}`}>
           {m.closed_issues}/{total}
         </span>
       </div>

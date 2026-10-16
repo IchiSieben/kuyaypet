@@ -11,8 +11,9 @@ type Size = 'sm' | 'md' | 'lg';
 // (shadow-inset) so they read as a physical surface rather than a flat tinted box.
 const VARIANTS: Record<Variant, string> = {
   primary: 'bg-terra text-white shadow-raised hover:bg-terra-600 hover:shadow-card focus-visible:shadow-glow',
-  like: 'bg-coral text-white shadow-raised hover:bg-coral-600 hover:shadow-card focus-visible:shadow-glow-coral',
-  success: 'bg-sage text-white shadow-raised hover:bg-sage-600 hover:shadow-card',
+  like: 'bg-coral-600 text-white shadow-raised hover:shadow-card hover:brightness-95 focus-visible:shadow-glow-coral',
+  // sage-600, not sage: white on sage is 4.07:1, below AA for button-size text.
+  success: 'bg-sage-600 text-white shadow-raised hover:shadow-card hover:brightness-95',
   outline: 'border border-cocoa/15 bg-white/80 text-cocoa shadow-hairline backdrop-blur hover:border-terra/60 hover:bg-white hover:text-terra',
   ghost: 'text-cocoa-700 hover:bg-cocoa/[.06]',
   soft: 'bg-terra-100 text-terra-600 hover:bg-terra-50 hover:shadow-soft',
@@ -420,9 +421,10 @@ export function Skeleton({ className = '' }: { className?: string }) {
 }
 
 export function ScoreBadge({ score, className = '' }: { score: number; className?: string }) {
-  const tone = score >= 80 ? 'bg-sage' : score >= 60 ? 'bg-honey' : 'bg-cocoa-500';
+  // AA on every tone: white on sage-600 / cocoa-500, dark text on honey (white on honey is 2.2:1).
+  const tone = score >= 80 ? 'bg-sage-600 text-white' : score >= 60 ? 'bg-honey text-cocoa-900' : 'bg-cocoa-500 text-white';
   return (
-    <span className={`inline-flex shrink-0 items-center gap-1 whitespace-nowrap rounded-full px-3 py-1 font-display font-extrabold text-white shadow-soft ${tone} ${className}`}>
+    <span className={`inline-flex shrink-0 items-center gap-1 whitespace-nowrap rounded-full px-3 py-1 font-display font-extrabold shadow-soft ${tone} ${className}`}>
       🐾 {score}%
     </span>
   );

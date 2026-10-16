@@ -26,7 +26,7 @@ export function FilterBar<T extends string>({
         <Chip key={o.value} active={value === o.value} onClick={() => onChange(o.value)} className="!px-3 !py-1 !text-[13px]">
           {o.label}
           {o.count !== undefined && (
-            <span aria-hidden className="tabular-nums opacity-70">
+            <span aria-hidden className="tabular-nums">
               {o.count}
             </span>
           )}

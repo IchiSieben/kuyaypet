@@ -60,7 +60,7 @@ export function Matches() {
                 <button key={m.id} onClick={() => thread && navigate(`/chats/${thread.id}`)} className="pressable flex w-[4.75rem] shrink-0 flex-col items-center gap-1.5">
                   <span className="relative">
                     <img src={pet!.photos[0]} alt="" className="h-[4.5rem] w-[4.5rem] rounded-full object-cover ring-2 ring-coral ring-offset-2 ring-offset-cream" />
-                    {pet!.status === 'adoptada' && <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 rounded-full bg-sage px-1.5 text-[10px] font-bold text-white">Adoptada</span>}
+                    {pet!.status === 'adoptada' && <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 rounded-full bg-sage-600 px-1.5 text-[10px] font-bold text-white">Adoptada</span>}
                   </span>
                   <span className="w-full truncate text-center text-sm font-bold text-cocoa-900">{pet!.name}</span>
                 </button>

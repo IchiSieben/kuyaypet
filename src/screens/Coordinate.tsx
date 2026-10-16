@@ -44,7 +44,7 @@ export function Coordinate() {
             initial={reduce ? false : { scale: 0 }}
             animate={{ scale: 1 }}
             transition={{ type: 'spring', stiffness: 260, damping: 16, delay: 0.1 }}
-            className="absolute -bottom-1 -right-1 flex h-10 w-10 items-center justify-center rounded-full bg-sage text-white shadow-raised ring-4 ring-cream"
+            className="absolute -bottom-1 -right-1 flex h-10 w-10 items-center justify-center rounded-full bg-sage-600 text-white shadow-raised ring-4 ring-cream"
             aria-hidden
           >
             <Check size={22} strokeWidth={3} />

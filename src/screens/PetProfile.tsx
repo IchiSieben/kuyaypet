@@ -181,7 +181,7 @@ export function PetProfile() {
               ['Tamaño', SIZE_LABEL[pet.size]],
             ].map(([k, v]) => (
               <div key={k} className="surface-2 rounded-2xl py-2.5">
-                <p className="text-xs font-bold text-cocoa-400">{k}</p>
+                <p className="text-xs font-bold text-cocoa-500">{k}</p>
                 <p className="font-display text-lg font-bold leading-tight">{v}</p>
               </div>
             ))}
@@ -219,7 +219,7 @@ export function PetProfile() {
                   </li>
                 ))}
               </ul>
-              <p className="mt-2 text-xs text-cocoa-300">Calculado con tus respuestas del cuestionario · pesos heurísticos</p>
+              <p className="mt-2 text-xs text-cocoa-500">Calculado con tus respuestas del cuestionario · pesos heurísticos</p>
             </Card>
           )}
 
@@ -258,7 +258,7 @@ export function PetProfile() {
             <Card className="flex items-center gap-3 p-4">
               <Avatar src={owner.avatar} name={owner.name} size={48} />
               <div className="flex-1">
-                <p className="text-xs font-bold text-cocoa-300">{owner.kind === 'albergue' ? 'Albergue responsable' : 'Responsable'}</p>
+                <p className="text-xs font-bold text-cocoa-500">{owner.kind === 'albergue' ? 'Albergue responsable' : 'Responsable'}</p>
                 <p className="font-bold">{owner.name}</p>
                 {owner.district && <p className="text-xs text-cocoa-500">{owner.district}</p>}
               </div>

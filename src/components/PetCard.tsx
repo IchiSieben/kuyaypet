@@ -29,7 +29,7 @@ export function FavoriteButton({ pet, className = '' }: { pet: Pet; className?: 
 }
 
 export function StatusBadge({ pet }: { pet: Pet }) {
-  if (pet.status === 'adoptada') return <span className="rounded-full bg-sage px-2.5 py-0.5 text-xs font-bold text-white">Adoptada 🎉</span>;
+  if (pet.status === 'adoptada') return <span className="rounded-full bg-sage-600 px-2.5 py-0.5 text-xs font-bold text-white">Adoptada 🎉</span>;
   if (pet.status === 'retirada') return <span className="rounded-full bg-cocoa-300 px-2.5 py-0.5 text-xs font-bold text-white">No disponible</span>;
   return null;
 }

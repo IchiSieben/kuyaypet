@@ -82,8 +82,8 @@ export function AppLayout() {
                 to={to}
                 data-tour={tour}
                 className={({ isActive }) =>
-                  `group flex w-16 flex-col items-center gap-0.5 rounded-2xl py-1 text-2xs font-bold ${
-                    isActive ? 'text-terra' : 'text-cocoa-400 hover:text-cocoa-700'
+                  `group flex min-w-16 flex-col items-center gap-0.5 whitespace-nowrap rounded-2xl px-1 py-1 text-2xs font-bold ${
+                    isActive ? 'text-terra' : 'text-cocoa-500 hover:text-cocoa-700'
                   }`
                 }
               >

@@ -65,7 +65,7 @@ function Stepper({ step }: { step: number }) {
             <div className="flex flex-col items-center gap-1.5">
               <span
                 className={`flex h-8 w-8 items-center justify-center rounded-full font-display text-sm font-extrabold tabular-nums ${
-                  done ? 'bg-sage text-white' : current ? 'bg-terra text-white shadow-raised' : 'bg-white text-cocoa-500 ring-1 ring-cocoa/10'
+                  done ? 'bg-sage-600 text-white' : current ? 'bg-terra text-white shadow-raised' : 'bg-white text-cocoa-500 ring-1 ring-cocoa/10'
                 }`}
               >
                 {done ? <Check size={16} strokeWidth={3} /> : i + 1}
