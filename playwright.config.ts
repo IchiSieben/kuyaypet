@@ -14,6 +14,8 @@ export default defineConfig({
     viewport: { width: 390, height: 844 },
     locale: 'es-PE',
     serviceWorkers: 'block',
+    // Optional: run with an already-installed Chromium (e.g. CI image) instead of downloading one.
+    ...(process.env.PW_CHROMIUM ? { launchOptions: { executablePath: process.env.PW_CHROMIUM } } : {}),
   },
   webServer: process.env.BASE_URL
     ? undefined
