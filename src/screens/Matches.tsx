@@ -1,7 +1,7 @@
 import { Check, Home, MapPin, Settings2 } from 'lucide-react';
 import { useMemo, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Button, Card, EmptyState, ScoreBadge } from '@/components/ui';
+import { Button, Card, Chip, EmptyState, PageHeader, ScoreBadge, Section } from '@/components/ui';
 import { FavoriteButton } from '@/components/PetCard';
 import { computeMatch, formatKm } from '@/lib/match';
 import { useCurrentUser } from '@/services/auth';
@@ -46,63 +46,58 @@ export function Matches() {
     .sort((a, b) => b.m.createdAt.localeCompare(a.m.createdAt));
 
   return (
-    <div className="space-y-5 px-4 pb-6" data-hu="HU-20">
-      <div>
-        <h1 className="text-2xl font-extrabold">💞 Mis Matches</h1>
-        <p className="text-sm text-cocoa-500">Conoce las mascotas que mejor se adaptan a ti.</p>
-      </div>
+    <div className="px-4 pb-8" data-hu="HU-20">
+      <PageHeader title="💞 Mis Matches" subtitle="Conoce las mascotas que mejor se adaptan a ti." />
 
-      <section data-hu="HU-07" data-tour="mutual-matches">
-        <h2 className="mb-2 flex items-center justify-between text-lg font-bold">
-          Interés mutuo <span className="text-sm font-semibold text-cocoa-500">{mutual.length}</span>
-        </h2>
+      <Section title="Interés mutuo" aside={<span className="tabular-nums">{mutual.length}</span>} data-hu="HU-07" data-tour="mutual-matches">
         {mutual.length === 0 ? (
-          <p className="rounded-2xl bg-white p-3 text-sm text-cocoa-500">Aún no tienes Matches. Da “Me gusta” en Descubrir: cuando el responsable acepte, aparecerán aquí.</p>
+          <Card className="p-4 text-[0.95rem] text-cocoa-500">Aún no tienes Matches. Da “Me gusta” en Descubrir: cuando el responsable acepte, aparecerán aquí.</Card>
         ) : (
-          <div className="-mx-4 flex gap-3 overflow-x-auto px-4 pb-1">
+          <div className="-mx-4 flex gap-4 overflow-x-auto px-5 pb-1 pt-1">
             {mutual.map(({ m, pet }) => {
               const thread = findDirectThread(m.petId, m.adopterId, m.ownerId);
               return (
-                <button key={m.id} onClick={() => thread && navigate(`/chats/${thread.id}`)} className="flex w-20 shrink-0 flex-col items-center gap-1">
+                <button key={m.id} onClick={() => thread && navigate(`/chats/${thread.id}`)} className="pressable flex w-[4.75rem] shrink-0 flex-col items-center gap-1.5">
                   <span className="relative">
-                    <img src={pet!.photos[0]} alt="" className="h-20 w-20 rounded-full border-4 border-coral object-cover shadow-soft" />
+                    <img src={pet!.photos[0]} alt="" className="h-[4.5rem] w-[4.5rem] rounded-full object-cover ring-2 ring-coral ring-offset-2 ring-offset-cream" />
                     {pet!.status === 'adoptada' && <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 rounded-full bg-sage px-1.5 text-[10px] font-bold text-white">Adoptada</span>}
                   </span>
-                  <span className="truncate text-sm font-bold">{pet!.name}</span>
+                  <span className="w-full truncate text-center text-sm font-bold text-cocoa-900">{pet!.name}</span>
                 </button>
               );
             })}
           </div>
         )}
         {pending.length > 0 && (
-          <p className="mt-2 text-sm text-cocoa-500">
+          <p className="mt-3 px-1 text-sm text-cocoa-500">
             ⏳ {pending.length} {pending.length === 1 ? 'interés espera' : 'intereses esperan'} la respuesta del responsable.
           </p>
         )}
-      </section>
+      </Section>
 
-      <Card className="p-4">
-        <div className="flex items-center justify-between">
-          <h2 className="flex items-center gap-2 font-bold">
-            <Settings2 size={18} /> Tus preferencias
-          </h2>
-          <Link to="/onboarding" className="text-sm font-bold text-terra underline underline-offset-4">
-            Editar
-          </Link>
-        </div>
-        <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-sm text-cocoa-700">
-          <span className="flex items-center gap-1">
-            <MapPin size={14} /> {user.profile.district} · {user.profile.radiusKm} km
-          </span>
-          <span className="flex items-center gap-1">
-            <Home size={14} /> {HOUSING_LABEL[user.profile.housing]}
-          </span>
-          <span>🐾 {user.profile.prefs.species.length ? user.profile.prefs.species.map((s) => SPECIES_LABEL[s]).join(' o ') : 'Perro o gato'}</span>
-        </div>
-      </Card>
+      <Section>
+        <Card className="p-4">
+          <div className="flex items-center justify-between">
+            <h2 className="flex items-center gap-2 font-display font-bold text-cocoa-900">
+              <Settings2 size={18} className="text-cocoa-500" /> Tus preferencias
+            </h2>
+            <Link to="/onboarding" className="rounded-full px-2 py-1 text-sm font-bold text-terra-600 hover:bg-terra-50">
+              Editar
+            </Link>
+          </div>
+          <div className="mt-3 flex flex-wrap gap-2">
+            <Chip>
+              <MapPin size={14} /> {user.profile.district} · {user.profile.radiusKm} km
+            </Chip>
+            <Chip>
+              <Home size={14} /> {HOUSING_LABEL[user.profile.housing]}
+            </Chip>
+            <Chip>🐾 {user.profile.prefs.species.length ? user.profile.prefs.species.map((s) => SPECIES_LABEL[s]).join(' o ') : 'Perro o gato'}</Chip>
+          </div>
+        </Card>
+      </Section>
 
-      <section>
-        <h2 className="mb-2 text-lg font-bold">Más compatibles contigo</h2>
+      <Section title="Más compatibles contigo">
         <div className="mb-3 flex gap-2">
           <select aria-label="Ordenar por" className="input !py-2 text-sm" value={sort} onChange={(e) => setSort(e.target.value as 'score' | 'distance')}>
             <option value="score">Mayor compatibilidad</option>
@@ -119,29 +114,29 @@ export function Matches() {
         ) : (
           <div className="space-y-3">
             {ranked.map(({ pet, m }, i) => (
-              <Link key={pet.id} to={`/mascota/${pet.id}`} className={`flex gap-3 rounded-3xl bg-white p-3 shadow-soft transition hover:shadow-card ${i === 0 && sort === 'score' ? 'ring-2 ring-honey' : ''}`}>
+              <Link key={pet.id} to={`/mascota/${pet.id}`} className="surface-2 pressable flex gap-3 rounded-3xl p-3 hover:shadow-card">
                 <div className="relative shrink-0">
-                  <img src={pet.photos[0]} alt="" loading="lazy" className="h-28 w-24 rounded-2xl object-cover" />
-                  {i === 0 && sort === 'score' && <span className="absolute -left-1 -top-2 rounded-full bg-honey px-2 py-0.5 text-[10px] font-extrabold text-cocoa">⭐ Mejor</span>}
+                  <img src={pet.photos[0]} alt="" loading="lazy" className="h-32 w-28 rounded-2xl bg-cream-200 object-cover" />
+                  {i === 0 && sort === 'score' && <span className="glass absolute left-1.5 top-1.5 rounded-full px-2 py-0.5 text-xs font-bold text-cocoa-900">⭐ Mejor</span>}
+                  <ScoreBadge score={m.score} className="absolute bottom-1.5 left-1.5 !px-2 text-sm" />
                 </div>
                 <div className="min-w-0 flex-1">
-                  <div className="flex items-start justify-between gap-1">
-                    <div>
-                      <h3 className="text-lg font-bold leading-tight">{pet.name}</h3>
-                      <p className="text-xs text-cocoa-500">
+                  <div>
+                    <div className="min-w-0">
+                      <h3 className="text-xl font-bold leading-tight text-cocoa-900">{pet.name}</h3>
+                      <p className="mt-0.5 text-sm text-cocoa-500">
                         {SPECIES_LABEL[pet.species]} · {ageLabel(pet.ageMonths)} · {SIZE_LABEL[pet.size]}
                       </p>
-                      <p className="text-xs text-cocoa-500">
+                      <p className="text-sm text-cocoa-500">
                         {pet.district} · {formatKm(m.distanceKm)}
                       </p>
                     </div>
-                    <ScoreBadge score={m.score} className="!px-2 text-sm" />
                   </div>
-                  <p className="mt-1.5 text-[11px] font-bold text-cocoa-300">Coincide contigo porque:</p>
-                  <ul className="text-xs text-cocoa-700">
+                  <p className="mt-2 text-xs font-bold text-cocoa-500">Coincide contigo porque:</p>
+                  <ul className="mt-0.5 text-sm text-cocoa-700">
                     {m.reasons.slice(0, 2).map((r) => (
                       <li key={r.factor} className="flex items-start gap-1">
-                        <Check size={14} className="mt-px shrink-0 text-sage" /> <span className="line-clamp-1">{r.text.replace(/^\S+\s/, '')}</span>
+                        <Check size={14} className="mt-1 shrink-0 text-sage-600" /> <span className="line-clamp-1">{r.text.replace(/^\S+\s/, '')}</span>
                       </li>
                     ))}
                   </ul>
@@ -151,8 +146,8 @@ export function Matches() {
             ))}
           </div>
         )}
-        <p className="mt-4 text-center text-xs text-cocoa-300">ⓘ Los resultados se basan en las preferencias de tu perfil.</p>
-      </section>
+        <p className="mt-5 text-center text-sm text-cocoa-500">ⓘ Los resultados se basan en las preferencias de tu perfil.</p>
+      </Section>
     </div>
   );
 }

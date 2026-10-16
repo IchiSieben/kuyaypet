@@ -9,9 +9,9 @@ import type { GeoPoint, Pet } from '@/types';
 function petIcon(pet: Pet) {
   return L.divIcon({
     className: '',
-    html: `<div style="width:36px;height:36px;border-radius:9999px;border:2px solid white;box-shadow:0 1px 4px rgba(0,0,0,.35);overflow:hidden;background:#e8ddd0"><img src="${pet.photos[0]}" style="width:100%;height:100%;object-fit:cover" /></div>`,
-    iconSize: [36, 36],
-    iconAnchor: [18, 18],
+    html: `<div style="width:40px;height:40px;border-radius:9999px;border:3px solid #fff;box-shadow:0 0 0 1px rgba(60,40,30,.18);overflow:hidden;background:#e8ddd0"><img src="${pet.photos[0]}" style="width:100%;height:100%;object-fit:cover" /></div>`,
+    iconSize: [40, 40],
+    iconAnchor: [20, 20],
   });
 }
 
@@ -53,7 +53,7 @@ export default function PetMap({
   mapKey.current = `${center.lat},${center.lng}`;
 
   return (
-    <div className="relative h-72 w-full overflow-hidden rounded-2xl border border-cream-300">
+    <div className="relative isolate h-72 w-full overflow-hidden rounded-3xl ring-1 ring-cocoa/10">
       <MapContainer
         key={mapKey.current}
         center={[center.lat, center.lng]}
@@ -70,10 +70,10 @@ export default function PetMap({
         {pets.map((p) => (
           <Marker key={p.id} position={[p.location.lat, p.location.lng]} icon={petIcon(p)}>
             <Popup>
-              <div className="text-sm">
-                <p className="font-bold">{p.name}</p>
-                <p>{formatKm(distances.get(p.id) ?? 0)}</p>
-                <Link to={`/mascota/${p.id}`} className="text-terra underline">
+              <div className="min-w-[7rem] text-sm">
+                <p className="font-display text-base font-bold leading-tight text-cocoa-900">{p.name}</p>
+                <p className="mb-1 tabular-nums text-cocoa-500">{formatKm(distances.get(p.id) ?? 0)}</p>
+                <Link to={`/mascota/${p.id}`} className="font-bold text-terra-600 underline underline-offset-4">
                   Ver perfil
                 </Link>
               </div>
@@ -84,7 +84,7 @@ export default function PetMap({
         <TileWatcher onOffline={() => setTilesOffline(true)} />
       </MapContainer>
       {tilesOffline && (
-        <div className="absolute inset-x-2 bottom-2 rounded-xl bg-cocoa/90 px-3 py-1.5 text-center text-xs font-semibold text-white shadow-soft">
+        <div className="glass absolute inset-x-3 bottom-3 z-[1000] rounded-full px-4 py-2 text-center text-sm font-semibold text-cocoa-900">
           Mapa sin conexión: usa la vista Lista
         </div>
       )}
