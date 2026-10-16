@@ -4,8 +4,9 @@ import { VitePWA } from 'vite-plugin-pwa';
 import { fileURLToPath, URL } from 'node:url';
 
 export default defineConfig({
-  // Relative base: the same build works on Hostinger (root) and GitHub Pages (/kuyaypet/).
-  base: './',
+  // Base configurable via VITE_BASE (e.g. `/next/` for a preview under a subpath).
+  // Default stays relative ('./') so the same build works on Hostinger (root) and GitHub Pages (/kuyaypet/).
+  base: process.env.VITE_BASE || './',
   resolve: { alias: { '@': fileURLToPath(new URL('./src', import.meta.url)) } },
   plugins: [
     react(),

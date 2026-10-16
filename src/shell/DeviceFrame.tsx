@@ -35,13 +35,21 @@ export function DeviceFrame({ children }: { children: ReactNode }) {
   if (IS_SPLIT_STAGE) return <SplitStage />;
 
   return (
-    <div className="flex h-screen items-center justify-center gap-10 overflow-hidden bg-gradient-to-br from-cream-200 via-cream to-terra-100 p-6">
+    <div className="stage relative flex h-screen items-center justify-center gap-10 overflow-hidden p-6">
+      {/* Ambient light: two soft blobs behind the phone so the frame sits in a space, not on a gradient. */}
+      <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
+        <div className="absolute -left-40 top-1/2 h-[720px] w-[720px] -translate-y-1/2 rounded-full bg-terra-100/70 blur-3xl" />
+        <div className="absolute -right-32 -top-32 h-[560px] w-[560px] rounded-full bg-honey-100/60 blur-3xl" />
+        <div className="absolute bottom-[-200px] left-1/2 h-[480px] w-[900px] -translate-x-1/2 rounded-full bg-sage-100/40 blur-3xl" />
+      </div>
       <div className="relative shrink-0">
-        <div className="relative h-[844px] max-h-[calc(100vh-92px)] w-[390px] rounded-[54px] border-[12px] border-cocoa bg-cocoa shadow-card">
-          <div className="absolute left-1/2 top-2 z-[70] h-6 w-28 -translate-x-1/2 rounded-full bg-cocoa" aria-hidden="true" />
-          <div className="h-full w-full overflow-hidden rounded-[42px] bg-cream pt-8">{screen}</div>
+        {/* Phone body: dark cocoa shell with a hairline bezel highlight and a long, soft contact shadow. */}
+        <div className="relative h-[844px] max-h-[calc(100vh-92px)] w-[390px] rounded-[58px] bg-cocoa-900 p-[11px] shadow-float ring-1 ring-white/30">
+          <div className="pointer-events-none absolute inset-0 rounded-[58px] ring-1 ring-inset ring-white/10" aria-hidden="true" />
+          <div className="absolute left-1/2 top-[22px] z-[70] h-[26px] w-[110px] -translate-x-1/2 rounded-full bg-cocoa-900 shadow-inset" aria-hidden="true" />
+          <div className="h-full w-full overflow-hidden rounded-[48px] bg-cream pt-8">{screen}</div>
         </div>
-        <p className="mt-3 text-center font-hand text-2xl text-terra">Adopta · Conecta · Transforma ♥</p>
+        <p className="mt-4 text-center font-hand text-2xl text-terra">Adopta · Conecta · Transforma ♥</p>
       </div>
       <PresenterPanel />
     </div>

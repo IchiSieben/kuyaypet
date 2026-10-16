@@ -1,4 +1,5 @@
 import { Bell, Heart, LayoutDashboard, MessageCircle, Search, Sparkles, User as UserIcon, PawPrint, type LucideIcon } from 'lucide-react';
+import { motion } from 'framer-motion';
 import { Link, NavLink, Outlet } from 'react-router-dom';
 
 import { useCurrentUser } from '@/services/auth';
@@ -38,21 +39,21 @@ export function AppLayout() {
   const tabs = TABS[user.role];
   return (
     <div className="flex h-full flex-col">
-      <header className="flex shrink-0 items-center justify-between px-4 pb-2 pt-[max(env(safe-area-inset-top),14px)]">
-        <Link to={tabs[0].to} className="w-28" aria-label="Inicio KuyayPet">
+      <header className="flex shrink-0 items-center justify-between px-4 pb-2 pt-safe-t">
+        <Link to={tabs[0].to} className="w-28 rounded-xl" aria-label="Inicio KuyayPet">
           <LogoMark className="w-full" />
         </Link>
         <div className="flex items-center gap-2">
-          <span className="rounded-full bg-cream-200 px-2.5 py-1 text-xs font-bold text-cocoa-700">{ROLE_LABEL[user.role]}</span>
+          <span className="rounded-full bg-white/70 px-2.5 py-1 text-xs font-bold text-cocoa-700 shadow-hairline">{ROLE_LABEL[user.role]}</span>
           <Link
             to="/notificaciones"
             data-tour="bell"
             aria-label={`Notificaciones${unread ? `, ${unread} sin leer` : ''}`}
-            className="relative rounded-full bg-white p-2.5 shadow-soft"
+            className="pressable relative rounded-full bg-white p-2.5 shadow-soft hover:shadow-raised"
           >
             <Bell size={20} />
             {unread > 0 && (
-              <span className="absolute -right-1 -top-1 flex h-5 min-w-5 items-center justify-center rounded-full bg-coral px-1 text-[11px] font-extrabold text-white">
+              <span className="absolute -right-1 -top-1 flex h-5 min-w-5 items-center justify-center rounded-full bg-coral px-1 text-2xs font-extrabold text-white ring-2 ring-cream">
                 {unread > 9 ? '9+' : unread}
               </span>
             )}
@@ -62,7 +63,7 @@ export function AppLayout() {
       <main className="scroll-area relative flex-1">
         <Outlet />
       </main>
-      <nav className="shrink-0 border-t border-cream-300 bg-white/95 px-2 pb-[max(env(safe-area-inset-bottom),8px)] pt-1.5 backdrop-blur" aria-label="Navegación principal">
+      <nav className="glass relative z-10 shrink-0 px-2 pb-safe-b pt-1.5" aria-label="Navegación principal">
         <ul className="flex justify-around">
           {tabs.map(({ to, label, icon: Icon, tour }) => (
             <li key={to}>
@@ -70,15 +71,22 @@ export function AppLayout() {
                 to={to}
                 data-tour={tour}
                 className={({ isActive }) =>
-                  `flex w-16 flex-col items-center gap-0.5 rounded-2xl py-1.5 text-[11px] font-bold transition ${
-                    isActive ? 'text-terra' : 'text-cocoa-300 hover:text-cocoa-500'
+                  `group flex w-16 flex-col items-center gap-0.5 rounded-2xl py-1 text-2xs font-bold ${
+                    isActive ? 'text-terra' : 'text-cocoa-400 hover:text-cocoa-700'
                   }`
                 }
               >
                 {({ isActive }) => (
                   <>
-                    <span className={`rounded-full px-3 py-1 transition ${isActive ? 'bg-terra-100' : ''}`}>
-                      <Icon size={22} strokeWidth={isActive ? 2.5 : 2} />
+                    <span className="relative flex h-8 w-14 items-center justify-center">
+                      {isActive && (
+                        <motion.span
+                          layoutId="tab-pill"
+                          className="absolute inset-0 rounded-full bg-terra-100"
+                          transition={{ type: 'spring', stiffness: 420, damping: 32 }}
+                        />
+                      )}
+                      <Icon size={22} strokeWidth={isActive ? 2.5 : 2} className="relative transition-transform duration-base ease-out group-active:scale-90" />
                     </span>
                     {label}
                   </>

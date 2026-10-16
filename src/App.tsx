@@ -80,6 +80,8 @@ const AdminReportDetail = lazyNamed(
 );
 const NewPet = lazyNamed(() => import("@/screens/owner/NewPet"), "NewPet");
 const EditPet = lazyNamed(() => import("@/screens/owner/EditPet"), "EditPet");
+const Historias = lazyNamed(() => import("@/screens/Historias"), "Historias");
+const Sprints = lazyNamed(() => import("@/screens/Sprints"), "Sprints");
 const AdopterProfileView = lazyNamed(
   () => import("@/screens/AdopterProfileView"),
   "AdopterProfileView",
@@ -108,6 +110,8 @@ export default function App() {
             <Route path="/recuperar" element={<Recover />} />
             <Route path="/creditos" element={<Credits />} />
             <Route path="/guia" element={<Guide />} />
+            <Route path="/historias" element={<Historias />} />
+            <Route path="/sprints" element={<Sprints />} />
             <Route element={<RequireAuth />}>
               <Route path="/onboarding" element={<Onboarding />} />
               <Route path="/mascota/:id" element={<PetProfile />} />
