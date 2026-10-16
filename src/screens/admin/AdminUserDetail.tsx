@@ -1,7 +1,6 @@
-import { ArrowLeft } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
-import { Avatar, Button, Card, Chip, EmptyState } from '@/components/ui';
+import { useNavigate, useParams } from 'react-router-dom';
+import { Avatar, Button, Card, Chip, EmptyState, PageHeader, Section } from '@/components/ui';
 import { useCurrentUser } from '@/services/auth';
 import { setUserActive } from '@/services/moderation';
 import { updateUser, useAdminUser, validateUserEdit } from '@/services/users';
@@ -31,7 +30,7 @@ export function AdminUserDetail() {
   if (!user)
     return (
       <div className="pt-10" data-hu="HU-22">
-        <EmptyState emoji="🔍" title="Usuario no encontrado" action={<Link to="/admin/usuarios"><Button>Volver a usuarios</Button></Link>} />
+        <EmptyState emoji="🔍" title="Usuario no encontrado" action={<Button onClick={() => navigate('/admin/usuarios')}>Volver a usuarios</Button>} />
       </div>
     );
 
@@ -40,6 +39,7 @@ export function AdminUserDetail() {
   const save = async () => {
     const invalid = validateUserEdit(user.id, { name, email });
     if (invalid) return setError(invalid);
+    setError(null);
     updateUser(user.id, { name: name.trim(), email: email.trim(), district: district.trim() || undefined });
     toast({ title: 'Cambios guardados', body: `Se actualizó la cuenta de ${name.trim()}.`, tone: 'success' });
   };
@@ -60,59 +60,69 @@ export function AdminUserDetail() {
   };
 
   return (
-    <div className="space-y-4 pt-2" data-hu="HU-22">
-      <button onClick={() => navigate('/admin/usuarios')} className="flex items-center gap-1 text-sm font-bold text-terra">
-        <ArrowLeft size={16} /> Usuarios
-      </button>
+    <div data-hu="HU-22">
+      <PageHeader back="/admin/usuarios" title={user.name} subtitle={user.email} />
+
       <Card className="flex items-center gap-3 p-4">
         <Avatar src={user.avatar} name={user.name} size={56} />
         <div className="min-w-0 flex-1">
-          <p className="truncate text-lg font-bold">{user.name}</p>
-          <p className="truncate text-sm text-cocoa-500">{user.email}</p>
+          <p className="font-display text-lg font-bold text-cocoa-900">{ROLE_LABEL[user.role]}</p>
+          {user.district && <p className="truncate text-sm text-cocoa-500">{user.district}</p>}
         </div>
-        <div className="flex flex-col items-end gap-1" data-hu="HU-25">
-          <Chip tone="terra">{ROLE_LABEL[user.role]}</Chip>
-          <Chip tone={user.active ? 'sage' : 'coral'}>{user.active ? 'Activo' : 'Inactiva'}</Chip>
+        <div className="shrink-0" data-hu="HU-25">
+          <Chip tone={user.active ? 'sage' : 'coral'} className="!px-2.5 !py-0.5 !text-[13px]">
+            {user.active ? 'Activo' : 'Inactiva'}
+          </Chip>
         </div>
       </Card>
 
-      <Card className="space-y-3 p-4">
-        <h2 className="text-lg font-bold">Editar información</h2>
-        <label className="block text-sm font-bold">
-          Nombre
-          <input className="input mt-1" value={name} onChange={(e) => setName(e.target.value)} aria-invalid={error?.field === 'name'} />
-        </label>
-        <label className="block text-sm font-bold">
-          Correo electrónico
-          <input className="input mt-1" value={email} onChange={(e) => setEmail(e.target.value)} aria-invalid={error?.field === 'email'} />
-        </label>
-        <label className="block text-sm font-bold">
-          Distrito
-          <input className="input mt-1" value={district} onChange={(e) => setDistrict(e.target.value)} />
-        </label>
-        <label className="block text-sm font-bold text-cocoa-300">
-          Rol (solo lectura)
-          <input className="input mt-1 bg-cream-200" value={ROLE_LABEL[user.role]} disabled readOnly />
-        </label>
-        {error && <p className="text-sm font-bold text-coral-600">{error.error}</p>}
-        <Button block onClick={save}>
-          Guardar cambios
-        </Button>
-      </Card>
-
-      <Card className="space-y-2 p-4">
-        <h2 className="text-lg font-bold">Estado de la cuenta</h2>
-        <p className="text-sm text-cocoa-500">
-          Estado actual: <b>{user.active ? 'Activo' : 'Inactiva'}</b>
-        </p>
-        {isSelf ? (
-          <p className="rounded-2xl bg-cream-200 p-3 text-sm">No puedes desactivar tu propia cuenta de administrador.</p>
-        ) : (
-          <Button block variant={user.active ? 'danger' : 'success'} onClick={toggleActive}>
-            {user.active ? 'Desactivar usuario' : 'Reactivar usuario'}
+      <Section title="Editar información" className="mt-6">
+        <Card className="space-y-4 p-4">
+          <label className="block text-sm font-bold text-cocoa-700">
+            Nombre
+            <input className="input mt-1.5" value={name} onChange={(e) => setName(e.target.value)} aria-invalid={error?.field === 'name'} />
+          </label>
+          <label className="block text-sm font-bold text-cocoa-700">
+            Correo electrónico
+            <input className="input mt-1.5" value={email} onChange={(e) => setEmail(e.target.value)} aria-invalid={error?.field === 'email'} />
+          </label>
+          <label className="block text-sm font-bold text-cocoa-700">
+            Distrito
+            <input className="input mt-1.5" value={district} onChange={(e) => setDistrict(e.target.value)} />
+          </label>
+          <label className="block text-sm font-bold text-cocoa-500">
+            Rol (solo lectura)
+            <input className="input mt-1.5 !bg-cream-200" value={ROLE_LABEL[user.role]} disabled readOnly />
+          </label>
+          {error && (
+            <p role="alert" className="text-sm font-bold text-coral-600">
+              {error.error}
+            </p>
+          )}
+          <Button block onClick={save}>
+            Guardar cambios
           </Button>
-        )}
-      </Card>
+        </Card>
+      </Section>
+
+      <Section title="Estado de la cuenta">
+        <Card className="space-y-3 p-4">
+          <p className="text-sm text-cocoa-500">
+            Estado actual: <b className={user.active ? 'text-sage-600' : 'text-coral-600'}>{user.active ? 'Activo' : 'Inactiva'}</b>
+          </p>
+          {isSelf ? (
+            <p className="rounded-2xl bg-cream-200 p-3 text-sm text-cocoa-700">No puedes desactivar tu propia cuenta de administrador.</p>
+          ) : user.active ? (
+            <Button block variant="outline" className="!border-coral/40 !text-coral-600 hover:!bg-coral-100/60" onClick={toggleActive}>
+              Desactivar usuario
+            </Button>
+          ) : (
+            <Button block variant="soft" onClick={toggleActive}>
+              Reactivar usuario
+            </Button>
+          )}
+        </Card>
+      </Section>
     </div>
   );
 }
