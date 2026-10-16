@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Avatar, EmptyState } from '@/components/ui';
+import { Avatar, EmptyState, ListGroup, PageHeader } from '@/components/ui';
 import { useCurrentUser } from '@/services/auth';
 import { lastMessage, unreadIn, useThreadsFor } from '@/services/chat';
 import { useDb } from '@/services/store';
@@ -21,13 +21,12 @@ export function ChatList() {
 
   if (!user) return null;
   return (
-    <div className="px-4 pb-6" data-hu="HU-08">
-      <h1 className="text-2xl font-extrabold">Conversaciones</h1>
-      <p className="mb-4 text-sm text-cocoa-500">Cada chat está vinculado a una mascota.</p>
+    <div className="px-4 pb-8" data-hu="HU-08">
+      <PageHeader title="Conversaciones" subtitle="Cada chat está vinculado a una mascota." />
       {threads.length === 0 ? (
         <EmptyState emoji="💬" title="Aún no tienes conversaciones" body="Cuando hagas Match, podrás chatear con el responsable aquí." />
       ) : (
-        <ul className="space-y-2">
+        <ListGroup>
           {threads.map((t) => {
             const pet = pets.find((p) => p.id === t.petId);
             const other = users.find((u) => u.id === t.memberIds.find((id) => id !== user.id));
@@ -36,29 +35,37 @@ export function ChatList() {
             const title = t.kind === 'group' ? `Grupo de ${pet?.name}` : user.role === 'adopter' ? `${pet?.name} · ${other?.name}` : `${other?.name} · ${pet?.name}`;
             return (
               <li key={t.id}>
-                <Link to={`/chats/${t.id}`} className="flex items-center gap-3 rounded-3xl bg-white p-3 shadow-soft transition hover:shadow-card">
-                  <span className="relative">
-                    <img src={pet?.photos[0]} alt="" className="h-14 w-14 rounded-full object-cover" />
+                <Link to={`/chats/${t.id}`} className="pressable flex items-center gap-3.5 px-4 py-3.5 hover:bg-white/80 active:bg-cream-100">
+                  <span className="relative shrink-0">
+                    <img src={pet?.photos[0]} alt="" className="h-16 w-16 rounded-full object-cover ring-1 ring-cocoa/10" />
                     {t.kind === 'direct' && other && (
-                      <span className="absolute -bottom-1 -right-1 rounded-full border-2 border-white">
-                        <Avatar src={other.avatar} name={other.name} size={24} />
+                      <span className="absolute -bottom-0.5 -right-0.5 rounded-full ring-2 ring-white">
+                        <Avatar src={other.avatar} name={other.name} size={26} />
                       </span>
                     )}
-                    {t.kind === 'group' && <span className="absolute -bottom-1 -right-1 rounded-full border-2 border-white bg-honey px-1 text-xs">👥</span>}
+                    {t.kind === 'group' && (
+                      <span className="absolute -bottom-0.5 -right-0.5 flex h-6 w-6 items-center justify-center rounded-full bg-honey-100 text-xs ring-2 ring-white" aria-hidden>
+                        👥
+                      </span>
+                    )}
                   </span>
                   <span className="min-w-0 flex-1">
-                    <span className="flex items-center justify-between gap-2">
-                      <span className="truncate font-bold">{title}</span>
-                      {last && <span className="shrink-0 text-xs text-cocoa-300">{timeLabel(last.createdAt)}</span>}
+                    <span className="flex items-baseline justify-between gap-2">
+                      <span className={`truncate text-base text-cocoa-900 ${unread ? 'font-extrabold' : 'font-bold'}`}>{title}</span>
+                      {last && <span className={`shrink-0 text-xs tabular-nums ${unread ? 'font-bold text-terra-600' : 'text-cocoa-500'}`}>{timeLabel(last.createdAt)}</span>}
                     </span>
-                    <span className={`block truncate text-sm ${unread ? 'font-bold text-cocoa' : 'text-cocoa-500'}`}>{last?.text ?? 'Inicia la conversación'}</span>
+                    <span className="mt-0.5 flex items-center justify-between gap-3">
+                      <span className={`line-clamp-2 text-sm leading-snug ${unread ? 'font-semibold text-cocoa-900' : 'text-cocoa-500'}`}>{last?.text ?? 'Inicia la conversación'}</span>
+                      {unread > 0 && (
+                        <span className="flex h-6 min-w-6 shrink-0 items-center justify-center rounded-full bg-coral px-1.5 text-xs font-extrabold tabular-nums text-white">{unread}</span>
+                      )}
+                    </span>
                   </span>
-                  {unread > 0 && <span className="flex h-6 min-w-6 items-center justify-center rounded-full bg-coral px-1.5 text-xs font-extrabold text-white">{unread}</span>}
                 </Link>
               </li>
             );
           })}
-        </ul>
+        </ListGroup>
       )}
     </div>
   );

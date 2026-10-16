@@ -1,8 +1,8 @@
-import { AnimatePresence, motion } from 'framer-motion';
-import { ArrowLeft, LocateFixed } from 'lucide-react';
+import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
+import { ArrowLeft, Check, LocateFixed } from 'lucide-react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Button, Chip } from '@/components/ui';
+import { Button, Card, Chip, IconButton } from '@/components/ui';
 import { DISTRICTS, districtByName } from '@/data/districts';
 import { useCurrentUser } from '@/services/auth';
 import { saveAdopterProfile } from '@/services/users';
@@ -27,24 +27,32 @@ const DEFAULT: AdopterProfile = {
 };
 
 function Options<T extends string | boolean>({ options, value, onChange }: { options: Option<T>[]; value: T; onChange: (v: T) => void }) {
+  const reduce = useReducedMotion();
   return (
-    <div className="grid gap-3">
+    <div className="grid gap-2.5">
       {options.map((o) => {
         const active = o.value === value;
         return (
           <motion.button
             key={String(o.value)}
-            whileTap={{ scale: 0.97 }}
+            type="button"
+            whileTap={reduce ? undefined : { scale: 0.98 }}
             onClick={() => onChange(o.value)}
             aria-pressed={active}
-            className={`flex items-center gap-4 rounded-3xl border-2 p-4 text-left transition ${
-              active ? 'border-terra bg-terra-100 shadow-soft' : 'border-cream-300 bg-white hover:border-terra-400'
+            className={`flex items-center gap-4 rounded-3xl p-3.5 text-left transition-shadow duration-base ease-out ${
+              active ? 'bg-terra-100/70 shadow-soft ring-2 ring-terra' : 'surface-2 ring-1 ring-transparent hover:shadow-card'
             }`}
           >
-            <span className="text-4xl">{o.emoji}</span>
-            <span>
-              <span className="block font-display text-lg font-bold">{o.label}</span>
-              {o.hint && <span className="block text-sm text-cocoa-500">{o.hint}</span>}
+            <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-cream-100 text-3xl">{o.emoji}</span>
+            <span className="min-w-0 flex-1">
+              <span className="block font-display text-lg font-bold leading-tight text-cocoa-900">{o.label}</span>
+              {o.hint && <span className="mt-0.5 block text-sm leading-snug text-cocoa-500">{o.hint}</span>}
+            </span>
+            <span
+              aria-hidden
+              className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-full transition-colors duration-base ${active ? 'bg-terra text-white' : 'border border-cocoa/20 bg-white/60'}`}
+            >
+              {active && <Check size={14} strokeWidth={3.5} />}
             </span>
           </motion.button>
         );
@@ -63,6 +71,7 @@ export function Onboarding() {
   const [p, setP] = useState<AdopterProfile>(user?.profile ?? DEFAULT);
   const [step, setStep] = useState(0);
   const [locating, setLocating] = useState(false);
+  const reduce = useReducedMotion();
   const up = (patch: Partial<AdopterProfile>) => setP((x) => ({ ...x, ...patch }));
 
   const useMyLocation = () => {
@@ -87,7 +96,7 @@ export function Onboarding() {
       q: '¿Dónde vives?',
       sub: 'Para mostrarte mascotas cerca de ti.',
       body: (
-        <div className="space-y-4">
+        <Card className="space-y-4 p-4">
           <Button variant="soft" block icon={<LocateFixed size={18} />} onClick={useMyLocation} disabled={locating}>
             {locating ? 'Buscando…' : 'Usar mi ubicación actual'}
           </Button>
@@ -106,11 +115,11 @@ export function Onboarding() {
           </div>
           <div>
             <label htmlFor="radius" className="label">
-              Distancia máxima: <span className="text-terra">{p.radiusKm} km</span>
+              Distancia máxima: <span className="tabular-nums text-terra-600">{p.radiusKm} km</span>
             </label>
             <input id="radius" type="range" min={1} max={20} value={p.radiusKm} onChange={(e) => up({ radiusKm: Number(e.target.value) })} className="w-full accent-terra" />
           </div>
-        </div>
+        </Card>
       ),
     },
     {
@@ -188,7 +197,7 @@ export function Onboarding() {
     {
       q: '¿Quiénes viven contigo?',
       body: (
-        <div className="space-y-5">
+        <Card className="space-y-5 p-4">
           <div>
             <p className="label">Niños en casa</p>
             <div className="flex flex-wrap gap-2">
@@ -233,14 +242,14 @@ export function Onboarding() {
               </Chip>
             </div>
           </div>
-        </div>
+        </Card>
       ),
     },
     {
       q: '¿Qué compañero buscas?',
       sub: 'Déjalo vacío si te da igual. Son preferencias suaves.',
       body: (
-        <div className="space-y-5">
+        <Card className="space-y-5 p-4">
           <div>
             <p className="label">Especie</p>
             <div className="flex gap-2">
@@ -300,7 +309,7 @@ export function Onboarding() {
               ))}
             </div>
           </div>
-        </div>
+        </Card>
       ),
     },
   ];
@@ -314,36 +323,49 @@ export function Onboarding() {
   };
 
   return (
-    <div className="flex h-full flex-col px-5 pb-5 pt-5" data-hu="HU-20" data-tour="onboarding">
-      <div className="flex items-center gap-3">
-        <button
-          onClick={() => (step === 0 ? navigate(-1) : setStep((s) => s - 1))}
-          aria-label="Atrás"
-          className="rounded-full p-2 hover:bg-cream-200"
+    <div className="flex h-full flex-col" data-hu="HU-20" data-tour="onboarding">
+      <div className="flex items-center gap-3 px-4 pb-2 pt-safe-t">
+        <IconButton label="Atrás" size="sm" onClick={() => (step === 0 ? navigate(-1) : setStep((s) => s - 1))} className="!shadow-none">
+          <ArrowLeft size={20} />
+        </IconButton>
+        <div
+          className="flex flex-1 gap-1.5"
+          role="progressbar"
+          aria-label={`Pregunta ${step + 1} de ${steps.length}`}
+          aria-valuemin={1}
+          aria-valuemax={steps.length}
+          aria-valuenow={step + 1}
         >
-          <ArrowLeft size={22} />
-        </button>
-        <div className="flex flex-1 gap-1.5" aria-label={`Pregunta ${step + 1} de ${steps.length}`}>
           {steps.map((_, i) => (
-            <span key={i} className={`h-1.5 flex-1 rounded-full transition ${i <= step ? 'bg-terra' : 'bg-cream-300'}`} />
+            <span key={i} className={`h-1.5 flex-1 rounded-full transition-colors duration-slow ease-out ${i <= step ? 'bg-terra' : 'bg-cocoa/10'}`} />
           ))}
         </div>
+        <span className="w-12 shrink-0 text-right text-sm font-semibold tabular-nums text-cocoa-500">
+          {step + 1}/{steps.length}
+        </span>
       </div>
-      <p className="mt-4 text-sm font-bold text-terra">
-        Pregunta {step + 1} de {steps.length}
-      </p>
-      <div className="scroll-area relative min-h-0 flex-1">
-        <AnimatePresence mode="wait">
-          <motion.div key={step} data-tour="onboarding-q" initial={{ x: 40, opacity: 0 }} animate={{ x: 0, opacity: 1 }} exit={{ x: -40, opacity: 0 }} transition={{ duration: 0.22 }} className="pb-4">
-            <h1 className="mb-1 text-3xl font-extrabold">{steps[step].q}</h1>
-            {steps[step].sub && <p className="mb-4 text-cocoa-500">{steps[step].sub}</p>}
-            <div className={steps[step].sub ? '' : 'mt-4'}>{steps[step].body}</div>
+      <div className="scroll-area relative min-h-0 flex-1 px-4">
+        <AnimatePresence mode="wait" initial={false}>
+          <motion.div
+            key={step}
+            data-tour="onboarding-q"
+            initial={{ x: reduce ? 0 : 32, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            exit={{ x: reduce ? 0 : -32, opacity: 0 }}
+            transition={{ duration: 0.22 }}
+            className="pb-6 pt-4"
+          >
+            <h1 className="text-3xl font-extrabold leading-tight text-cocoa-900">{steps[step].q}</h1>
+            {steps[step].sub && <p className="mt-1.5 text-[0.95rem] leading-snug text-cocoa-500">{steps[step].sub}</p>}
+            <div className="mt-5">{steps[step].body}</div>
           </motion.div>
         </AnimatePresence>
       </div>
-      <Button size="lg" block onClick={() => (last ? finish() : setStep((s) => s + 1))}>
-        {last ? '¡Ver mis mascotas compatibles!' : 'Continuar'}
-      </Button>
+      <div className="glass relative z-10 shrink-0 px-4 pb-safe-b pt-3">
+        <Button size="lg" block onClick={() => (last ? finish() : setStep((s) => s + 1))}>
+          {last ? '¡Ver mis mascotas compatibles!' : 'Continuar'}
+        </Button>
+      </div>
     </div>
   );
 }

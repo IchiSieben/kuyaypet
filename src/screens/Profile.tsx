@@ -1,33 +1,17 @@
-import { BookOpen, ChevronRight, Heart, History, LogOut, Settings2, Users } from 'lucide-react';
+import { BookOpen, Heart, History, LogOut, Settings2, Users } from 'lucide-react';
 import type { ReactNode } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { Avatar, Card } from '@/components/ui';
+import { useNavigate } from 'react-router-dom';
+import { Avatar, Chip, ListGroup, ListRow } from '@/components/ui';
 import { logout, useCurrentUser } from '@/services/auth';
 import { useFavorites, useHistory } from '@/services/match';
 import { confirm, toast } from '@/services/ui';
 
 const ROLE_LABEL = { adopter: 'Adoptante', owner: 'Responsable de mascotas', admin: 'Administrador' } as const;
 
-function Row({ icon, label, hint, to, onClick, soon }: { icon: ReactNode; label: string; hint?: string; to?: string; onClick?: () => void; soon?: boolean }) {
-  const body = (
-    <>
-      <span className="rounded-2xl bg-terra-100 p-2 text-terra">{icon}</span>
-      <span className="flex-1">
-        <span className="block font-bold">{label}</span>
-        {hint && <span className="block text-xs text-cocoa-500">{hint}</span>}
-      </span>
-      {soon ? <span className="rounded-full bg-honey-100 px-2 py-0.5 text-[10px] font-bold">Fase 1</span> : <ChevronRight size={18} className="text-cocoa-300" />}
-    </>
-  );
-  const cls = 'flex w-full items-center gap-3 px-4 py-3 text-left hover:bg-cream-100';
-  return to ? (
-    <Link to={to} className={cls}>
-      {body}
-    </Link>
-  ) : (
-    <button onClick={onClick} className={cls}>
-      {body}
-    </button>
+/** Rounded icon tile used as the leading element of a settings row (local helper). */
+function Tile({ children, tone = 'terra' }: { children: ReactNode; tone?: 'terra' | 'coral' }) {
+  return (
+    <span className={`flex h-9 w-9 items-center justify-center rounded-xl ${tone === 'coral' ? 'bg-coral-100 text-coral-600' : 'bg-terra-100 text-terra'}`}>{children}</span>
   );
 }
 
@@ -47,31 +31,33 @@ export function Profile() {
   };
 
   return (
-    <div className="space-y-4 px-4 pb-6" data-hu="HU-21">
-      <Card className="flex items-center gap-4 p-4">
-        <Avatar src={user.avatar} name={user.name} size={64} />
-        <div className="min-w-0">
-          <h1 className="truncate text-2xl font-extrabold">{user.name}</h1>
-          <p className="truncate text-sm text-cocoa-500">{user.email}</p>
-          <span className="mt-1 inline-block rounded-full bg-cream-200 px-2.5 py-0.5 text-xs font-bold">{ROLE_LABEL[user.role]}</span>
-        </div>
-      </Card>
+    <div className="px-4 pb-8" data-hu="HU-21">
+      <header className="flex flex-col items-center px-2 pb-6 pt-3 text-center">
+        <Avatar src={user.avatar} name={user.name} size={96} />
+        <h1 className="mt-4 max-w-full truncate text-3xl font-extrabold text-cocoa-900">{user.name}</h1>
+        <p className="mt-0.5 max-w-full truncate text-[0.95rem] text-cocoa-500">{user.email}</p>
+        <Chip tone="terra" className="mt-3">
+          {ROLE_LABEL[user.role]}
+        </Chip>
+      </header>
 
-      {user.role === 'adopter' && (
-        <Card className="divide-y divide-cream-200 overflow-hidden">
-          <Row icon={<Settings2 size={20} />} label="Mis preferencias" hint="Cuestionario de compatibilidad" to="/onboarding" />
-          <Row icon={<Heart size={20} />} label="Favoritos" hint={`${favs.length} mascotas guardadas`} to="/favoritos" />
-          <Row icon={<History size={20} />} label="Historial de interés" hint={`${history.length} mascotas`} to="/historial" />
-        </Card>
-      )}
-      <Card className="divide-y divide-cream-200 overflow-hidden">
-        <Row icon={<BookOpen size={20} />} label="Guía de adopción" hint="Requisitos, vacunas, Ley 30407 y 31807" to="/guia" />
-        <Row icon={<Users size={20} />} label="Equipo KuyayPet" hint="Créditos del proyecto · UPCH" to="/creditos" />
-      </Card>
-      <Card className="overflow-hidden">
-        <Row icon={<LogOut size={20} />} label="Cerrar sesión" onClick={onLogout} />
-      </Card>
-      <p className="text-center text-xs text-cocoa-300">La sesión se cierra sola tras 15 min de inactividad.</p>
+      <div className="space-y-6">
+        {user.role === 'adopter' && (
+          <ListGroup>
+            <ListRow leading={<Tile><Settings2 size={20} /></Tile>} title="Mis preferencias" subtitle="Cuestionario de compatibilidad" to="/onboarding" />
+            <ListRow leading={<Tile><Heart size={20} /></Tile>} title="Favoritos" subtitle={`${favs.length} mascotas guardadas`} to="/favoritos" />
+            <ListRow leading={<Tile><History size={20} /></Tile>} title="Historial de interés" subtitle={`${history.length} mascotas`} to="/historial" />
+          </ListGroup>
+        )}
+        <ListGroup>
+          <ListRow leading={<Tile><BookOpen size={20} /></Tile>} title="Guía de adopción" subtitle="Requisitos, vacunas, Ley 30407 y 31807" to="/guia" />
+          <ListRow leading={<Tile><Users size={20} /></Tile>} title="Equipo KuyayPet" subtitle="Créditos del proyecto · UPCH" to="/creditos" />
+        </ListGroup>
+        <ListGroup>
+          <ListRow leading={<Tile tone="coral"><LogOut size={20} /></Tile>} title={<span className="text-coral-600">Cerrar sesión</span>} onClick={onLogout} chevron={false} />
+        </ListGroup>
+      </div>
+      <p className="mt-6 px-6 text-center text-xs leading-snug text-cocoa-500">La sesión se cierra sola tras 15 min de inactividad.</p>
     </div>
   );
 }
