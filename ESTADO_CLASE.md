@@ -1,4 +1,31 @@
-# ESTADO_CLASE — actualizado 2026-10-16 16:45 (Lima)
+# ESTADO_CLASE — actualizado 2026-10-28 13:45 (Lima)
+
+## Dónde está cada versión
+| URL | Versión | Build |
+|---|---|---|
+| https://firebrick-cod-910257.hostingersite.com/ | **`v0.3.1-sprint2`**: arreglos de criterios de los Sprints 1–2 | `index-DQQidj1w.js` |
+| https://firebrick-cod-910257.hostingersite.com/next/ | preview `v0.4-ui` (sin tocar) | `index-DoPHrMAe.js` |
+| https://firebrick-cod-910257.hostingersite.com/next2/ | preview `v0.5-ui` (sin tocar) | `index-DwMPTle2.js` |
+| https://ichisieben.github.io/kuyaypet/ | espejo de `main` = Sprints 1–4 completos (`9c6a9a9`) | build de Pages |
+
+- **Deploy del 28-oct, 13:40–13:44:** se subieron 235 archivos a la raíz por TUS (curl), con `index.html` al final y sin borrar nada. **Suite completa contra Hostinger: 54/54 Playwright** y 22/22 Vitest.
+- **Service worker:** ahora tiene `navigateFallbackDenylist: [/\/manual\//, /^\/next2?\//]`. En navegadores que todavía tienen el SW viejo, la primera carga de la raíz lo actualiza (`autoUpdate`). Desde ahí `/next/` y `/next2/` abren sin incógnito.
+- **Qué cambió para la demo (escena 6):**
+  - Al editar una mascota se pueden agregar y quitar fotos y etiquetas (HU-16).
+  - Al guardar, la app abre el **perfil público** (HU-12 c5).
+  - En computadora, `/buscar` y el perfil usan el ancho completo, sin marco de teléfono (I-02). El resto de las rutas, el tour y la pantalla dividida siguen con marco.
+  - Si no hay mascotas disponibles aparece "No hay mascotas disponibles por ahora" (I-01).
+  - Cerrar sesión avisa si falla (HU-21).
+  - Guion corregido en `../ENSAYO_VIDEO.md`.
+- **Revertir a v0.3-fase1:** subir `../revert-v0.3-fase1/{manifest.webmanifest,sw.js,index.html}` con `tus_root.py` (ver `kuyaypet-tools/DECISIONES.md`). Los assets viejos siguen en el servidor.
+- **Repos:**
+  - IchiSieben/kuyaypet `main` tiene los Sprints 1–4. El tag `v0.3.1-sprint2` (`a8ecf24`) es lo desplegado en Hostinger.
+  - ClxNode/KuyayPet: PR #48–#65 del Sprint 2 abiertos (se fusionan en el video después de #35 y #47). Los Sprints 3–4 están en ramas locales; ver `kuyaypet-tools/LIBERACION.md`.
+- **Videos de evidencias:** Drive `02-Proyectos/produccion/kuyaypet/videos-hu/` (26 videos), https://drive.google.com/open?id=1e3GcYnJlez_F5GLwqA6CveFjX5wRCiQV
+
+---
+
+## ESTADO_CLASE anterior — actualizado 2026-10-16 16:45 (Lima)
 
 ## Qué versión está dónde
 | URL | Versión | Build |
