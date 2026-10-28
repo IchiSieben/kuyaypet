@@ -1,4 +1,19 @@
-# HANDOFF — 2026-09-25 17:45 (Fase 1 desplegada: `v0.3-fase1`)
+# HANDOFF — 2026-10-28 13:45 (Sprint 2 desplegado: `v0.3.1-sprint2`)
+
+- **Producción:** `v0.3.1-sprint2` en la raíz de Hostinger (`index-DQQidj1w.js`), con 54/54 Playwright contra producción. `/next/` (v0.4) y `/next2/` (v0.5) siguen intactos. `main` = `9c6a9a9` (Sprints 1–4).
+- **Cómo se desplegó:** `npm run build` desde `main` (con `.env.production`). Después `hosting_files_generate-upload-url`, que es una operación del MCP que no aparece en `search` pero existe. Luego `tus_root.py creds.json dist` (TUS archivo por archivo con **curl**, porque el `urllib` de Python no valida la cadena YE1 de Let's Encrypt). Se rechaza cualquier ruta `next/`/`next2/`, y `index.html`, `sw.js` y `manifest` van al final. Al terminar se borra `creds.json`. **Nunca** `hosting_deploy`: reemplaza el sitio entero.
+- **Código idéntico al del grupo:** `kuyaypet-tools/DIFF_REPOS_2026-10-28.txt` (`src`, `tests`, `public` y configs idénticos).
+- **Pendiente:**
+  - El tag `v0.3.1-sprint2` apunta a `a8ecf24`, que tiene un error de tipos en un spec de evidencias, ya arreglado en `c108d41`. No se movió por la regla de no hacer force-push; el comando está en DECISIONES.
+  - Liberar los Sprints 3–4 en ClxNode (`LIBERACION.md`).
+- **Lecciones:**
+  - Correr `npm run build` después del último cambio: `tsc -b` también compila `tests/` con la configuración de Node, que no tiene tipos del DOM.
+  - Las ramas de evidencias de cada sprint se encadenan (S2 → S3 → S4) porque comparten `tests/evidencias/shared.ts`.
+  - Un `net::ERR_ABORTED` aislado en un `beforeEach` fue inestabilidad del entorno con 3 servidores a la vez; al repetir pasó 14/14.
+
+---
+
+## HANDOFF anterior — 2026-09-25 17:45 (Fase 1 desplegada: `v0.3-fase1`)
 
 - **Producción:** `v0.3-fase1` en Hostinger y Pages; 21/21 Playwright contra Hostinger. `main` = `fase1-cont`.
 - **Hecho:** A–E completos; F: Match cinematográfico, pantalla dividida (ADR-13), barras por factor, stack de 3 cartas, splash, mapa OSM (ADR-14), rendimiento (ADR-15).
