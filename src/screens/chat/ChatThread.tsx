@@ -1,13 +1,13 @@
 import { motion } from 'framer-motion';
-import { ArrowLeft, CalendarCheck, SendHorizonal } from 'lucide-react';
+import { ArrowLeft, CalendarCheck, SendHorizonal, XCircle } from 'lucide-react';
 import { useEffect, useRef, useState, type FormEvent } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Avatar, EmptyState, Button } from '@/components/ui';
 import { useCurrentUser } from '@/services/auth';
-import { markThreadRead, sendMessage, useMessages, useThread } from '@/services/chat';
+import { closeThread, markThreadRead, sendMessage, useMessages, useThread } from '@/services/chat';
 import { usePet } from '@/services/pets';
 import { useDb } from '@/services/store';
-import { useUi } from '@/services/ui';
+import { confirm, useUi } from '@/services/ui';
 
 export function ChatThreadScreen() {
   const { id } = useParams();
@@ -35,9 +35,20 @@ export function ChatThreadScreen() {
 
   const lastMineId = [...messages].reverse().find((m) => m.senderId === user.id && !m.system)?.id;
   const other = users.find((u) => u.id === thread.memberIds.find((m) => m !== user.id));
+  const closed = !!thread.closedAt;
+  const finish = async () => {
+    const ok = await confirm({
+      title: '¿Finalizar la conversación?',
+      body: 'Podrás seguir consultando el historial, pero ya no se podrán enviar mensajes.',
+      emoji: '👋',
+      confirmLabel: 'Finalizar',
+      danger: true,
+    });
+    if (ok) closeThread(thread.id);
+  };
   const submit = (e: FormEvent) => {
     e.preventDefault();
-    if (!text.trim()) return;
+    if (closed || !text.trim()) return;
     sendMessage(thread.id, user.id, text);
     setText('');
   };
@@ -62,7 +73,12 @@ export function ChatThreadScreen() {
             )}
           </span>
         </Link>
-        {user.role === 'adopter' && pet && thread.kind === 'direct' && (
+        {user.role === 'adopter' && thread.kind === 'direct' && !closed && (
+          <button onClick={finish} aria-label="Finalizar conversación" title="Finalizar conversación" className="shrink-0 rounded-full p-2 text-cocoa-500 hover:bg-cream-200">
+            <XCircle size={20} />
+          </button>
+        )}
+        {user.role === 'adopter' && pet && thread.kind === 'direct' && !closed && (
           <Link to={`/coordinar/${pet.id}`} data-tour="chat-coordinate" aria-label="Coordinar adopción" className="flex shrink-0 items-center gap-1 rounded-full bg-sage-100 px-3 py-2 text-xs font-bold text-sage-600">
             <CalendarCheck size={16} /> Coordinar
           </Link>
@@ -106,16 +122,22 @@ export function ChatThreadScreen() {
         <div ref={endRef} />
       </div>
 
+      {closed && (
+        <p role="status" className="shrink-0 border-t border-cream-300 bg-honey-100 px-3 py-2 text-center text-xs font-semibold text-cocoa-700">
+          Esta conversación fue finalizada. Puedes consultar el historial, pero ya no enviar mensajes.
+        </p>
+      )}
       <form onSubmit={submit} className="flex shrink-0 items-center gap-2 border-t border-cream-300 bg-white p-3 pb-[max(env(safe-area-inset-bottom),12px)]">
         <input
           value={text}
           onChange={(e) => setText(e.target.value)}
           placeholder="Escribe un mensaje…"
           aria-label="Mensaje"
+          disabled={closed}
           data-tour="chat-input"
           className="input !rounded-full !py-2.5"
         />
-        <button type="submit" disabled={!text.trim()} aria-label="Enviar" className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-terra text-white transition disabled:opacity-40">
+        <button type="submit" disabled={closed || !text.trim()} aria-label="Enviar" className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-terra text-white transition disabled:opacity-40">
           <SendHorizonal size={20} />
         </button>
       </form>
