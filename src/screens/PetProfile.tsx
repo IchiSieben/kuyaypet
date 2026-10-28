@@ -115,8 +115,9 @@ export function PetProfile() {
   return (
     <div className="flex h-full flex-col" data-hu="HU-03">
       <div className="scroll-area flex-1 pb-4">
+       <div className="[.unframed_&]:mx-auto [.unframed_&]:grid [.unframed_&]:max-w-5xl [.unframed_&]:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] [.unframed_&]:items-start [.unframed_&]:gap-8 [.unframed_&]:p-6">
         {/* carousel */}
-        <div className="relative aspect-[4/3.6] bg-cocoa">
+        <div className="relative aspect-[4/3.6] bg-cocoa [.unframed_&]:sticky [.unframed_&]:top-0 [.unframed_&]:overflow-hidden [.unframed_&]:rounded-3xl">
           <AnimatePresence mode="wait">
             <motion.img key={photo} src={photos[photo]} alt={`Foto ${photo + 1} de ${pet.name}`} className="h-full w-full object-cover" initial={{ opacity: 0.4 }} animate={{ opacity: 1 }} exit={{ opacity: 0.4 }} />
           </AnimatePresence>
@@ -150,7 +151,7 @@ export function PetProfile() {
           )}
         </div>
 
-        <div className="relative -mt-6 space-y-4 rounded-t-4xl bg-cream px-5 pt-5">
+        <div className="relative -mt-6 space-y-4 rounded-t-4xl bg-cream px-5 pt-5 [.unframed_&]:mt-0 [.unframed_&]:px-0 [.unframed_&]:pt-0">
           <div className="flex items-start justify-between gap-2">
             <div>
               <h1 className="text-4xl font-extrabold">{pet.name}</h1>
@@ -285,10 +286,12 @@ export function PetProfile() {
             </button>
           )}
         </div>
+       </div>
       </div>
 
       {isAdopter && (
-        <div className="shrink-0 space-y-2 border-t border-cream-300 bg-white/95 p-3">
+        <div className="shrink-0 border-t border-cream-300 bg-white/95 p-3">
+         <div className="mx-auto w-full max-w-5xl space-y-2 [.unframed_&]:max-w-md">
           {!available ? (
             <p className="rounded-2xl bg-cream-200 p-3 text-center text-sm font-semibold">
               {pet.status === 'adoptada' ? `🎉 ${pet.name} ya encontró un hogar. No se aceptan nuevas solicitudes.` : 'Este perfil ya no está disponible para adopción.'}
@@ -319,6 +322,7 @@ export function PetProfile() {
               </div>
             </>
           )}
+         </div>
         </div>
       )}
 

@@ -106,7 +106,7 @@ export function Browse() {
       : 'No hay mascotas que cumplan estos criterios. Prueba con otros filtros.';
 
   return (
-    <div className="px-4 pb-6" data-hu="HU-02">
+    <div className="px-4 pb-6 [.unframed_&]:mx-auto [.unframed_&]:max-w-6xl [.unframed_&]:px-6" data-hu="HU-02">
       <div className="flex items-start justify-between gap-2">
         <div>
           <h1 className="text-2xl font-extrabold">Mascotas disponibles</h1>
@@ -174,7 +174,7 @@ export function Browse() {
       {results.length === 0 ? (
         <EmptyState emoji="🐾" title={emptyMessage} body={origin ? 'Prueba con un radio más amplio o cambia de distrito.' : 'Vuelve pronto: los albergues publican nuevas mascotas cada semana.'} />
       ) : (
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-2 gap-3 [.unframed_&]:grid-cols-3 [.unframed_&]:gap-4 xl:[.unframed_&]:grid-cols-4">
           {results.map(({ pet, distanceKm }) => (
             <PetCard key={pet.id} pet={pet} distance={distanceKm != null ? formatKm(distanceKm) : undefined} />
           ))}

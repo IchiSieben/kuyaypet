@@ -38,7 +38,7 @@ export function AppLayout() {
   const tabs = TABS[user.role];
   return (
     <div className="flex h-full flex-col">
-      <header className="flex shrink-0 items-center justify-between px-4 pb-2 pt-[max(env(safe-area-inset-top),14px)]">
+      <header className="flex shrink-0 items-center justify-between px-4 [.unframed_&]:mx-auto [.unframed_&]:w-full [.unframed_&]:max-w-6xl [.unframed_&]:px-6 pb-2 pt-[max(env(safe-area-inset-top),14px)]">
         <Link to={tabs[0].to} className="w-28" aria-label="Inicio KuyayPet">
           <LogoMark className="w-full" />
         </Link>
@@ -63,7 +63,7 @@ export function AppLayout() {
         <Outlet />
       </main>
       <nav className="shrink-0 border-t border-cream-300 bg-white/95 px-2 pb-[max(env(safe-area-inset-bottom),8px)] pt-1.5 backdrop-blur" aria-label="Navegación principal">
-        <ul className="flex justify-around">
+        <ul className="flex justify-around [.unframed_&]:mx-auto [.unframed_&]:max-w-xl">
           {tabs.map(({ to, label, icon: Icon, tour }) => (
             <li key={to}>
               <NavLink
