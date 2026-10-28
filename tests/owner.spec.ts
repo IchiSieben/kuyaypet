@@ -120,6 +120,22 @@ test('HU-12 editar información de una mascota propia', async ({ page }) => {
   await expect(page.getByText('Porotopo Editado').first()).toBeVisible();
 });
 
+test('HU-12 no permite editar una mascota que no registré', async ({ page }) => {
+  const readPet = () =>
+    page.evaluate(() => JSON.parse(localStorage.getItem('kuyaypet-db')!).state.pets.find((p: { id: string }) => p.id === 'p02'));
+  const before = await readPet();
+  expect(before.ownerId).toBe('u-owner-10');
+
+  await page.goto('./#/responsable/editar/p02');
+  await expect(page.locator('[data-hu="HU-12"]')).toBeVisible();
+  await expect(page.getByText('Mascota no encontrada')).toBeVisible();
+  await expect(page.locator('#name')).toHaveCount(0);
+  await expect(page.getByRole('button', { name: 'Guardar cambios' })).toHaveCount(0);
+  await shot(page, 'HU-12-ajena-bloqueada');
+
+  expect(await readPet()).toEqual(before);
+});
+
 test('HU-13 click en notificación de interés navega al perfil del adoptante', async ({ page }) => {
   // Generate a fresh interest (with actorId) as the adopter demo before checking the owner's notifications.
   await page.goto('./#/perfil');
