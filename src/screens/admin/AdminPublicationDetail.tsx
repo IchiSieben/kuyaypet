@@ -2,6 +2,7 @@ import { ArrowLeft } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Button, Card, Chip, EmptyState, Sheet } from '@/components/ui';
+import { ageLabel, SEX_LABEL, SIZE_LABEL, SPECIES_LABEL } from '@/services/pets';
 import { approvePublication, rejectPublication, updatePublication, usePublication } from '@/services/moderation';
 import { useDb } from '@/services/store';
 import { confirm, toast } from '@/services/ui';
@@ -31,6 +32,14 @@ export function AdminPublicationDetail() {
     setStory(pet?.story ?? '');
     setSpecialCare(pet?.specialCare ?? '');
   }, [pet?.id]);
+
+  const health = pet
+    ? [
+        pet.vaccinated && 'Vacunas al día',
+        pet.dewormed && 'Desparasitad' + (pet.sex === 'macho' ? 'o' : 'a'),
+        pet.sterilized && 'Esterilizad' + (pet.sex === 'macho' ? 'o' : 'a'),
+      ].filter(Boolean)
+    : [];
 
   if (!pet)
     return (
@@ -72,6 +81,25 @@ export function AdminPublicationDetail() {
           <p className="text-xs text-cocoa-500">Por {owner?.name}</p>
         </div>
         <Chip tone={pet.approval === 'aprobada' ? 'sage' : pet.approval === 'rechazada' ? 'coral' : 'honey'}>{APPROVAL_LABEL[pet.approval]}</Chip>
+      </Card>
+
+      <Card className="p-4">
+        <h2 className="text-lg font-bold">Datos de la mascota</h2>
+        <dl className="mt-2 grid grid-cols-2 gap-x-3 gap-y-2 text-sm">
+          {[
+            ['Especie', SPECIES_LABEL[pet.species]],
+            ['Edad', ageLabel(pet.ageMonths)],
+            ['Sexo', SEX_LABEL[pet.sex]],
+            ['Tamaño', SIZE_LABEL[pet.size]],
+            ['Distrito', pet.district],
+            ['Salud', health.length ? health.join(', ') : 'Sin datos de salud registrados'],
+          ].map(([k, v]) => (
+            <div key={k} className={k === 'Salud' ? 'col-span-2' : ''}>
+              <dt className="text-xs font-bold text-cocoa-300">{k}</dt>
+              <dd className="font-semibold">{v}</dd>
+            </div>
+          ))}
+        </dl>
       </Card>
 
       <Card className="space-y-3 p-4">

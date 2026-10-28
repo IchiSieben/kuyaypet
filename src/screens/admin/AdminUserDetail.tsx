@@ -105,6 +105,11 @@ export function AdminUserDetail() {
         <p className="text-sm text-cocoa-500">
           Estado actual: <b>{user.active ? 'Activo' : 'Inactiva'}</b>
         </p>
+        {!user.active && !isSelf && (
+          <p role="status" className="rounded-2xl bg-cream-200 p-3 text-sm">
+            La cuenta ya está inactiva.
+          </p>
+        )}
         {isSelf ? (
           <p className="rounded-2xl bg-cream-200 p-3 text-sm">No puedes desactivar tu propia cuenta de administrador.</p>
         ) : (
