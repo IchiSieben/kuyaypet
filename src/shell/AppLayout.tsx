@@ -1,4 +1,4 @@
-import { Bell, Heart, LayoutDashboard, MessageCircle, Search, Sparkles, User as UserIcon, PawPrint, type LucideIcon } from 'lucide-react';
+import { Bell, BookOpen, Heart, LayoutDashboard, MessageCircle, Search, Sparkles, User as UserIcon, PawPrint, type LucideIcon } from 'lucide-react';
 import { Link, NavLink, Outlet } from 'react-router-dom';
 
 import { useCurrentUser } from '@/services/auth';
@@ -14,12 +14,14 @@ const TABS: Record<Role, Tab[]> = {
     { to: '/buscar', label: 'Buscar', icon: Search },
     { to: '/matches', label: 'Matches', icon: Heart, tour: 'tab-matches' },
     { to: '/chats', label: 'Chats', icon: MessageCircle, tour: 'tab-chats' },
+    { to: '/guia', label: 'Guía', icon: BookOpen },
     { to: '/perfil', label: 'Perfil', icon: UserIcon },
   ],
   owner: [
     { to: '/responsable', label: 'Mis mascotas', icon: PawPrint },
     { to: '/chats', label: 'Chats', icon: MessageCircle },
     { to: '/notificaciones', label: 'Avisos', icon: Bell },
+    { to: '/guia', label: 'Guía', icon: BookOpen },
     { to: '/perfil', label: 'Perfil', icon: UserIcon },
   ],
   admin: [
@@ -70,7 +72,7 @@ export function AppLayout() {
                 to={to}
                 data-tour={tour}
                 className={({ isActive }) =>
-                  `flex w-16 flex-col items-center gap-0.5 rounded-2xl py-1.5 text-[11px] font-bold transition ${
+                  `flex w-14 flex-col items-center gap-0.5 rounded-2xl py-1.5 text-[11px] font-bold transition ${
                     isActive ? 'text-terra' : 'text-cocoa-300 hover:text-cocoa-500'
                   }`
                 }
