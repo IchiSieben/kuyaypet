@@ -176,6 +176,7 @@ export interface ChatThread {
   memberIds: string[];
   createdAt: string;
   lastReadAt: Record<string, string>;
+  closedAt?: string;
 }
 
 export type AdoptionStatus = 'pendiente' | 'aceptada' | 'rechazada';

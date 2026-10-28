@@ -40,6 +40,11 @@ export function markThreadRead(threadId: string, userId: string) {
   }));
 }
 
+/** Closing keeps the whole history; it only stops new messages. */
+export function closeThread(threadId: string) {
+  db.set((s) => ({ threads: s.threads.map((t) => (t.id === threadId && !t.closedAt ? { ...t, closedAt: nowIso() } : t)) }));
+}
+
 export function findDirectThread(petId: string, a: string, b: string): ChatThread | undefined {
   return db.get().threads.find((t) => t.kind === 'direct' && t.petId === petId && t.memberIds.includes(a) && t.memberIds.includes(b));
 }
@@ -61,6 +66,7 @@ export function postMessage(threadId: string, senderId: string, text: string, sy
 export function sendMessage(threadId: string, senderId: string, text: string) {
   const clean = text.trim();
   if (!clean) return;
+  if (db.get().threads.find((t) => t.id === threadId)?.closedAt) return;
   postMessage(threadId, senderId, clean);
   const thread = db.get().threads.find((t) => t.id === threadId);
   if (!thread || thread.kind !== 'direct') return;
@@ -93,6 +99,7 @@ export function scheduleOwnerReply(threadId: string, ownerId: string, lastText: 
   setTimeout(() => useUi.setState((s) => ({ typing: { ...s.typing, [threadId]: true } })), 500);
   setTimeout(() => {
     useUi.setState((s) => ({ typing: { ...s.typing, [threadId]: false } }));
+    if (db.get().threads.find((t) => t.id === threadId)?.closedAt) return;
     const reply = replyFor(lastText, pet?.name ?? 'la mascota').replace('desparasitad@', pet?.sex === 'macho' ? 'desparasitado' : 'desparasitada');
     postMessage(threadId, ownerId, reply);
     const adopterId = thread?.memberIds.find((id) => id !== ownerId);
