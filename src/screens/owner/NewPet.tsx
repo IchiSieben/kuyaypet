@@ -4,13 +4,12 @@ import { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button, Chip } from '@/components/ui';
 import { DISTRICTS } from '@/data/districts';
+import { PERSONALITY_OPTIONS } from '@/data/petTags';
 import { useCurrentUser } from '@/services/auth';
-import { processImage, MAX_PET_PHOTOS } from '@/services/media';
+import { processPhotoBatch, MAX_PET_PHOTOS } from '@/services/media';
 import { createPublication, validateNewPet, type NewPetInput } from '@/services/publications';
 import { confirm, toast } from '@/services/ui';
 import type { Sex, Size, Species } from '@/types';
-
-const PERSONALITY_OPTIONS = ['Cariñoso/a', 'Sociable', 'Guardián/a', 'Curioso/a', 'Tranquilo/a', 'Juguetón/a', 'Dormilón/a'];
 
 const EMPTY: NewPetInput = {
   name: '',
@@ -66,17 +65,9 @@ export function NewPet() {
 
   const onFiles = async (files: FileList | null) => {
     if (!files || files.length === 0) return;
-    setPhotoError('');
-    const remaining = MAX_PET_PHOTOS - form.photos.length;
-    const batch = Array.from(files).slice(0, Math.max(0, remaining));
-    for (const file of batch) {
-      const result = await processImage(file);
-      if (!result.ok) {
-        setPhotoError(result.error);
-        continue;
-      }
-      setForm((f) => ({ ...f, photos: [...f.photos, result.dataUrl] }));
-    }
+    const { dataUrls, error } = await processPhotoBatch(files, form.photos.length);
+    setPhotoError(error);
+    setForm((f) => ({ ...f, photos: [...f.photos, ...dataUrls] }));
     if (fileRef.current) fileRef.current.value = '';
   };
 

@@ -56,6 +56,49 @@ test('HU-11/16 registrar mascota: wizard de 3 pasos con validaciones y fotos', a
   await expect(page).toHaveURL(/#\/responsable/);
   await expect(page.getByText('Firulais de Prueba').first()).toBeVisible();
   await expect(page.getByText('En revisión').first()).toBeVisible();
+
+  // HU-16: la foto y la etiqueta elegidas al registrar se ven en el perfil (el responsable lo abre desde su panel).
+  await page.getByRole('link', { name: /Firulais de Prueba/ }).click();
+  await expect(page).toHaveURL(/#\/mascota\//);
+  await expect(page.getByRole('img', { name: 'Foto 1 de Firulais de Prueba' })).toBeVisible();
+  await expect(page.getByText('Cariñoso/a', { exact: true })).toBeVisible();
+});
+
+test('HU-16 editar: agregar y quitar foto, cambiar etiquetas, y se ven en el perfil', async ({ page }) => {
+  await page.goto('./#/mascota/p01');
+  await expect(page.getByRole('button', { name: /Ver foto/ })).toHaveCount(2); // semilla: 2 fotos
+  await page.goto('./#/responsable/editar/p01');
+  await expect(page.locator('[data-hu="HU-12"]')).toBeVisible();
+  await shot(page, 'HU-16-editar-antes');
+  const photos = page.getByTestId('edit-photo');
+  await expect(photos).toHaveCount(2);
+
+  const fileInput = page.locator('input[type="file"]');
+  // Formato inválido -> error, sin cambiar las fotos.
+  await fileInput.setInputFiles({ name: 'documento.txt', mimeType: 'text/plain', buffer: Buffer.from('no es una imagen') });
+  await expect(page.locator('[role="alert"]')).toContainText('Formato no permitido');
+  await expect(photos).toHaveCount(2);
+
+  // Agregar una foto válida y quitar una de las originales: 2 + 1 = 3, luego se quita una -> 2.
+  await fileInput.setInputFiles({ name: 'nueva.png', mimeType: 'image/png', buffer: TINY_PNG });
+  await expect(photos).toHaveCount(3);
+  await photos.first().getByRole('button', { name: 'Quitar foto' }).click();
+  await expect(photos).toHaveCount(2);
+
+  // Etiquetas: quitar una existente (semilla "Sociable") y agregar "Juguetón/a".
+  await page.getByRole('button', { name: 'Sociable', exact: true }).click();
+  await page.getByRole('button', { name: 'Juguetón/a', exact: true }).click();
+  await shot(page, 'HU-16-editar-despues');
+  await page.getByRole('button', { name: 'Guardar cambios' }).click();
+  await expect(page).toHaveURL(/#\/responsable/);
+
+  await page.goto('./#/mascota/p01');
+  await expect(page.getByRole('button', { name: /Ver foto/ })).toHaveCount(2);
+  await page.getByRole('button', { name: 'Foto siguiente' }).click();
+  await expect(page.getByRole('img', { name: 'Foto 2 de Porotopo' })).toHaveAttribute('src', /^data:image\/jpeg/);
+  await expect(page.getByText('Juguetón/a', { exact: true })).toBeVisible();
+  await expect(page.getByText('Sociable', { exact: true })).toHaveCount(0);
+  await shot(page, 'HU-16-perfil-editado');
 });
 
 test('HU-12 editar información de una mascota propia', async ({ page }) => {

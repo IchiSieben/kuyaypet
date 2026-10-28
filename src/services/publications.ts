@@ -97,11 +97,15 @@ export interface EditPetInput {
   ageMonths: number;
   story?: string;
   specialCare?: string;
+  /** HU-16: optional; when present replaces the pet's photos / personality tags. */
+  photos?: string[];
+  personality?: string[];
 }
 
 export function validateEditPet(i: Partial<EditPetInput>): NewPetErrors {
   const errors: NewPetErrors = {};
   if (!i.name?.trim()) errors.name = 'El nombre no puede estar vacío.';
+  if (i.photos && i.photos.length === 0) errors.photos = 'La mascota debe tener al menos una foto.';
   return errors;
 }
 
@@ -119,6 +123,8 @@ export function updatePublication(petId: string, input: EditPetInput): { ok: tru
             ageMonths: input.ageMonths,
             story: input.story?.trim() || undefined,
             specialCare: input.specialCare?.trim() || undefined,
+            photos: input.photos ?? p.photos,
+            personality: input.personality ?? p.personality,
           }
         : p,
     ),
