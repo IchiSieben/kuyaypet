@@ -41,7 +41,10 @@ export function Profile() {
   const onLogout = async () => {
     const ok = await confirm({ title: '¿Cerrar sesión?', body: 'Tendrás que volver a ingresar tus datos para entrar.', emoji: '👋', confirmLabel: 'Cerrar sesión', danger: true });
     if (!ok) return;
-    logout();
+    if (!logout()) {
+      toast({ title: 'No se pudo cerrar sesión. Intenta de nuevo.', emoji: '⚠️', tone: 'error' });
+      return;
+    }
     navigate('/login', { replace: true });
     toast({ title: 'Sesión cerrada', body: '¡Vuelve pronto!', emoji: '👋' });
   };
