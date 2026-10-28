@@ -16,6 +16,11 @@ function nextSaturday() {
 /** HU-10: propose date/time to meet the pet; the owner accepts or rejects (status visible to the adopter). */
 export function Coordinate() {
   const { petId } = useParams();
+  // Keyed by pet: going from /coordinar/p01 to /coordinar/p12 must not carry over the "sent" state.
+  return <CoordinateForm key={petId} petId={petId} />;
+}
+
+function CoordinateForm({ petId }: { petId: string | undefined }) {
   const pet = usePet(petId);
   const owner = useUser(pet?.ownerId);
   const user = useCurrentUser();

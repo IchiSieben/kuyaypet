@@ -69,7 +69,6 @@ test('HU-10 c5: el adoptante ve el estado de su solicitud', async ({ page }) => 
 test('HU-10 c6: el adoptante ve si el responsable aceptó o rechazó', async ({ page }) => {
   for (const petId of ['p01', 'p12']) {
     await page.goto(`./#/coordinar/${petId}`);
-    await page.reload();
     await page.getByRole('button', { name: 'Enviar solicitud' }).click();
     await expect(page.getByText('¡Solicitud enviada!')).toBeVisible();
   }
