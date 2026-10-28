@@ -167,3 +167,38 @@ test('HU-19 marcar mascota como adoptada bloquea nuevas solicitudes', async ({ p
   await expect(page.getByText('Adoptada 🎉').first()).toBeVisible();
   await shot(page, 'HU-19-adoptada');
 });
+
+test('HU-19 una mascota adoptada ya no aparece en la lista de disponibles', async ({ page }) => {
+  const cards = '[data-hu="HU-02"] a[href^="#/mascota/"]';
+  const logout = async () => {
+    await page.goto('./#/perfil');
+    await page.getByRole('button', { name: 'Cerrar sesión' }).click();
+    await page.getByRole('alertdialog').getByRole('button', { name: 'Cerrar sesión' }).click();
+    await page.goto('./');
+  };
+  const petCard = page.locator('div.overflow-hidden:has(> a[href="#/mascota/p01"])');
+
+  // Antes: Porotopo (p01) figura entre las disponibles para un adoptante.
+  await logout();
+  await page.getByRole('button', { name: /Adoptante/ }).click();
+  await page.goto('./#/buscar');
+  await expect(page.locator(`a[href="#/mascota/p01"]`)).toBeVisible();
+  const before = await page.locator(cards).count();
+  await shot(page, 'HU-19-catalogo-antes');
+
+  // La responsable la marca como adoptada.
+  await logout();
+  await page.getByRole('button', { name: /Responsable/ }).click();
+  await petCard.getByRole('button', { name: 'Marcar como adoptada' }).click();
+  await page.getByRole('alertdialog').getByRole('button', { name: 'Marcar como adoptada' }).click();
+  await expect(petCard.getByText('Adoptada 🎉')).toBeVisible();
+
+  // Después: el adoptante ya no la ve y la lista bajó en una.
+  await logout();
+  await page.getByRole('button', { name: /Adoptante/ }).click();
+  await page.goto('./#/buscar');
+  await expect(page.locator(cards).first()).toBeVisible();
+  await expect(page.locator('a[href="#/mascota/p01"]')).toHaveCount(0);
+  await expect(page.locator(cards)).toHaveCount(before - 1);
+  await shot(page, 'HU-19-catalogo-despues');
+});
