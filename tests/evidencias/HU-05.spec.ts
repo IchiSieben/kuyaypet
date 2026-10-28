@@ -49,7 +49,7 @@ test('HU-05 búsqueda de cercanas: criterios 1 a 5', async ({ page }) => {
 
   // c5: radius 1 km from a district with no pets nearby -> message
   await page.locator('#browse-radius').fill('1');
-  const options = await page.locator('#browse-district option').evaluateAll((os) => os.map((o) => (o as HTMLOptionElement).value).filter(Boolean));
+  const options = await page.locator('#browse-district option').evaluateAll((os) => os.map((o) => (o as unknown as { value: string }).value).filter(Boolean));
   let found = '';
   for (const d of options) {
     await page.locator('#browse-district').selectOption(d);
