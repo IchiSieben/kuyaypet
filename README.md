@@ -15,6 +15,13 @@ npm test           # Vitest: motor de compatibilidad
 npm run build && npm run test:e2e   # Playwright en viewport 390×844
 ```
 
+Evidencias por HU (un video móvil y una captura por caso, fuera de la suite normal):
+```bash
+npx vite preview --port 4199 --strictPort    # en otra terminal
+EVIDENCIAS_DIR=<carpeta de capturas> VIDEOS_DIR=<carpeta de videos> \
+  BASE_URL=http://localhost:4199/ node scripts/record-hu.mjs 01 02 03
+```
+
 ## Stack
 Vite + React 18 + TypeScript strict · Tailwind · Framer Motion · Zustand (persist) · PWA · Vitest · Playwright. Ver `docs/decisiones.md`.
 

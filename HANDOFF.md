@@ -1,10 +1,9 @@
-# HANDOFF — 2026-09-25 16:50 (Fase 1: B, D, E cerrados en rama; F en curso)
+# HANDOFF — 2026-09-25 17:45 (Fase 1 desplegada: `v0.3-fase1`)
 
-- **Producción:** `v0.2-clase` (Hostinger + Pages). **Hostinger congelado hasta 17:30 Lima.**
-- **Rama `fase1-cont`:** B completo (ADR-12), semilla D, las 26 HU (E), Match cinematográfico y pantalla dividida (F, ADR-13). 22 Vitest + 20 Playwright verdes.
-- **En curso:** 2 agentes en worktrees: (1) barras por factor + stack 3 cartas + splash; (2) mapa Leaflet HU-05 (ADR-14). Integrar solo si pasan todos los tests.
-- **Siguiente (después de 17:30):** merge `fase1-cont` → `main` con la suite completa verde (incluye tour ×3) → `npm run manual` → build → zip con `C:\Windows\System32	ar.exe` → TUS + deploy Hostinger → push (Pages) → smoke contra producción → tag `v0.3` → `npm run backup` → actualizar ESTADO_CLASE.md.
-- **Trampas:** el lock `.git/index.lock` puede quedar colgado (verificar que no haya proceso git y borrarlo); las capturas en conflicto se resuelven con `--ours` y se regeneran con la suite.
+- **Producción:** `v0.3-fase1` en Hostinger y Pages; 21/21 Playwright contra Hostinger. `main` = `fase1-cont`.
+- **Hecho:** A–E completos; F: Match cinematográfico, pantalla dividida (ADR-13), barras por factor, stack de 3 cartas, splash, mapa OSM (ADR-14), rendimiento (ADR-15).
+- **Pendiente:** Lighthouse móvil 80 → ≥ 90 (LazyMotion, panel de presentador fuera del chunk inicial); transición carta → perfil con `layoutId`; `data/team.json` sin HU asignadas.
+- **Lecciones:** los worktrees de agentes nacen de la rama por defecto del remoto, no de la rama local: pedir `git merge fase1-cont` al inicio o integrar a mano. `npm ci` falla en Windows si hay un `vite preview` corriendo (bloquea `node_modules`). CARTO `rastertiles/voyager` ahora exige API key.
 
 ## Estado de Fase 0 (histórico)
 

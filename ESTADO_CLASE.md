@@ -1,4 +1,4 @@
-# ESTADO_CLASE — actualizado 2026-09-25 17:16 (Lima)
+# ESTADO_CLASE — actualizado 2026-09-25 17:45 (Lima)
 
 ## Links para la clase
 - **App (Hostinger):** https://firebrick-cod-910257.hostingersite.com/
@@ -8,13 +8,12 @@
 - Cuentas demo (contraseña `kuyay2026`): adoptante@ · responsable@ · admin@ kuyaypet.pe
 
 ## Versión desplegada
-- Tag `v0.2-clase` (commit `1997f9a`), desplegada a las 15:19 en Hostinger y Pages.
-- Tests: 13 Vitest + 4 Playwright en verde (incluye el tour recorrido **3 veces seguidas** con el mismo estado final). Smoke en producción: 3/3.
-- **Congelado Hostinger 15:45–17:30.** El trabajo sigue en la rama `fase1-cont`.
+- **Tag `v0.3-fase1`** (commit `e06c048`), desplegada a las 17:31 en Hostinger (TUS + deploy) y en Pages (push a `main`). Las dos URLs sirven el mismo build (`index-BmydHsl6.js`).
+- **Suite completa contra Hostinger: 21/21 Playwright en verde** (tour ×3, tour con acciones fuera de guion, pantalla dividida, mapa, todas las HU). Local: 22 Vitest + 21 Playwright.
+- Versión anterior de respaldo: `v0.2-clase`.
 
-## HU listas
-- **En producción (`v0.2-clase`):** 10/26: HU-01, 02, 03, 06, 07, 08, 10, 20, 21, 24.
-- **En la rama `fase1-cont` (pendiente de integrar a `main` después de las 17:30):** 26/26 marcadas, con test Playwright por HU y capturas en `docs/screenshots/`.
+## HU listas: 26/26 (en producción)
+Cada una tiene `data-hu`, un test Playwright y capturas en `docs/screenshots/`. Simulado (y así se dice en la demo): correo de recuperación (bandeja simulada), respuestas del responsable en el chat, aceptación automática de responsables sintéticos y login con Google.
 
 ## Qué se hizo hoy
 - A: tag `v0.1-fase0`; bundle, zip y manual en Drive (`05-Backups/repos/kuyaypet`, `02-Proyectos/produccion/kuyaypet`); `npm run backup`; fila en REGISTRO.md.
@@ -24,7 +23,7 @@
 - E (rama): HU-04, 05, 09, 14, 15, 17, 18 (adoptante); 11, 12, 13, 16, 19 (responsable); 22, 23, 25, 26 (admin, con panel en pestañas y KPIs).
 - F: Match cinematográfico (anillo, razones una a una, confeti de huellas); pantalla dividida Adoptante | Responsable con sesiones reales (ADR-13); barras por factor en “¿Por qué hacemos match?”; stack de 3 cartas con vibración; splash animado; mapa de cercanía con Leaflet y OpenStreetMap (ADR-14; CARTO pedía API key); carga diferida y primer pintado estático (ADR-15).
 
-## Tests (`main` = `fase1-cont`, commit previo al despliegue)
+## Tests (commit desplegado)
 22 Vitest + 21 Playwright en verde: tour ×3, tour con acciones fuera de guion, pantalla dividida, mapa y una prueba por HU.
 
 ## Lighthouse (local)
