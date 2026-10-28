@@ -116,7 +116,9 @@ test('HU-12 editar información de una mascota propia', async ({ page }) => {
   await nameInput.fill('Porotopo Editado');
   await page.locator('#about').fill('Nueva descripción de prueba.');
   await page.getByRole('button', { name: 'Guardar cambios' }).click();
-  await expect(page).toHaveURL(/#\/responsable/);
+  await expect(page).toHaveURL(/#\/mascota\//);
+  await expect(page.getByRole('heading', { name: 'Porotopo Editado', exact: true })).toBeVisible();
+  await page.goto('./#/responsable');
   await expect(page.getByText('Porotopo Editado').first()).toBeVisible();
 });
 

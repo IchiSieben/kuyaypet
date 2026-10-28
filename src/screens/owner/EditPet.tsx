@@ -58,7 +58,7 @@ export function EditPet() {
       return;
     }
     toast({ title: 'Cambios guardados con éxito', tone: 'success', emoji: '✅' });
-    navigate('/responsable', { replace: true });
+    navigate(`/mascota/${pet.id}`, { replace: true });
   };
 
   return (
