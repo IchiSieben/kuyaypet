@@ -26,6 +26,17 @@ export async function readDb(page: Page): Promise<any> {
   return page.evaluate(() => JSON.parse(localStorage.getItem('kuyaypet-db') || '{}').state);
 }
 
+/** Switches the persisted session without going through the login form (demo shortcut used by the criterion tests). */
+export async function switchSession(page: Page, userId: string) {
+  await page.evaluate((id) => {
+    const raw = JSON.parse(localStorage.getItem('kuyaypet-db')!);
+    raw.state.sessionUserId = id;
+    localStorage.setItem('kuyaypet-db', JSON.stringify(raw));
+  }, userId);
+  await page.goto('./');
+  await page.reload();
+}
+
 export const TINY_PNG = Buffer.from(
   'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+A8AAQUBAScY42YAAAAASUVORK5CYII=',
   'base64',
