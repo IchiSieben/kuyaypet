@@ -90,7 +90,8 @@ test('HU-16 editar: agregar y quitar foto, cambiar etiquetas, y se ven en el per
   await page.getByRole('button', { name: 'Juguetón/a', exact: true }).click();
   await shot(page, 'HU-16-editar-despues');
   await page.getByRole('button', { name: 'Guardar cambios' }).click();
-  await expect(page).toHaveURL(/#\/responsable/);
+  // After saving: owner panel, or the public profile once the HU-12 c5 PR lands; this test holds with either.
+  await expect(page).toHaveURL(/#\/(responsable|mascota\/p01)/);
 
   await page.goto('./#/mascota/p01');
   await expect(page.getByRole('button', { name: /Ver foto/ })).toHaveCount(2);
