@@ -3,6 +3,7 @@ import { ArrowLeft, Heart, Star } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { EmptyState } from '@/components/ui';
 import { useCurrentUser } from '@/services/auth';
+import { useAdoptionsForAdopter } from '@/services/adoptions';
 import { useHistory } from '@/services/match';
 import { useDb } from '@/services/store';
 
@@ -15,6 +16,7 @@ export function History() {
   const user = useCurrentUser();
   const history = useHistory(user?.id);
   const pets = useDb((s) => s.pets);
+  const adoptions = useAdoptionsForAdopter(user?.id);
 
   const rows = history
     .slice()
@@ -36,6 +38,17 @@ export function History() {
           {rows.map(({ interaction, pet }) => {
             const p = pet!;
             const available = p.status === 'disponible' && p.approval === 'aprobada';
+            const inProcess = adoptions.some((a) => a.petId === p.id && a.status !== 'rechazada');
+            const [stateLabel, stateTone] =
+              p.status === 'adoptada'
+                ? ['Adoptada', 'bg-sage text-white']
+                : p.status === 'retirada'
+                  ? ['Retirada', 'bg-cream-200 text-cocoa-700']
+                  : !available
+                    ? ['No disponible', 'bg-cream-200 text-cocoa-700']
+                    : inProcess
+                      ? ['En proceso', 'bg-honey-100 text-cocoa-700']
+                      : ['Disponible', 'bg-sage-100 text-cocoa-700'];
             const content = (
               <>
                 <img src={p.photos[0]} alt="" className="h-14 w-14 shrink-0 rounded-2xl object-cover" />
@@ -46,13 +59,12 @@ export function History() {
                   </span>
                   <span className="block text-xs text-cocoa-500">{timeLabel(interaction.createdAt)}</span>
                 </span>
-                <span className="shrink-0">
-                  {p.status === 'adoptada' ? (
-                    <span className="rounded-full bg-sage px-2.5 py-0.5 text-xs font-bold text-white">Adoptada</span>
-                  ) : !available ? (
-                    <span className="text-xs font-semibold text-cocoa-300">Este perfil ya no está disponible</span>
-                  ) : (
+                <span className="flex shrink-0 flex-col items-end gap-1 text-right">
+                  <span className={`rounded-full px-2.5 py-0.5 text-xs font-bold ${stateTone}`}>{stateLabel}</span>
+                  {available ? (
                     <span className="text-xs font-bold text-terra">Ver perfil →</span>
+                  ) : (
+                    p.status !== 'adoptada' && <span className="max-w-[9rem] text-xs font-semibold text-cocoa-300">Este perfil ya no está disponible</span>
                   )}
                 </span>
               </>
