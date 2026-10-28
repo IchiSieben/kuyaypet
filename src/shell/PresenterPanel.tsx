@@ -33,8 +33,10 @@ function devsFor(hu: string): string {
   return names.join(', ');
 }
 
-export function PresenterPanel() {
-  const open = useUi((s) => s.presenterOpen);
+export function PresenterPanel({ open: openProp, onOpenChange }: { open?: boolean; onOpenChange?: (open: boolean) => void } = {}) {
+  const storeOpen = useUi((s) => s.presenterOpen);
+  const open = openProp ?? storeOpen;
+  const setOpen = onOpenChange ?? ((v: boolean) => useUi.setState({ presenterOpen: v }));
   const guaranteed = useDb((s) => s.demo.guaranteedMatch);
   const tourStep = useUi((s) => s.tourStep);
   const [showCount, setShowCount] = useState(false);
@@ -45,7 +47,7 @@ export function PresenterPanel() {
 
   if (!open)
     return (
-      <button onClick={() => useUi.setState({ presenterOpen: true })} className="fixed right-4 top-1/2 flex -translate-y-1/2 items-center gap-1 rounded-l-2xl bg-cocoa px-2 py-4 font-bold text-cream shadow-card" aria-label="Abrir panel de presentador">
+      <button onClick={() => setOpen(true)} className="fixed right-4 top-1/2 flex -translate-y-1/2 items-center gap-1 rounded-l-2xl bg-cocoa px-2 py-4 font-bold text-cream shadow-card" aria-label="Abrir panel de presentador">
         <ChevronLeft size={18} />
       </button>
     );
@@ -81,7 +83,7 @@ export function PresenterPanel() {
             <p className="text-xs text-cocoa-500">Solo visible en escritorio</p>
           </div>
         </div>
-        <button onClick={() => useUi.setState({ presenterOpen: false })} aria-label="Ocultar panel" className="rounded-full p-2 hover:bg-cream-200">
+        <button onClick={() => setOpen(false)} aria-label="Ocultar panel" className="rounded-full p-2 hover:bg-cream-200">
           <ChevronRight size={18} />
         </button>
       </div>

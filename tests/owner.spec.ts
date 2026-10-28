@@ -56,6 +56,50 @@ test('HU-11/16 registrar mascota: wizard de 3 pasos con validaciones y fotos', a
   await expect(page).toHaveURL(/#\/responsable/);
   await expect(page.getByText('Firulais de Prueba').first()).toBeVisible();
   await expect(page.getByText('En revisión').first()).toBeVisible();
+
+  // HU-16: la foto y la etiqueta elegidas al registrar se ven en el perfil (el responsable lo abre desde su panel).
+  await page.getByRole('link', { name: /Firulais de Prueba/ }).click();
+  await expect(page).toHaveURL(/#\/mascota\//);
+  await expect(page.getByRole('img', { name: 'Foto 1 de Firulais de Prueba' })).toBeVisible();
+  await expect(page.getByText('Cariñoso/a', { exact: true })).toBeVisible();
+});
+
+test('HU-16 editar: agregar y quitar foto, cambiar etiquetas, y se ven en el perfil', async ({ page }) => {
+  await page.goto('./#/mascota/p01');
+  await expect(page.getByRole('button', { name: /Ver foto/ })).toHaveCount(2); // semilla: 2 fotos
+  await page.goto('./#/responsable/editar/p01');
+  await expect(page.locator('[data-hu="HU-12"]')).toBeVisible();
+  await shot(page, 'HU-16-editar-antes');
+  const photos = page.getByTestId('edit-photo');
+  await expect(photos).toHaveCount(2);
+
+  const fileInput = page.locator('input[type="file"]');
+  // Formato inválido -> error, sin cambiar las fotos.
+  await fileInput.setInputFiles({ name: 'documento.txt', mimeType: 'text/plain', buffer: Buffer.from('no es una imagen') });
+  await expect(page.locator('[role="alert"]')).toContainText('Formato no permitido');
+  await expect(photos).toHaveCount(2);
+
+  // Agregar una foto válida y quitar una de las originales: 2 + 1 = 3, luego se quita una -> 2.
+  await fileInput.setInputFiles({ name: 'nueva.png', mimeType: 'image/png', buffer: TINY_PNG });
+  await expect(photos).toHaveCount(3);
+  await photos.first().getByRole('button', { name: 'Quitar foto' }).click();
+  await expect(photos).toHaveCount(2);
+
+  // Etiquetas: quitar una existente (semilla "Sociable") y agregar "Juguetón/a".
+  await page.getByRole('button', { name: 'Sociable', exact: true }).click();
+  await page.getByRole('button', { name: 'Juguetón/a', exact: true }).click();
+  await shot(page, 'HU-16-editar-despues');
+  await page.getByRole('button', { name: 'Guardar cambios' }).click();
+  // After saving: owner panel, or the public profile once the HU-12 c5 PR lands; this test holds with either.
+  await expect(page).toHaveURL(/#\/(responsable|mascota\/p01)/);
+
+  await page.goto('./#/mascota/p01');
+  await expect(page.getByRole('button', { name: /Ver foto/ })).toHaveCount(2);
+  await page.getByRole('button', { name: 'Foto siguiente' }).click();
+  await expect(page.getByRole('img', { name: 'Foto 2 de Porotopo' })).toHaveAttribute('src', /^data:image\/jpeg/);
+  await expect(page.getByText('Juguetón/a', { exact: true })).toBeVisible();
+  await expect(page.getByText('Sociable', { exact: true })).toHaveCount(0);
+  await shot(page, 'HU-16-perfil-editado');
 });
 
 test('HU-12 editar información de una mascota propia', async ({ page }) => {
@@ -72,8 +116,26 @@ test('HU-12 editar información de una mascota propia', async ({ page }) => {
   await nameInput.fill('Porotopo Editado');
   await page.locator('#about').fill('Nueva descripción de prueba.');
   await page.getByRole('button', { name: 'Guardar cambios' }).click();
-  await expect(page).toHaveURL(/#\/responsable/);
+  await expect(page).toHaveURL(/#\/mascota\//);
+  await expect(page.getByRole('heading', { name: 'Porotopo Editado', exact: true })).toBeVisible();
+  await page.goto('./#/responsable');
   await expect(page.getByText('Porotopo Editado').first()).toBeVisible();
+});
+
+test('HU-12 no permite editar una mascota que no registré', async ({ page }) => {
+  const readPet = () =>
+    page.evaluate(() => JSON.parse(localStorage.getItem('kuyaypet-db')!).state.pets.find((p: { id: string }) => p.id === 'p02'));
+  const before = await readPet();
+  expect(before.ownerId).toBe('u-owner-10');
+
+  await page.goto('./#/responsable/editar/p02');
+  await expect(page.locator('[data-hu="HU-12"]')).toBeVisible();
+  await expect(page.getByText('Mascota no encontrada')).toBeVisible();
+  await expect(page.locator('#name')).toHaveCount(0);
+  await expect(page.getByRole('button', { name: 'Guardar cambios' })).toHaveCount(0);
+  await shot(page, 'HU-12-ajena-bloqueada');
+
+  expect(await readPet()).toEqual(before);
 });
 
 test('HU-13 click en notificación de interés navega al perfil del adoptante', async ({ page }) => {
@@ -106,4 +168,39 @@ test('HU-19 marcar mascota como adoptada bloquea nuevas solicitudes', async ({ p
   await page.getByRole('alertdialog').getByRole('button', { name: 'Marcar como adoptada' }).click();
   await expect(page.getByText('Adoptada 🎉').first()).toBeVisible();
   await shot(page, 'HU-19-adoptada');
+});
+
+test('HU-19 una mascota adoptada ya no aparece en la lista de disponibles', async ({ page }) => {
+  const cards = '[data-hu="HU-02"] a[href^="#/mascota/"]';
+  const logout = async () => {
+    await page.goto('./#/perfil');
+    await page.getByRole('button', { name: 'Cerrar sesión' }).click();
+    await page.getByRole('alertdialog').getByRole('button', { name: 'Cerrar sesión' }).click();
+    await page.goto('./');
+  };
+  const petCard = page.locator('div.overflow-hidden:has(> a[href="#/mascota/p01"])');
+
+  // Antes: Porotopo (p01) figura entre las disponibles para un adoptante.
+  await logout();
+  await page.getByRole('button', { name: /Adoptante/ }).click();
+  await page.goto('./#/buscar');
+  await expect(page.locator(`a[href="#/mascota/p01"]`)).toBeVisible();
+  const before = await page.locator(cards).count();
+  await shot(page, 'HU-19-catalogo-antes');
+
+  // La responsable la marca como adoptada.
+  await logout();
+  await page.getByRole('button', { name: /Responsable/ }).click();
+  await petCard.getByRole('button', { name: 'Marcar como adoptada' }).click();
+  await page.getByRole('alertdialog').getByRole('button', { name: 'Marcar como adoptada' }).click();
+  await expect(petCard.getByText('Adoptada 🎉')).toBeVisible();
+
+  // Después: el adoptante ya no la ve y la lista bajó en una.
+  await logout();
+  await page.getByRole('button', { name: /Adoptante/ }).click();
+  await page.goto('./#/buscar');
+  await expect(page.locator(cards).first()).toBeVisible();
+  await expect(page.locator('a[href="#/mascota/p01"]')).toHaveCount(0);
+  await expect(page.locator(cards)).toHaveCount(before - 1);
+  await shot(page, 'HU-19-catalogo-despues');
 });

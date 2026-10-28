@@ -100,7 +100,7 @@ export function Sheet({
             role="dialog"
             aria-modal="true"
             aria-label={title}
-            className="scroll-area relative max-h-[88%] rounded-t-4xl bg-cream p-5 pb-8 shadow-card"
+            className="scroll-area relative max-h-[88%] w-full rounded-t-4xl [.unframed_&]:mx-auto [.unframed_&]:max-w-lg bg-cream p-5 pb-8 shadow-card"
             initial={{ y: '100%' }}
             animate={{ y: 0 }}
             exit={{ y: '100%' }}

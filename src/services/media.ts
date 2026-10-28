@@ -56,3 +56,20 @@ export async function processImage(file: File): Promise<{ ok: true; dataUrl: str
 }
 
 export const MAX_PET_PHOTOS = 4;
+
+/**
+ * Processes a batch of picked files against the photo limit (HU-16). Shared by the
+ * register and edit screens so validation ("Formato no permitido") and the max of
+ * MAX_PET_PHOTOS behave identically. Invalid files are skipped; the last error wins.
+ */
+export async function processPhotoBatch(files: FileList | File[], currentCount: number): Promise<{ dataUrls: string[]; error: string }> {
+  const remaining = Math.max(0, MAX_PET_PHOTOS - currentCount);
+  const dataUrls: string[] = [];
+  let error = '';
+  for (const file of Array.from(files).slice(0, remaining)) {
+    const result = await processImage(file);
+    if (result.ok) dataUrls.push(result.dataUrl);
+    else error = result.error;
+  }
+  return { dataUrls, error };
+}

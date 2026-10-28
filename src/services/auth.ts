@@ -158,8 +158,20 @@ export function confirmPasswordReset(
   return { ok: true };
 }
 
-export function logout() {
-  db.set({ sessionUserId: null });
+/** Returns false when the session could not be cleared (e.g. storage write fails); the session is kept so the user can retry. */
+export function logout(): boolean {
+  const previous = db.get().sessionUserId;
+  try {
+    db.set({ sessionUserId: null });
+    return true;
+  } catch {
+    try {
+      db.set({ sessionUserId: previous });
+    } catch {
+      /* the session is still the one in memory */
+    }
+    return false;
+  }
 }
 
 export function touchActivity() {

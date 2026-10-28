@@ -67,6 +67,23 @@ test('HU-04 y HU-05: filtros y cercanía en /buscar', async ({ page }) => {
   }
 });
 
+test('HU-05: mensaje cuando no hay mascotas cercanas a la ubicación indicada', async ({ page }) => {
+  await loginAsAdopter(page);
+  await page.goto('./#/buscar');
+  const cards = page.locator('[data-hu="HU-02"] a[href^="#/mascota/"]');
+  await expect(cards.first()).toBeVisible();
+
+  // Los Olivos está a más de 3 km de toda mascota disponible del seed; con radio mínimo (1 km) no hay resultados.
+  await page.locator('#browse-district').selectOption('Los Olivos');
+  await page.locator('#browse-radius').fill('1');
+  await page.getByRole('button', { name: 'Buscar', exact: true }).click();
+
+  await expect(page.getByText(/Mostrando mascotas cerca de Los Olivos/)).toBeVisible();
+  await expect(cards).toHaveCount(0);
+  await expect(page.getByText('No se encontraron mascotas cercanas')).toBeVisible();
+  await shot(page, 'HU-05-sin-cercanas');
+});
+
 test('HU-09: unirme al chat grupal de una mascota', async ({ page }) => {
   await loginAsAdopter(page);
   await page.goto('./#/buscar');
