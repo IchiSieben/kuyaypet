@@ -58,7 +58,7 @@ test('HU-02 mascotas disponibles: casos P-06 a P-09', async ({ page, browser, ba
   await page.reload();
   await expect(page.locator('[data-hu="HU-02"]')).toBeVisible();
   await expect(page.locator(cards)).toHaveCount(0);
-  await expect(page.getByText('No hay mascotas que cumplan estos criterios')).toBeVisible();
+  await expect(page.getByText('No hay mascotas disponibles por ahora')).toBeVisible();
   await beat(page);
   await evid(page, 'HU-02', 'P-08-sin-mascotas-disponibles');
   await beat(page, 1500);

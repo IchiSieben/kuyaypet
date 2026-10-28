@@ -101,7 +101,9 @@ export function Browse() {
 
   const emptyMessage = origin
     ? 'No se encontraron mascotas cercanas'
-    : 'No hay mascotas que cumplan estos criterios. Prueba con otros filtros.';
+    : available.length === 0
+      ? 'No hay mascotas disponibles por ahora'
+      : 'No hay mascotas que cumplan estos criterios. Prueba con otros filtros.';
 
   return (
     <div className="px-4 pb-6" data-hu="HU-02">
