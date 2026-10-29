@@ -9,6 +9,7 @@
   - La guía carga en un navegador nuevo y también en uno que abrió antes la app, ya controlado por el service worker.
   - Las 30 imágenes responden 200 `image/webp`.
   - La raíz sigue sirviendo la app. `/next/`, `/next2/` y `/manual/` son byte a byte iguales a como estaban antes.
+- **Si alguien ve la app en `/guia-sprint2/`:** recargar una vez (o abrir en incógnito). Lo simulé con el service worker viejo: la primera visita muestra la app, porque ese worker no conocía la guía. Mientras tanto el navegador baja el worker nuevo, y con una recarga ya sale la guía. El HTML de la guía no se cachea en la CDN; las imágenes sí (7 días), así que si se cambia una imagen con el mismo nombre hay que purgar la CDN.
 - **Repos:**
   - IchiSieben/kuyaypet: `main` = `0f865fe`; lo desplegado es la rama `hotfix/sw-guia-sprint2` (`c578bae`, sobre `c108d41`).
   - ClxNode/KuyayPet: PR #66 (`sprint-2/chore-sw-guia`), que va después de #54.
