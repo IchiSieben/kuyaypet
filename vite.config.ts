@@ -32,8 +32,8 @@ export default defineConfig({
         globPatterns: ['**/*.{js,css,html,svg,png,webp,woff2,json}'],
         maximumFileSizeToCacheInBytes: 4 * 1024 * 1024,
         // The demo manual is a separate static page, never the SPA shell; /next/ and /next2/ are preview builds
-        // with their own shell, which this root worker must not answer.
-        navigateFallbackDenylist: [/\/manual\//, /^\/next2?\//],
+        // with their own shell, which this root worker must not answer. /guia-sprint2/ is the team's static guide.
+        navigateFallbackDenylist: [/\/manual\//, /^\/next2?\//, /^\/guia-sprint2\//],
       },
     }),
   ],
