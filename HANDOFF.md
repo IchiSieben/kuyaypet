@@ -1,3 +1,16 @@
+# HANDOFF — 2026-10-28 22:30 (guía del Sprint 2 en `/guia-sprint2/`)
+
+- **Publicado:** https://firebrick-cod-910257.hostingersite.com/guia-sprint2/. Se subieron los 31 archivos de `../guia-sprint2/` y el `sw.js` de la raíz, nada más. Playwright contra producción: 16/16 (`scratchpad/verify-guia.cjs`: título, 30 imágenes, navegador con el SW de la raíz, `/next*/` y `/manual/` sin cambios).
+- **Qué está en producción:** `c108d41` (v0.3.1-sprint2) + `c578bae` (denylist con `/^\/guia-sprint2\//`), en la rama `hotfix/sw-guia-sprint2`. El mismo commit está en `main` = `0f865fe`. **Para tocar la raíz, construir desde esa rama y no desde `main`**, que tiene los Sprints 1–4: con `main` cambian los nombres de los assets.
+- **CDN (lección):** la CDN de Hostinger guarda `sw.js` 7 días (`max-age=604800`). Después de subirlo hay que purgarla con `hosting_cache_clear` (`scope: "cdn"`) y comprobar con `curl -s /sw.js`, **sin** `?cb=`. Antes de esta purga, la CDN seguía entregando el `sw.js` del 25-sep.
+- **Revertir el sw.js:** subir `../revert-v0.3-fase1/sw.v0.3.1-sprint2.js` como `sw.js` y purgar la CDN.
+- **Pendiente:**
+  - El botón "Guía del Sprint 2" en `src/shell/PresenterPanel.tsx`.
+  - Si el dueño da el OK, `Cache-Control: no-cache` para `sw.js` en el `.htaccess` de la raíz.
+  - El PR #66 del grupo, que va después de #54.
+
+---
+
 # HANDOFF — 2026-10-28 13:45 (Sprint 2 desplegado: `v0.3.1-sprint2`)
 
 - **Producción:** `v0.3.1-sprint2` en la raíz de Hostinger (`index-DQQidj1w.js`), con 54/54 Playwright contra producción. `/next/` (v0.4) y `/next2/` (v0.5) siguen intactos. `main` = `9c6a9a9` (Sprints 1–4).

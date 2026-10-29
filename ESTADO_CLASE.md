@@ -1,4 +1,20 @@
-# ESTADO_CLASE — actualizado 2026-10-28 13:45 (Lima)
+# ESTADO_CLASE — actualizado 2026-10-28 22:30 (Lima)
+
+## Guía del Sprint 2 publicada
+- **URL:** https://firebrick-cod-910257.hostingersite.com/guia-sprint2/ ("Guía del Sprint 2 · KuyayPet", 30 capturas `.webp`).
+- **Se subió:** `guia-sprint2/index.html` y `guia-sprint2/img/*.webp` (31 archivos, por TUS, con `index.html` al final). En la raíz, solo `sw.js`. Nada se borró.
+- **Service worker:** `navigateFallbackDenylist: [/\/manual\//, /^\/next2?\//, /^\/guia-sprint2\//]`. Se construyó desde el mismo código de producción, así que la app (`index-DQQidj1w.js`) no cambia.
+- **CDN:** sin cache-busting, la CDN de Hostinger seguía sirviendo el `sw.js` del 25-sep, que guarda 7 días. Así que el denylist de `/next*/` del deploy de las 13:40 no había llegado a los navegadores. Se purgó la CDN y ahora sirve el nuevo. **Cada vez que cambie `sw.js`, hay que purgar la CDN.**
+- **Verificado con Playwright contra producción (16/16):**
+  - La guía carga en un navegador nuevo y también en uno que abrió antes la app, ya controlado por el service worker.
+  - Las 30 imágenes responden 200 `image/webp`.
+  - La raíz sigue sirviendo la app. `/next/`, `/next2/` y `/manual/` son byte a byte iguales a como estaban antes.
+- **Repos:**
+  - IchiSieben/kuyaypet: `main` = `0f865fe`; lo desplegado es la rama `hotfix/sw-guia-sprint2` (`c578bae`, sobre `c108d41`).
+  - ClxNode/KuyayPet: PR #66 (`sprint-2/chore-sw-guia`), que va después de #54.
+- **Pendiente:** botón "Guía del Sprint 2" en el panel Modo presentador. Cambia el bundle de la app, así que va en el próximo deploy de la app.
+
+## Estado anterior — actualizado 2026-10-28 13:45 (Lima)
 
 ## Dónde está cada versión
 | URL | Versión | Build |
