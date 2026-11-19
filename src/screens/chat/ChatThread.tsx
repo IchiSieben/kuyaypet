@@ -26,7 +26,8 @@ export function ChatThreadScreen() {
     if (id && user) markThreadRead(id, user.id);
   }, [messages.length, typing, id, user]);
 
-  if (!thread || !user)
+  // A direct chat is private to its two members; group chats are open to anyone interested (HU-09).
+  if (!thread || !user || (thread.kind === 'direct' && !thread.memberIds.includes(user.id)))
     return (
       <div className="pt-10">
         <EmptyState emoji="💬" title="Conversación no encontrada" action={<Button onClick={() => navigate('/chats')}>Ir a mis chats</Button>} />

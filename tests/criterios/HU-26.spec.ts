@@ -2,7 +2,7 @@ import { expect, test, type Page } from '@playwright/test';
 
 test.use({ reducedMotion: 'reduce' });
 
-const EVID = '../../Sprint_04/7.Pruebas/evidencias/HU-26';
+const EVID = '../../Sprint_03/7.Pruebas/evidencias/HU-26';
 const shot = (page: Page, name: string) => page.screenshot({ path: `${EVID}/${name}.png` });
 
 test.beforeEach(async ({ page }) => {

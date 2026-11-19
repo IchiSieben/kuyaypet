@@ -3,7 +3,7 @@ import { expect, test, type Page } from '@playwright/test';
 test.use({ reducedMotion: 'reduce' });
 
 const PREFIX = process.env.SHOT_PREFIX ?? 'despues';
-const shot = (page: Page, name: string) => page.screenshot({ path: `../../Sprint_04/7.Pruebas/evidencias/HU-23/${PREFIX}-${name}.png`, fullPage: true });
+const shot = (page: Page, name: string) => page.screenshot({ path: `../../Sprint_03/7.Pruebas/evidencias/HU-23/${PREFIX}-${name}.png`, fullPage: true });
 
 test.beforeEach(async ({ page }) => {
   await page.goto('./');

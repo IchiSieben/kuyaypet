@@ -2,7 +2,7 @@ import { expect, test, type Page } from '@playwright/test';
 
 test.use({ reducedMotion: 'reduce' });
 
-const shot = (page: Page, name: string) => page.screenshot({ path: `../../Sprint_04/7.Pruebas/evidencias/HU-22/despues-${name}.png` });
+const shot = (page: Page, name: string) => page.screenshot({ path: `../../Sprint_03/7.Pruebas/evidencias/HU-22/despues-${name}.png` });
 
 test.beforeEach(async ({ page }) => {
   await page.goto('./');

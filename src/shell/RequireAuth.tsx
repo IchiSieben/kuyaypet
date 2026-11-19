@@ -12,6 +12,12 @@ export function RequireAuth() {
 
   useEffect(() => {
     if (!user) return;
+    // Account deactivated by an admin while this session was open (HU-25, seguridad SEG-12).
+    if (!user.active) {
+      logout();
+      toast({ title: 'Tu cuenta está desactivada', body: 'Escríbenos a soporte@kuyaypet.pe.', emoji: '🔒' });
+      return;
+    }
     // Expired while the tab was closed?
     if (Date.now() - db.get().lastActivity > INACTIVITY_MS) {
       logout();
@@ -41,7 +47,7 @@ export function RequireAuth() {
     };
   }, [user, navigate]);
 
-  if (!user) return <Navigate to="/login" replace state={{ from: location.pathname }} />;
+  if (!user || !user.active) return <Navigate to="/login" replace state={{ from: location.pathname }} />;
   if (!canAccess(user.role, location.pathname)) return <Navigate to={HOME_BY_ROLE[user.role]} replace />;
   return <Outlet />;
 }
