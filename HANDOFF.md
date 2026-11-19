@@ -1,3 +1,14 @@
+# HANDOFF — 2026-11-19 (producción `v1.0.0`, cierre del proyecto)
+
+- **Producción:** https://firebrick-cod-910257.hostingersite.com/ = tag `v1.0.0` (`26ea3b7`; `package.json` 1.0.0 en `d5ccad0`, mismo bundle `index-BXqdrcgB.js`). `main` = `d5ccad0`. Mismo `src/` y `tests/` que `ClxNode/KuyayPet` `main` (`cf01fe7`), donde el equipo fusionó #88–#95 y #99 el 19-nov.
+- **Qué entró:** HU-14, 15, 22–26 (Sprint 3 parte b), 13 tests de seguridad (`tests/seguridad/`), `RequireAuth` cierra la sesión de cuentas desactivadas y los chats directos solo los abren sus miembros.
+- **Tests:** local 22/22 Vitest · 130/130 Playwright (`--workers=1`, 4199). Contra producción: 129/130 + HU-12 (timeout de red) 5/5 al repetir; 26/26 specs de evidencias (HU-06 repetida). Videos: `Gdrive:02-Proyectos/produccion/kuyaypet/videos-hu/v1.0.0-2026-11-19/`.
+- **Cómo se desplegó (sin MCP, que no conectó):** `npm run build` → `python ../../kuyaypet-tools/deploy_tus.py dist` (API pública de Hostinger con `HOSTINGER_API_TOKEN`; 235 archivos; shell al final; purga la CDN). Verificar después cada archivo por tamaño contra el origen.
+- **Revertir:** `python deploy_tus.py ../../revert-v0.3.1 --only index.html sw.js manifest.webmanifest` (los assets de `v0.3.1-sprint2` siguen en el servidor) y la purga sale sola.
+- **Pendiente:** borrar `assets/_probe.txt` del servidor (dueño, hPanel); `Cache-Control: no-cache` para `sw.js` (necesita OK); mover el tag `v1.0.0` a `d5ccad0` solo con OK (comando en `kuyaypet-tools/DECISIONES.md`).
+
+---
+
 # HANDOFF — 2026-10-28 22:30 (guía del Sprint 2 en `/guia-sprint2/`)
 
 - **Publicado:** https://firebrick-cod-910257.hostingersite.com/guia-sprint2/. Se subieron los 31 archivos de `../guia-sprint2/` y el `sw.js` de la raíz, nada más. Playwright contra producción: 16/16 (`scratchpad/verify-guia.cjs`: título, 30 imágenes, navegador con el SW de la raíz, `/next*/` y `/manual/` sin cambios).
